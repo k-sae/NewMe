@@ -6,6 +6,26 @@
             android:id="@+id/nav_news"
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/news" />
+        <item
+            android:id="@+id/nav_123"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="FAQ" />
+        <item
+            android:id="@+id/nar_23121"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Contact us" />
+        <item
+            android:id="@+id/nar_23122"
+            android:icon="@drawable/ic_menu_share"
+            android:title="About us" />
+        <item
+            android:id="@+id/nar_23132"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Login" />
+        <item
+            android:id="@+id/nar_231322"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="New me" />
     </group>
 
   <!--  <item android:title="Communicate">
