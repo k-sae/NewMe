@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.kareem.newme"
-        minSdkVersion 15
+        minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -31,4 +31,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.2.0'
     compile 'com.google.code.gson:gson:2.4'
     testCompile 'junit:junit:4.12'
+    compile 'com.firebaseui:firebase-ui:1.2.0'
+    apply plugin: 'com.google.gms.google-services'
 }

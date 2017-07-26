@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "499707935376",
+    "firebase_url": "https://newme-69855.firebaseio.com",
+    "project_id": "newme-69855",
+    "storage_bucket": "newme-69855.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:499707935376:android:da6bd0d0225a89d5",
+        "android_client_info": {
+          "package_name": "com.kareem.newme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "499707935376-n6av64af7hojo6aobnj6ks7edh7n775b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kareem.newme",
+            "certificate_hash": "66ed1e52da64a0999b0f7152e39611a0fe3fb4f7"
+          }
+        },
+        {
+          "client_id": "499707935376-etok5fn4huss7845kgft5041701cnbsb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFkw7w2Ijc-6RfiYpKNZ_CcrfslC3U7Wk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "499707935376-etok5fn4huss7845kgft5041701cnbsb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

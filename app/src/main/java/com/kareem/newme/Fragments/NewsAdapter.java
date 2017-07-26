@@ -43,7 +43,8 @@ public class NewsAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+
+        throw new RuntimeException("NOT fucken Implemented u piece of shit");
     }
 
     public List<News> getmValues() {

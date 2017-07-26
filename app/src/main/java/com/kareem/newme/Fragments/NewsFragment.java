@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.kareem.newme.BasicNotifier;
 import com.kareem.newme.Constants;
@@ -70,10 +72,15 @@ public class NewsFragment extends Fragment implements DataSetListener {
     public void onDataSetChanged(String data) {
 
         newsAdapter.getmValues().addAll(parser.fromJson(data, NewsArray.class).getNews());
+        FirebaseDatabase.getInstance()
+                .getReference("News")
+                .push()
+                .setValue(newsAdapter.getmValues().get(0)
+                );
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                newsAdapter.notifyDataSetChanged();
+//                newsAdapter.notifyDataSetChanged();
             }
         });
 
