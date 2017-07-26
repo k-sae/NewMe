@@ -1,16 +1,15 @@
 package com.kareem.newme.Fragments;
 
-import android.content.Context;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
@@ -20,8 +19,6 @@ import com.kareem.newme.DataSetListener;
 import com.kareem.newme.Model.News;
 import com.kareem.newme.Model.NewsArray;
 import com.kareem.newme.R;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -32,6 +29,7 @@ public class NewsFragment extends Fragment implements DataSetListener {
 
     private BasicNotifier basicNotifier;
     private NewsAdapter newsAdapter;
+    private FirebaseListAdapter<News> newsFirebaseListAdapter;
     private Gson parser;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -55,9 +53,10 @@ public class NewsFragment extends Fragment implements DataSetListener {
         // Set the adapter
         parser = new Gson();
         ListView listView = (ListView) view.findViewById(R.id.news_container_listView);
+        populateNews(listView);
         newsAdapter = new NewsAdapter();
         basicNotifier = new BasicNotifier(this);
-        listView.setAdapter(newsAdapter);
+//        listView.setAdapter(newsAdapter);
         basicNotifier.execute(Constants.NEWS_URL);
         return view;
     }
@@ -68,15 +67,43 @@ public class NewsFragment extends Fragment implements DataSetListener {
         basicNotifier.close();
     }
 
+    private void populateNews(ListView newsListView)
+    {
+        newsFirebaseListAdapter = new FirebaseListAdapter<News>(getActivity(), News.class,
+                R.layout.news_list_item, FirebaseDatabase.getInstance().getReference("News-2")) {
+            @Override
+            protected void populateView(View v, News model, int position) {
+                // Get references to the views of message.xml
+                //TODO dont forget the image
+                TextView newsTitle = (TextView)v.findViewById(R.id.news_list_item_title);
+                TextView newsDetails = (TextView)v.findViewById(R.id.news_list_item_details);
+
+                // Set their text
+                newsTitle.setText(model.getTitle());
+                newsDetails.setText(model.getContent());
+
+            }
+        };
+        newsFirebaseListAdapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+
+            }
+        });
+        newsListView.setAdapter(newsFirebaseListAdapter);
+    }
+
     @Override
     public void onDataSetChanged(String data) {
 
-        newsAdapter.getmValues().addAll(parser.fromJson(data, NewsArray.class).getNews());
-        FirebaseDatabase.getInstance()
-                .getReference("News")
-                .push()
-                .setValue(newsAdapter.getmValues().get(0)
-                );
+//        newsAdapter.getmValues().addAll(parser.fromJson(data, NewsArray.class).getNews());
+//        FirebaseDatabase.getInstance()
+//                .getReference("News")
+//                .push()
+//                .setValue(newsAdapter.getmValues().get(0)
+//                );
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

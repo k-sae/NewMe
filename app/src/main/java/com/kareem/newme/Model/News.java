@@ -1,91 +1,71 @@
 
 package com.kareem.newme.Model;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class News {
 
+    @SerializedName("comments")
+    @Expose
+    private List<Comment> comments = null;
     @SerializedName("contain_image")
     @Expose
-    private String containImage;
+    private Boolean containImage;
     @SerializedName("contain_video")
     @Expose
-    private String containVideo;
-    @SerializedName("image_url")
-    @Expose
-    private String imageUrl;
-    @SerializedName("cover_image_url")
-    @Expose
-    private String coverImageUrl;
-    @SerializedName("video_url")
-    @Expose
-    private String videoUrl;
-    @SerializedName("title")
-    @Expose
-    private String title;
+    private Boolean containVideo;
     @SerializedName("content")
     @Expose
     private String content;
+    @SerializedName("cover_image_url")
+    @Expose
+    private String coverImageUrl;
     @SerializedName("date")
     @Expose
     private String date;
     @SerializedName("default_image")
     @Expose
     private String defaultImage;
-    @SerializedName("id")
+    @SerializedName("image_url")
     @Expose
-    private String id;
+    private String imageUrl;
+    @SerializedName("likes")
+    @Expose
+    private List<Like> likes = null;
+    @SerializedName("title")
+    @Expose
+    private String title;
+    @SerializedName("video_url")
+    @Expose
+    private String videoUrl;
     @SerializedName("writer")
     @Expose
     private String writer;
 
-    public String getContainImage() {
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Boolean getContainImage() {
         return containImage;
     }
 
-    public void setContainImage(String containImage) {
+    public void setContainImage(Boolean containImage) {
         this.containImage = containImage;
     }
 
-    public String getContainVideo() {
+    public Boolean getContainVideo() {
         return containVideo;
     }
 
-    public void setContainVideo(String containVideo) {
+    public void setContainVideo(Boolean containVideo) {
         this.containVideo = containVideo;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getCoverImageUrl() {
-        return coverImageUrl;
-    }
-
-    public void setCoverImageUrl(String coverImageUrl) {
-        this.coverImageUrl = coverImageUrl;
-    }
-
-    public String getVideoUrl() {
-        return videoUrl;
-    }
-
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getContent() {
@@ -94,6 +74,14 @@ public class News {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getCoverImageUrl() {
+        return coverImageUrl;
+    }
+
+    public void setCoverImageUrl(String coverImageUrl) {
+        this.coverImageUrl = coverImageUrl;
     }
 
     public String getDate() {
@@ -112,12 +100,36 @@ public class News {
         this.defaultImage = defaultImage;
     }
 
-    public String getId() {
-        return id;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public List<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 
     public String getWriter() {

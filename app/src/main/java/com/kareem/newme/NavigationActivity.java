@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.kareem.newme.Fragments.NewsFragment;
 
 public class NavigationActivity extends AppCompatActivity
@@ -43,6 +44,8 @@ public class NavigationActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth.signInAnonymously();
         newsFragment = new NewsFragment();
     }
 
