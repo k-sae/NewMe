@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.kareem.newme.Constants;
@@ -19,6 +20,8 @@ import com.kareem.newme.R;
  */
 public class NewsEditorFragment extends Fragment {
     private News news;
+    private TextView titleTextView;
+    private TextView contentTextView;
     public NewsEditorFragment() {
     }
 
@@ -28,12 +31,13 @@ public class NewsEditorFragment extends Fragment {
         //TODO
         // check the Intent if an already existed news is passed
         String jsonNews = getActivity().getIntent().getStringExtra(Constants.NEWS_DATA);
-        if(jsonNews != null)
-           news = new Gson().fromJson(jsonNews, News.class);
-        else news = new News();
-
         View view = inflater.inflate(R.layout.fragment_news_editor, container, false);
         setLayout(view);
+        if(jsonNews != null) {
+            news = new Gson().fromJson(jsonNews, News.class);
+            //TODO
+        }
+        else news = new News();
         return view;
     }
     private void setLayout(View view)
@@ -42,10 +46,18 @@ public class NewsEditorFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                String content = contentTextView.getText().toString();
+                String title =  titleTextView.getText().toString();
+                if (content.equals("") || title.equals(""))
+                Snackbar.make(view, "please fill all text fields", Snackbar.LENGTH_LONG).show();
+                else{
+                    //TODO image check
+                    news.setTitle(title);
+                    news.setContent(content);
+                }
             }
         });
-//        view.findViewById(R)
+        titleTextView = (TextView) view.findViewById(R.id.news_title_edit_text);
+        contentTextView = (TextView) view.findViewById(R.id.news_content_edit_text);
     }
 }
