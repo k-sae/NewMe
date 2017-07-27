@@ -8,4 +8,7 @@
     <string name="news">News</string>
     <string name="user_image">User Image</string>
     <string name="title_activity_news_editor">NewsEditor</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
+    <string name="news_image">News Image</string>
 </resources>
