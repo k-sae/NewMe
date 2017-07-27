@@ -28,7 +28,6 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:textAlignment="textEnd"
             android:layout_marginTop="@dimen/textFields_default_margin"
             android:hint="@string/title"/>
         <EditText
@@ -39,7 +38,6 @@
             android:inputType="textMultiLine"
             android:hint="@string/content"
             android:layout_marginTop="@dimen/textFields_default_margin"
-            android:textAlignment="textEnd"
             />
     </LinearLayout>
 
