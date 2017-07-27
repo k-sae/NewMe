@@ -1,4 +1,4 @@
-package com.kareem.newme.Fragments;
+package com.kareem.newme.News;
 
 import android.database.DataSetObserver;
 import android.os.Bundle;
@@ -10,14 +10,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.kareem.newme.BasicNotifier;
 import com.kareem.newme.Constants;
 import com.kareem.newme.DataSetListener;
 import com.kareem.newme.Model.News;
-import com.kareem.newme.Model.NewsArray;
 import com.kareem.newme.R;
 
 /**

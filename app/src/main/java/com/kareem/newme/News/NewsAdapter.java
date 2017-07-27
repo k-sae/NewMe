@@ -1,4 +1,4 @@
-package com.kareem.newme.Fragments;
+package com.kareem.newme.News;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
