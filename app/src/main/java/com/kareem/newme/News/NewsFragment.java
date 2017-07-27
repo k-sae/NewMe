@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -46,7 +47,7 @@ public class NewsFragment extends Fragment implements DataSetListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news, container, false);
 
@@ -62,8 +63,14 @@ public class NewsFragment extends Fragment implements DataSetListener {
                 startActivity(intent);
             }
         });
-
-//        listView.setAdapter(newsAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), NewsDetails.class);
+                intent.putExtra(Constants.NEWS_DATA, new Gson().toJson(newsFirebaseListAdapter.getItem(position)));
+                startActivity(intent);
+            }
+        });
         return view;
     }
 

@@ -28,6 +28,10 @@
         <activity
             android:name=".News.NewsEditor"
             android:label="@string/title_activity_news_editor"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".News.NewsDetails"
+            android:label="@string/title_activity_news_details"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

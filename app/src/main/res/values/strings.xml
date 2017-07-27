@@ -11,4 +11,6 @@
     <string name="title">Title</string>
     <string name="content">Content</string>
     <string name="news_image">News Image</string>
+    <string name="title_activity_news_details">NewsDetails</string>
+    <string name="write_comment">write comment</string>
 </resources>
