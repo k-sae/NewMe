@@ -12,7 +12,7 @@
         android:layout_height="120dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/side_nav_bar"
+        android:background="@mipmap/test"
         android:contentDescription="@string/user_image" />
 
     <TextView

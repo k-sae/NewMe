@@ -1,6 +1,8 @@
 package com.kareem.newme.News;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -8,12 +10,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.kareem.newme.Constants;
 import com.kareem.newme.Model.News;
 import com.kareem.newme.R;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -22,6 +28,8 @@ public class NewsEditorFragment extends Fragment {
     private News news;
     private TextView titleTextView;
     private TextView contentTextView;
+    private ImageView newsImageView;
+
     public NewsEditorFragment() {
     }
 
@@ -59,5 +67,35 @@ public class NewsEditorFragment extends Fragment {
         });
         titleTextView = (TextView) view.findViewById(R.id.news_title_edit_text);
         contentTextView = (TextView) view.findViewById(R.id.news_content_edit_text);
+        newsImageView = (ImageView) view.findViewById(R.id.news_edit_imageView);
+        newsImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"),1);
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            if (data == null) {
+                return;
+            }
+            try {
+                InputStream profileImageStream = getActivity().getContentResolver().openInputStream(data.getData());
+                assert profileImageStream != null;
+                byte[] profileImageByteArray = new byte[profileImageStream.available()];
+                //noinspection ResultOfMethodCallIgnored
+                profileImageStream.read(profileImageByteArray);
+                newsImageView.setImageBitmap(BitmapFactory.decodeByteArray(profileImageByteArray,0,profileImageByteArray.length));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
