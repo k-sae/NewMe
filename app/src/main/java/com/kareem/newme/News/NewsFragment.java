@@ -1,7 +1,10 @@
 package com.kareem.newme.News;
 
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,7 @@ import com.kareem.newme.BasicNotifier;
 import com.kareem.newme.Constants;
 import com.kareem.newme.DataSetListener;
 import com.kareem.newme.Model.News;
+import com.kareem.newme.NavigationActivity;
 import com.kareem.newme.R;
 
 /**
@@ -25,8 +29,6 @@ import com.kareem.newme.R;
  */
 public class NewsFragment extends Fragment implements DataSetListener {
 
-    private BasicNotifier basicNotifier;
-    private NewsAdapter newsAdapter;
     private FirebaseListAdapter<News> newsFirebaseListAdapter;
     private Gson parser;
     /**
@@ -52,17 +54,23 @@ public class NewsFragment extends Fragment implements DataSetListener {
         parser = new Gson();
         ListView listView = (ListView) view.findViewById(R.id.news_container_listView);
         populateNews(listView);
-        newsAdapter = new NewsAdapter();
-        basicNotifier = new BasicNotifier(this);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), NewsEditor.class);
+                startActivity(intent);
+            }
+        });
+
 //        listView.setAdapter(newsAdapter);
-        basicNotifier.execute(Constants.NEWS_URL);
         return view;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        basicNotifier.close();
+
     }
 
     private void populateNews(ListView newsListView)

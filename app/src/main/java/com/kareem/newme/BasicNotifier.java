@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
+@Deprecated
 public  class BasicNotifier extends AsyncTask<String, Void,Void>
 {
     private DataSetListener dataSetListener;
