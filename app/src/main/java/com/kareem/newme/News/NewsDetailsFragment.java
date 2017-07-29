@@ -30,23 +30,6 @@ public class NewsDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         String jsonNews = getActivity().getIntent().getStringExtra(Constants.NEWS_DATA);
         View view = inflater.inflate(R.layout.fragment_news_details, container, false);
-        try {
-            PostConnector postConnector = new PostConnector(new URL("http://drhanadi.com/newmemobile/classes/MobileApi.php")) {
-                @Override
-                public void onFinish(String data) {
-                    Log.e("asd", "onFinish: "+ data);
-                }
-            };
-            Map<String,String> params = new HashMap<>();
-//            params.put("req","addNew");
-//            params.put("new", jsonNews);
-            params.put("req", "deleteNew");
-            params.put("newId", "-Kq5Br7peEFznzrrj2OY");
-            postConnector.setParams(params);
-            postConnector.execute();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
         return view;
     }
 }

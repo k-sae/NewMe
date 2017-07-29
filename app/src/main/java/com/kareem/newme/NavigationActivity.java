@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.kareem.newme.Model.ChatMessage;
 import com.kareem.newme.News.NewsFragment;
 
 public class NavigationActivity extends AppCompatActivity
@@ -39,6 +41,9 @@ public class NavigationActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signInAnonymously();
+
+
+
         newsFragment = new NewsFragment();
     }
 

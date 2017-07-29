@@ -1,35 +1,56 @@
 package com.kareem.newme.News;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.google.gson.Gson;
+import com.kareem.newme.Connections.PostConnector;
+import com.kareem.newme.Connections.VolleyRequest;
 import com.kareem.newme.Constants;
 import com.kareem.newme.Model.News;
 import com.kareem.newme.R;
+import com.kareem.newme.Utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A placeholder fragment containing a simple view.
+ * imageApi
+ *  req = addNewPic
+    newId = (capital i)
+    image =
  */
+//            params.put("req", "deleteNew");
+//            params.put("newId", "-Kq5Br7peEFznzrrj2OY");
 public class NewsEditorFragment extends Fragment {
     private News news;
     private TextView titleTextView;
     private TextView contentTextView;
     private ImageView newsImageView;
-
+    private Bitmap bitmap;
+    //    private byte[] profileImageByteArray;
     public NewsEditorFragment() {
     }
 
@@ -62,6 +83,7 @@ public class NewsEditorFragment extends Fragment {
                     //TODO image check
                     news.setTitle(title);
                     news.setContent(content);
+                    uploadNews();
                 }
             }
         });
@@ -86,16 +108,40 @@ public class NewsEditorFragment extends Fragment {
             if (data == null) {
                 return;
             }
+            Uri filePath = data.getData();
             try {
-                InputStream profileImageStream = getActivity().getContentResolver().openInputStream(data.getData());
-                assert profileImageStream != null;
-                byte[] profileImageByteArray = new byte[profileImageStream.available()];
-                //noinspection ResultOfMethodCallIgnored
-                profileImageStream.read(profileImageByteArray);
-                newsImageView.setImageBitmap(BitmapFactory.decodeByteArray(profileImageByteArray,0,profileImageByteArray.length));
+                //Getting the Bitmap from Gallery
+                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                //Setting the Bitmap to ImageView
+                newsImageView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+    private void uploadNews()
+    {
+        final ProgressDialog loading = ProgressDialog.show(getActivity(),"Uploading...","Please wait...",false,false);
+        loading.show();
+        Map<String,String> params = new HashMap<>();
+            params.put("req","addNew");
+            params.put("new", new Gson().toJson(news));
+            params.put("imagebase64", Utils.getStringImage(bitmap));
+            final VolleyRequest volleyRequest = new VolleyRequest("http://drhanadi.com/newmemobile/classes/MobileApi.php", params, getActivity()) {
+                @Override
+                public void onResponse(String response) {
+                    loading.dismiss();
+                    getActivity().finish();
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getActivity(),"Error occure will uploading please try again", Toast.LENGTH_LONG).show();
+                    loading.setMessage("retrying");
+                  uploadImage();
+                }
+            };
+            volleyRequest.uploadImage();
+
     }
 }
