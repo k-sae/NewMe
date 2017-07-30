@@ -15,30 +15,24 @@
             android:icon="@drawable/ic_menu_send"
             android:title="Contact us" />
         <item
+            android:id="@+id/nar_231322"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="New me" />
+
+        <item
             android:id="@+id/nar_23122"
             android:icon="@drawable/ic_menu_share"
             android:title="About us" />
         <item
-            android:id="@+id/nar_23132"
+            android:id="@+id/nav_login"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Login" />
-        <item
-            android:id="@+id/nar_231322"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="New me" />
+            android:title="@string/login" />
+
     </group>
 
-  <!--  <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
--->
+ <!--<item android:title="">-->
+        <!--<menu>-->
+           <!---->
+        <!--</menu>-->
+    <!--</item>-->
 </menu>

@@ -1,10 +1,8 @@
 package com.kareem.newme;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,13 +13,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
-import com.kareem.newme.Model.ChatMessage;
+import com.kareem.newme.Authentication.AuthenticationActivity;
 import com.kareem.newme.News.NewsFragment;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    NewsFragment newsFragment;
+    private NewsFragment newsFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +85,9 @@ public class NavigationActivity extends AppCompatActivity
         if (id == R.id.nav_news) {
             navigate(newsFragment);
         }
-
+        else if (id == R.id.nav_login){
+            navigate(AuthenticationActivity.class);
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -100,5 +99,10 @@ public class NavigationActivity extends AppCompatActivity
                 .replace(R.id.frame_content,
                         fragment)
                 .commit();
+    }
+    private void navigate(Class<?> cls)
+    {
+        Intent intent = new Intent(this, cls);
+        startActivity(intent);
     }
 }

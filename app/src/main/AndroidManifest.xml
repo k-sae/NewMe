@@ -32,6 +32,10 @@
         <activity
             android:name=".News.NewsDetails"
             android:label="@string/title_activity_news_details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Authentication.AuthenticationActivity"
+            android:label="@string/title_activity_authentication"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
