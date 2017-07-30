@@ -32,11 +32,9 @@ public class LoginFragment extends ViewPagerFragment implements View.OnClickList
     public LoginFragment() {
         // Required empty public constructor
     }
-
     @Override
     public void onStart() {
         super.onStart();
-        setFragmentTitle(getString(R.string.login));
     }
 
     @Override

@@ -26,7 +26,9 @@ public class AuthenticationFragment extends ViewPagerFragment {
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.authentication_ViewPager);
         FragmentAdapter fragmentAdapter = new FragmentAdapter(getActivity().getSupportFragmentManager());
         LoginFragment loginFragment = new LoginFragment();
+        loginFragment.setFragmentTitle(getString(R.string.login));
         RegisterFragment registerFragment = new RegisterFragment();
+        registerFragment.setFragmentTitle(getString(R.string.register));
         fragmentAdapter.getFragments().add(loginFragment);
         fragmentAdapter.getFragments().add(registerFragment);
         viewPager.setAdapter(fragmentAdapter);
