@@ -12,38 +12,46 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
 import com.kareem.newme.Authentication.AuthenticationActivity;
+import com.kareem.newme.Model.RealmObjects.RealmUser;
+import com.kareem.newme.Model.RealmObjects.RealmUserUtils;
+import com.kareem.newme.Model.User;
 import com.kareem.newme.News.NewsFragment;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private NewsFragment newsFragment;
     private final int LOGIN_ACTIVITY_RESULT_CODE = 3521;
+    private TextView navigationBarHeader;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        firebaseAuth.signInAnonymously();
-
-
-
-        newsFragment = new NewsFragment();
+        navigationBarHeader = (TextView) navigationView.getHeaderView(0).findViewById(R.id.navigation_header_text);
+        if (savedInstanceState == null) {
+            newsFragment = new NewsFragment();
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            firebaseAuth.signInAnonymously();
+            navigationView.setCheckedItem(R.id.nav_news);
+            navigate(newsFragment);
+        }
+        RealmUserUtils realmUserUtils = new RealmUserUtils(this);
+        RunTimeItems.loggedUser = realmUserUtils.getLoggedUserFromDataBase();
+        if(RunTimeItems.loggedUser != null) updateLoginStatus();
     }
 
     @Override
@@ -114,6 +122,13 @@ public class NavigationActivity extends AppCompatActivity
         if (requestCode == LOGIN_ACTIVITY_RESULT_CODE && resultCode == Activity.RESULT_OK)
         {
             String userData = data.getStringExtra(Constants.USER_DATA);
+            RunTimeItems.loggedUser = new Gson().fromJson(userData, User.class);
+            new RealmUserUtils(this).save(RunTimeItems.loggedUser);
+            updateLoginStatus();
         }
+    }
+    private void updateLoginStatus()
+    {
+        navigationBarHeader.setText(RunTimeItems.loggedUser.getName());
     }
 }

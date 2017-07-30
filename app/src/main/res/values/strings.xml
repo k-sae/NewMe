@@ -23,4 +23,5 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="username">UserName</string>
+    <string name="anonymous">Anonymous</string>
 </resources>

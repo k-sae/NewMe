@@ -1,6 +1,7 @@
 package com.kareem.newme.Model.RealmObjects;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.kareem.newme.Model.User;
 
@@ -48,5 +49,15 @@ public class RealmUserUtils{
         realm.beginTransaction();
         realmResults.clear();
         realm.commitTransaction();
+    }
+
+    @Nullable
+    public User getLoggedUserFromDataBase()
+    {
+        RealmResults<RealmUser> realmUsers = realm.where(RealmUser.class).findAll();
+        if (realmUsers.size() > 0) {
+            return fromRealmUser(realmUsers.get(0));
+        }
+        else return null;
     }
 }
