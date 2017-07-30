@@ -4,14 +4,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,6 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
-import com.kareem.newme.Connections.PostConnector;
 import com.kareem.newme.Connections.VolleyRequest;
 import com.kareem.newme.Constants;
 import com.kareem.newme.Model.News;
@@ -29,9 +26,6 @@ import com.kareem.newme.R;
 import com.kareem.newme.Utils;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -127,7 +121,7 @@ public class NewsEditorFragment extends Fragment {
             params.put("req","addNew");
             params.put("new", new Gson().toJson(news));
             params.put("imagebase64", Utils.getStringImage(bitmap));
-            final VolleyRequest volleyRequest = new VolleyRequest("http://drhanadi.com/newmemobile/classes/MobileApi.php", params, getActivity()) {
+            final VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL, params, getActivity()) {
                 @Override
                 public void onResponse(String response) {
                     loading.dismiss();

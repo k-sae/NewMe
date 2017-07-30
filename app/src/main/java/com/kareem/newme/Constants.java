@@ -6,7 +6,7 @@ package com.kareem.newme;
 
 public class Constants {
     //Related to website
-    public static final String NEWS_URL = "http://192.168.43.195:4444/";
+    public static final String BASE_URL = "http://drhanadi.com/newmemobile/classes/MobileApi.php";
 
     //Related to in app data
     public static final String NEWS_DATA = "news_data";
