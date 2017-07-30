@@ -31,7 +31,7 @@ public abstract class VolleyRequest implements  Response.Listener<String>, Respo
         this.context = context;
     }
 
-    public void uploadImage(){
+    public void start(){
         //Showing the progress dialog
          stringRequest = new StringRequest(Request.Method.POST, url,this,this){
             @Override

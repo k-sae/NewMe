@@ -132,10 +132,10 @@ public class NewsEditorFragment extends Fragment {
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(getActivity(),"Error occure will uploading please try again", Toast.LENGTH_LONG).show();
                     loading.setMessage("retrying");
-                  uploadImage();
+                  start();
                 }
             };
-            volleyRequest.uploadImage();
+            volleyRequest.start();
 
     }
 }
