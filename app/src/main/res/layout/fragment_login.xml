@@ -1,13 +1,75 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kareem.newme.Authentication.LoginFragment">
+    tools:context="com.kareem.newme.Authentication.LoginFragment"
+    android:background="@color/background_color"
+    >
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+        <LinearLayout
+            android:id="@+id/login_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_gravity="center"
+                android:paddingLeft="@dimen/logo_default_padding"
+                android:paddingRight="@dimen/logo_default_padding"
+                android:src="@drawable/new_me_logo"
+                />
+
+            <EditText
+                android:id="@+id/login_username"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@android:color/transparent"
+                android:drawableStart="@drawable/user"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:hint="@string/username"
+                android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:background="@color/white_greyish" />
+
+            <EditText
+                android:id="@+id/login_password"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableStart="@drawable/password"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="16sp" />
+            <Button
+                android:id="@+id/loginBtn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/loginbutton_selector"
+                android:padding="3dp"
+                android:text="@string/login"
+                android:textColor="@color/background_color"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+</RelativeLayout>
