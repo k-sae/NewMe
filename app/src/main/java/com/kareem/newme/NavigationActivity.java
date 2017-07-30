@@ -1,5 +1,6 @@
 package com.kareem.newme;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import com.kareem.newme.News.NewsFragment;
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private NewsFragment newsFragment;
+    private final int LOGIN_ACTIVITY_RESULT_CODE = 3521;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +105,15 @@ public class NavigationActivity extends AppCompatActivity
     private void navigate(Class<?> cls)
     {
         Intent intent = new Intent(this, cls);
-        startActivity(intent);
+        startActivityForResult(intent,LOGIN_ACTIVITY_RESULT_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LOGIN_ACTIVITY_RESULT_CODE && resultCode == Activity.RESULT_OK)
+        {
+            String userData = data.getStringExtra(Constants.USER_DATA);
+        }
     }
 }

@@ -1,7 +1,9 @@
 package com.kareem.newme.Authentication;
 
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -66,14 +68,16 @@ public class LoginFragment extends ViewPagerFragment implements View.OnClickList
             @Override
             public void onResponse(String response) {
                 loading.dismiss();
-                User user = new Gson().fromJson(response, User.class);
-                if (user == null)
+                if (response.contains("\"apiRespond\":false"))
                 {
                     Toast.makeText(getActivity(),"Wrong User Name or Password", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
-                    //TODO database stuff
+                    Intent data = new Intent();
+                    data.putExtra(Constants.USER_DATA, response);
+                    getActivity().setResult(Activity.RESULT_OK,data);
+                    getActivity().finish();
                 }
             }
         };
