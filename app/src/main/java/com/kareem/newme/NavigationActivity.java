@@ -27,6 +27,7 @@ public class NavigationActivity extends AppCompatActivity
     private NewsFragment newsFragment;
     private final int LOGIN_ACTIVITY_RESULT_CODE = 3521;
     private TextView navigationBarHeader;
+    private Menu menu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +43,7 @@ public class NavigationActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationBarHeader = (TextView) navigationView.getHeaderView(0).findViewById(R.id.navigation_header_text);
+        menu = navigationView.getMenu();
         if (savedInstanceState == null) {
             newsFragment = new NewsFragment();
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -96,12 +98,15 @@ public class NavigationActivity extends AppCompatActivity
             navigate(newsFragment);
         }
         else if (id == R.id.nav_login){
+            if (RunTimeItems.loggedUser == null)
             navigate(AuthenticationActivity.class);
+            else logout();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     private void navigate(Fragment fragment)
     {
 
@@ -130,5 +135,13 @@ public class NavigationActivity extends AppCompatActivity
     private void updateLoginStatus()
     {
         navigationBarHeader.setText(RunTimeItems.loggedUser.getName());
+        menu.findItem(R.id.nav_login).setTitle(getString(R.string.logout));
+    }
+    private void logout() {
+        navigationBarHeader.setText(getString(R.string.anonymous));
+        menu.findItem(R.id.nav_login).setTitle(getString(R.string.login));
+        RunTimeItems.loggedUser = null;
+        RealmUserUtils realmUserUtils = new RealmUserUtils(this);
+        realmUserUtils.clearRealmItems();
     }
 }
