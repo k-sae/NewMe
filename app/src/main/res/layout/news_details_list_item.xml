@@ -21,7 +21,6 @@
             />
         <ImageView
             style="@style/image_control_button_style"
-            android:padding="@dimen/default_spacing"
             android:src="@drawable/edit"
             />
         <ImageView
