@@ -122,13 +122,12 @@ public class NewsFragment extends UserRoleFragment implements DataSetListener {
 
     @Override
     public void onUserRoleChanged() {
+        if (fab != null)
         if ((RunTimeItems.loggedUser != null && RunTimeItems.loggedUser.getUserType().equals(Constants.ADMIN_TYPE)))
         {
-            assert fab != null;
             fab.setVisibility(View.VISIBLE);
         }
         else{
-            assert fab != null;
             fab.setVisibility(View.GONE);
         }
     }
