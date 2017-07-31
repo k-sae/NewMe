@@ -7,9 +7,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.kareem.newme.Connections.PostConnector;
 import com.kareem.newme.Constants;
+import com.kareem.newme.Model.News;
 import com.kareem.newme.R;
 
 import java.net.MalformedURLException;
@@ -22,6 +30,7 @@ import java.util.Map;
  */
 public class NewsDetailsFragment extends Fragment {
 
+    private NewsDetailsAdapter newsDetailsAdapter;
     public NewsDetailsFragment() {
     }
 
@@ -30,6 +39,29 @@ public class NewsDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         String jsonNews = getActivity().getIntent().getStringExtra(Constants.NEWS_DATA);
         View view = inflater.inflate(R.layout.fragment_news_details, container, false);
+        Log.e( "onCreateView: ", getActivity().getIntent().getStringExtra(Constants.NEWS_ID) );
+        Log.e( "onCreateView: ", getActivity().getIntent().getStringExtra(Constants.NEWS_DATA) );
+        ListView listView = (ListView) view.findViewById(R.id.news_details_listView);
+        setNewsDetailsAdapter(listView);
         return view;
+    }
+    private void setNewsDetailsAdapter(ListView listView)
+    {
+        newsDetailsAdapter = new NewsDetailsAdapter(getActivity());
+        newsDetailsAdapter.setNews(new Gson().fromJson(getActivity().getIntent().getStringExtra(Constants.NEWS_DATA), News.class));
+        FirebaseDatabase.getInstance().getReference("News-2").child(getActivity().getIntent().getStringExtra(Constants.NEWS_ID)).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+               newsDetailsAdapter.setNews(dataSnapshot.getValue(News.class));
+                newsDetailsAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        listView.setAdapter(newsDetailsAdapter);
+
     }
 }

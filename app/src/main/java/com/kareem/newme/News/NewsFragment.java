@@ -66,7 +66,6 @@ public class NewsFragment extends UserRoleFragment implements DataSetListener {
 
         // Set the adapter
         ListView listView = (ListView) view.findViewById(R.id.news_container_listView);
-        populateNews(listView);
         setNewsAdapter(listView);
          fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +81,9 @@ public class NewsFragment extends UserRoleFragment implements DataSetListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), NewsDetails.class);
-                intent.putExtra(Constants.NEWS_DATA, new Gson().toJson(newsFirebaseListAdapter.getItem(position)));
+                DataSnapshot dataSnapshot = newsAdapter.getDataSnapshots().get(position);
+                intent.putExtra(Constants.NEWS_DATA,new Gson().toJson(dataSnapshot.getValue(News.class)));
+                intent.putExtra(Constants.NEWS_ID,dataSnapshot.getKey());
                 startActivity(intent);
             }
         });
@@ -121,7 +122,7 @@ public class NewsFragment extends UserRoleFragment implements DataSetListener {
             }
         });
 
-//        newsListView.setAdapter(newsFirebaseListAdapter);
+        newsListView.setAdapter(newsFirebaseListAdapter);
     }
 
     private void setNewsAdapter(ListView listView)

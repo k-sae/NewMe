@@ -7,7 +7,7 @@ package com.kareem.newme;
 public class Constants {
     //Related to website
     public static final String BASE_URL = "http://drhanadi.com/newmemobile/classes/MobileApi.php";
-
+    public static final String NEWS_COLUMN = "News-2";
     //Related to in app data
     public static final String NEWS_DATA = "news_data";
     public static final String USER_DATA = "user_data";
