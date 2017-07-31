@@ -12,4 +12,5 @@ public class Constants {
     public static final String NEWS_DATA = "news_data";
     public static final String USER_DATA = "user_data";
     public static final String ADMIN_TYPE = "0";
+    public static final String NEWS_ID = "news_id";
 }

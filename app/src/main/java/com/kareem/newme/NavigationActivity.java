@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.kareem.newme.Authentication.AuthenticationActivity;
-import com.kareem.newme.Model.RealmObjects.RealmUser;
 import com.kareem.newme.Model.RealmObjects.RealmUserUtils;
 import com.kareem.newme.Model.User;
 import com.kareem.newme.News.NewsFragment;
@@ -141,7 +140,7 @@ public class NavigationActivity extends AppCompatActivity
     {
         navigationBarHeader.setText(RunTimeItems.loggedUser.getName());
         menu.findItem(R.id.nav_login).setTitle(getString(R.string.logout));
-        trigerUserRoleChanged();
+        triggerUserRoleChanged();
     }
     private void logout() {
         navigationBarHeader.setText(getString(R.string.anonymous));
@@ -149,9 +148,9 @@ public class NavigationActivity extends AppCompatActivity
         RunTimeItems.loggedUser = null;
         RealmUserUtils realmUserUtils = new RealmUserUtils(this);
         realmUserUtils.clearRealmItems();
-        trigerUserRoleChanged();
+        triggerUserRoleChanged();
     }
-    private void trigerUserRoleChanged()
+    private void triggerUserRoleChanged()
     {
         assert activeUserRoleFragment != null;
         activeUserRoleFragment.onUserRoleChanged();
