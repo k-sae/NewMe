@@ -22,21 +22,29 @@ import com.kareem.newme.DataSetListener;
 import com.kareem.newme.Model.News;
 import com.kareem.newme.NavigationActivity;
 import com.kareem.newme.R;
+import com.kareem.newme.RunTimeItems;
+import com.kareem.newme.UserRoleFragment;
 
 /**
  * A fragment representing a list of Items.
  * <p/>
  * interface.
  */
-public class NewsFragment extends Fragment implements DataSetListener {
+public class NewsFragment extends UserRoleFragment implements DataSetListener {
 
     private FirebaseListAdapter<News> newsFirebaseListAdapter;
-    private Gson parser;
+    private  FloatingActionButton fab;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
     public NewsFragment() {
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
     }
 
     // TODO: Customize parameter initialization
@@ -52,10 +60,9 @@ public class NewsFragment extends Fragment implements DataSetListener {
         View view = inflater.inflate(R.layout.fragment_news, container, false);
 
         // Set the adapter
-        parser = new Gson();
         ListView listView = (ListView) view.findViewById(R.id.news_container_listView);
         populateNews(listView);
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,6 +70,8 @@ public class NewsFragment extends Fragment implements DataSetListener {
                 startActivity(intent);
             }
         });
+        onUserRoleChanged();
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -109,21 +118,19 @@ public class NewsFragment extends Fragment implements DataSetListener {
 
     @Override
     public void onDataSetChanged(String data) {
+    }
 
-//        newsAdapter.getmValues().addAll(parser.fromJson(data, NewsArray.class).getNews());
-//        FirebaseDatabase.getInstance()
-//                .getReference("News")
-//                .push()
-//                .setValue(newsAdapter.getmValues().get(0)
-//                );
-
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-//                newsAdapter.notifyDataSetChanged();
-            }
-        });
-
+    @Override
+    public void onUserRoleChanged() {
+        if ((RunTimeItems.loggedUser != null && RunTimeItems.loggedUser.getUserType().equals(Constants.ADMIN_TYPE)))
+        {
+            assert fab != null;
+            fab.setVisibility(View.VISIBLE);
+        }
+        else{
+            assert fab != null;
+            fab.setVisibility(View.GONE);
+        }
     }
 
     /**

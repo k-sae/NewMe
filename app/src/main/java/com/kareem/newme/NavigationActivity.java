@@ -28,6 +28,7 @@ public class NavigationActivity extends AppCompatActivity
     private final int LOGIN_ACTIVITY_RESULT_CODE = 3521;
     private TextView navigationBarHeader;
     private Menu menu;
+    private UserRoleFragment activeUserRoleFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +115,10 @@ public class NavigationActivity extends AppCompatActivity
                 .replace(R.id.frame_content,
                         fragment)
                 .commit();
+        if (fragment instanceof UserRoleFragment)
+        {
+            activeUserRoleFragment = (UserRoleFragment) fragment;
+        }
     }
     private void navigate(Class<?> cls)
     {
@@ -136,6 +141,7 @@ public class NavigationActivity extends AppCompatActivity
     {
         navigationBarHeader.setText(RunTimeItems.loggedUser.getName());
         menu.findItem(R.id.nav_login).setTitle(getString(R.string.logout));
+        trigerUserRoleChanged();
     }
     private void logout() {
         navigationBarHeader.setText(getString(R.string.anonymous));
@@ -143,5 +149,11 @@ public class NavigationActivity extends AppCompatActivity
         RunTimeItems.loggedUser = null;
         RealmUserUtils realmUserUtils = new RealmUserUtils(this);
         realmUserUtils.clearRealmItems();
+        trigerUserRoleChanged();
+    }
+    private void trigerUserRoleChanged()
+    {
+        assert activeUserRoleFragment != null;
+        activeUserRoleFragment.onUserRoleChanged();
     }
 }

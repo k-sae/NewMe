@@ -1,5 +1,7 @@
 package com.kareem.newme;
 
+import android.support.annotation.Nullable;
+
 import com.kareem.newme.Model.User;
 
 /**
@@ -7,6 +9,7 @@ import com.kareem.newme.Model.User;
  */
 
 public class RunTimeItems {
+    @Nullable
     public static User loggedUser;
 
 }
