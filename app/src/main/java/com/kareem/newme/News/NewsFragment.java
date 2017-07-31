@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.kareem.newme.BasicNotifier;
 import com.kareem.newme.Constants;
@@ -34,6 +38,7 @@ public class NewsFragment extends UserRoleFragment implements DataSetListener {
 
     private FirebaseListAdapter<News> newsFirebaseListAdapter;
     private  FloatingActionButton fab;
+    private NewsAdapter newsAdapter;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -62,6 +67,7 @@ public class NewsFragment extends UserRoleFragment implements DataSetListener {
         // Set the adapter
         ListView listView = (ListView) view.findViewById(R.id.news_container_listView);
         populateNews(listView);
+        setNewsAdapter(listView);
          fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,9 +94,10 @@ public class NewsFragment extends UserRoleFragment implements DataSetListener {
         super.onDestroy();
 
     }
-
+    @Deprecated
     private void populateNews(ListView newsListView)
     {
+
         newsFirebaseListAdapter = new FirebaseListAdapter<News>(getActivity(), News.class,
                 R.layout.news_list_item, FirebaseDatabase.getInstance().getReference("News-2")) {
             @Override
@@ -113,7 +120,30 @@ public class NewsFragment extends UserRoleFragment implements DataSetListener {
 
             }
         });
-        newsListView.setAdapter(newsFirebaseListAdapter);
+
+//        newsListView.setAdapter(newsFirebaseListAdapter);
+    }
+
+    private void setNewsAdapter(ListView listView)
+    {
+        newsAdapter = new NewsAdapter(getActivity());
+        FirebaseDatabase.getInstance().getReference("News-2").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                newsAdapter.getDataSnapshots().clear();
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()
+                        ) {
+                    newsAdapter.getDataSnapshots().add(snapshot);
+                }
+                newsAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        listView.setAdapter(newsAdapter);
     }
 
     @Override
