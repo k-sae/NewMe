@@ -9,6 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/news_details_textView_title"
+        android:textSize="@dimen/news_title_fontSize"
+        android:textColor="@color/titleFontColor"
         />
     <TextView
         android:layout_width="wrap_content"

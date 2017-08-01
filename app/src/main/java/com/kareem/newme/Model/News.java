@@ -1,6 +1,7 @@
 
 package com.kareem.newme.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -9,7 +10,7 @@ public class News {
 
     @SerializedName("comments")
     @Expose
-    private List<Comment> comments = null;
+    private List<Comment> comments = new ArrayList<>();
     @SerializedName("contain_image")
     @Expose
     private Boolean containImage;
@@ -33,7 +34,7 @@ public class News {
     private String imageUrl;
     @SerializedName("likes")
     @Expose
-    private List<Like> likes = null;
+    private List<Like> likes = new ArrayList<>();
     @SerializedName("title")
     @Expose
     private String title;

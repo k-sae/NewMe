@@ -152,7 +152,7 @@ public class NavigationActivity extends AppCompatActivity
     }
     private void triggerUserRoleChanged()
     {
-        assert activeUserRoleFragment != null;
+        if (activeUserRoleFragment != null)
         activeUserRoleFragment.onUserRoleChanged();
     }
 }

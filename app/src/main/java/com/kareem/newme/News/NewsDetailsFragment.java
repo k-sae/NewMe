@@ -52,8 +52,12 @@ public class NewsDetailsFragment extends Fragment {
         FirebaseDatabase.getInstance().getReference("News-2").child(getActivity().getIntent().getStringExtra(Constants.NEWS_ID)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-               newsDetailsAdapter.setNews(dataSnapshot.getValue(News.class));
-                newsDetailsAdapter.notifyDataSetChanged();
+                News news = dataSnapshot.getValue(News.class);
+                if (news == null) getActivity().finish();
+                else {
+                    newsDetailsAdapter.setNews(news);
+                    newsDetailsAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
