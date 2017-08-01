@@ -26,14 +26,17 @@
         <ImageView
             style="@style/image_control_button_style"
             android:src="@drawable/like"
+            android:id="@+id/news_details_image_view_like"
             />
         <ImageView
             style="@style/image_control_button_style"
             android:src="@drawable/edit"
+            android:id="@+id/news_details_image_view_edit"
             />
         <ImageView
             style="@style/image_control_button_style"
             android:src="@drawable/delete"
+            android:id="@+id/news_details_image_view_delete"
   />
     </LinearLayout>
     <TextView

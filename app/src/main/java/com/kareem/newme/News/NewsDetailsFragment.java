@@ -49,7 +49,8 @@ public class NewsDetailsFragment extends Fragment {
     {
         newsDetailsAdapter = new NewsDetailsAdapter(getActivity());
         newsDetailsAdapter.setNews(new Gson().fromJson(getActivity().getIntent().getStringExtra(Constants.NEWS_DATA), News.class));
-        FirebaseDatabase.getInstance().getReference("News-2").child(getActivity().getIntent().getStringExtra(Constants.NEWS_ID)).addValueEventListener(new ValueEventListener() {
+        newsDetailsAdapter.setNewsId(getActivity().getIntent().getStringExtra(Constants.NEWS_ID));
+        FirebaseDatabase.getInstance().getReference("News-2").child(newsDetailsAdapter.getNewsId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 News news = dataSnapshot.getValue(News.class);

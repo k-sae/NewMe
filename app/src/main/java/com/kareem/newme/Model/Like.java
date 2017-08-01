@@ -6,6 +6,11 @@ import com.google.gson.annotations.SerializedName;
 
 public class Like {
 
+    public Like(Integer userId) {
+        this.userId = userId;
+    }
+    public Like() {
+    }
     @SerializedName("userId")
     @Expose
     private Integer userId;
