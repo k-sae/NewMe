@@ -4,16 +4,18 @@
     android:layout_height="match_parent">
 <ImageView
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" android:id="@+id/image_detail" />
+    android:layout_height="wrap_content" android:id="@+id/news_details_image_view"
+    android:src="@mipmap/default_image_news"
+    />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/news_details_textView_title"
         android:textSize="@dimen/news_title_fontSize"
         android:textColor="@color/titleFontColor"
         />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/news_details_textView_content"
         />

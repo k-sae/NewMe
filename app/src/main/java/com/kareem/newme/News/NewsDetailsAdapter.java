@@ -5,10 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kareem.newme.Model.News;
 import com.kareem.newme.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -56,10 +58,12 @@ public class NewsDetailsAdapter extends BaseAdapter {
         }
         TextView newsTitle = (TextView)v.findViewById(R.id.news_details_textView_title);
         TextView newsDetails = (TextView)v.findViewById(R.id.news_details_textView_content);
-
+        ImageView imageView = (ImageView) v.findViewById(R.id.news_details_image_view);
         // Set their text
         newsTitle.setText(news.getTitle());
         newsDetails.setText(news.getContent());
+        Picasso.with(context).load(news.getImage_url()).error(R.mipmap.default_image_news).into(imageView);
+
         return v;
     }
 

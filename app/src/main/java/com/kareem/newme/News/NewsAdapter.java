@@ -1,16 +1,17 @@
 package com.kareem.newme.News;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.kareem.newme.Model.News;
 import com.kareem.newme.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -50,6 +51,8 @@ public class NewsAdapter extends BaseAdapter {
         {
             v = LayoutInflater.from(context).inflate(R.layout.news_list_item,parent,false);
         }
+        ImageView imageView = (ImageView) v.findViewById(R.id.news_list_item_imageView);
+
         TextView newsTitle = (TextView)v.findViewById(R.id.news_list_item_title);
         TextView newsDetails = (TextView)v.findViewById(R.id.news_list_item_details);
 
@@ -57,6 +60,7 @@ public class NewsAdapter extends BaseAdapter {
         News news = dataSnapshots.get(position).getValue(News.class);
         newsTitle.setText(news.getTitle());
         newsDetails.setText(news.getContent());
+        Picasso.with(context).load(news.getImage_url()).error(R.mipmap.default_image_news).into(imageView);
         return v;
     }
 
