@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -31,7 +30,8 @@ public class NewsDetailsAdapter extends BaseAdapter {
     private News news;
     private Context context;
     private String newsId;
-    Boolean isLiked = false;
+    private Boolean isLiked = false;
+    private int likeId;
     public NewsDetailsAdapter(Context context) {
         this.context = context;
     }
@@ -81,20 +81,25 @@ public class NewsDetailsAdapter extends BaseAdapter {
         //like button
         //edit
         //delete
-        ImageView imageView = (ImageView) view.findViewById(R.id.news_details_image_view_like);
+        ImageView likeButton = (ImageView) view.findViewById(R.id.news_details_image_view_like);
 
-        if (RunTimeItems.loggedUser != null)
-        for (Like like: news.getLikes()
-             ) {
-            if (RunTimeItems.loggedUser.getId().equals(like.getUserId().toString()))
-            {
-                isLiked = true;
+        if (RunTimeItems.loggedUser != null) {
+            isLiked = false;
+            for (int i = 0; i < news.getLikes().size(); i++) {
+                Like like = news.getLikes().get(i);
+                if (RunTimeItems.loggedUser.getId().equals(like.getUserId().toString())) {
+                    isLiked = true;
+                    likeId = i;
+                    break;
+                }
+
             }
         }
+        else likeButton.setVisibility(View.GONE);
         if (isLiked)
-            imageView.setImageResource(R.drawable.like_active);
-        else imageView.setImageResource(R.drawable.like);
-        imageView.setOnClickListener(new View.OnClickListener() {
+            likeButton.setImageResource(R.drawable.like_active);
+        else likeButton.setImageResource(R.drawable.like);
+        likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendLikeRequest();
@@ -116,7 +121,7 @@ public class NewsDetailsAdapter extends BaseAdapter {
         stringMap.put("req", "likeNew");
         stringMap.put("newId", newsId);
         //TODO fix this
-        if (isLiked) stringMap.put("likeId", "dislikeNew");
+        if (isLiked) stringMap.put("likeId", String.valueOf(likeId));
         else
             stringMap.put("like", new Gson().toJson(new Like(Integer.valueOf(RunTimeItems.loggedUser.getId()))));
         VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,context) {
