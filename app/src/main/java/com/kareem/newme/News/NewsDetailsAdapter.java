@@ -2,10 +2,12 @@ package com.kareem.newme.News;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +15,7 @@ import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.kareem.newme.Connections.VolleyRequest;
 import com.kareem.newme.Constants;
+import com.kareem.newme.Model.Comment;
 import com.kareem.newme.Model.Like;
 import com.kareem.newme.Model.News;
 import com.kareem.newme.R;
@@ -60,22 +63,40 @@ public class NewsDetailsAdapter extends BaseAdapter {
             if (position == 0)
             v = LayoutInflater.from(context).inflate(R.layout.news_details_list_item,parent,false);
             //TODO
-            else v = LayoutInflater.from(context).inflate(R.layout.news_details_list_item,parent,false);
+            else v = LayoutInflater.from(context).inflate(R.layout.comments_list_items,parent,false);
         }
         if ((position == 0 && v.findViewById(R.id.news_details_textView_title) == null) )
         {
             v = LayoutInflater.from(context).inflate(R.layout.news_details_list_item,parent,false);
         }
-        TextView newsTitle = (TextView)v.findViewById(R.id.news_details_textView_title);
-        TextView newsDetails = (TextView)v.findViewById(R.id.news_details_textView_content);
-        ImageView imageView = (ImageView) v.findViewById(R.id.news_details_image_view);
+        else if (v.findViewById(R.id.comments_list_content) == null) v = LayoutInflater.from(context).inflate(R.layout.comments_list_items,parent,false);
+        if (position == 0) setNewsLayout(v);
+        else setCommentsLayout(v,position);
+        return v;
+    }
+
+    private void setCommentsLayout(View v, int position) {
+        EditText content = (EditText) v.findViewById(R.id.comments_list_content);
+        TextView name = (TextView) v.findViewById(R.id.comments_list_name);
+        Comment comment = news.getComments().get(position -1);
+        content.setText(comment.getContent());
+        name.setText(comment.getUserName());
+        //TODO
+        // 1- set listeners
+        //idk just it seems i forgot something :)
+    }
+
+    private void setNewsLayout(View view) {
+        TextView newsTitle = (TextView)view.findViewById(R.id.news_details_textView_title);
+        TextView newsDetails = (TextView)view.findViewById(R.id.news_details_textView_content);
+        ImageView imageView = (ImageView) view.findViewById(R.id.news_details_image_view);
         // Set their text
         newsTitle.setText(news.getTitle());
         newsDetails.setText(news.getContent());
         Picasso.with(context).load(news.getImage_url()).error(R.mipmap.default_image_news).into(imageView);
-        setNewsButtonsLayoutAndListeners(v);
-        return v;
+        setNewsButtonsLayoutAndListeners(view);
     }
+
     private void setNewsButtonsLayoutAndListeners(View view)
     {
         //like button
@@ -191,4 +212,5 @@ public class NewsDetailsAdapter extends BaseAdapter {
     public void setNewsId(String newsId) {
         this.newsId = newsId;
     }
+
 }
