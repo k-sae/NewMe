@@ -37,7 +37,6 @@ public class NewsDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        String jsonNews = getActivity().getIntent().getStringExtra(Constants.NEWS_DATA);
         View view = inflater.inflate(R.layout.fragment_news_details, container, false);
         Log.e( "onCreateView: ", getActivity().getIntent().getStringExtra(Constants.NEWS_ID) );
         Log.e( "onCreateView: ", getActivity().getIntent().getStringExtra(Constants.NEWS_DATA) );
