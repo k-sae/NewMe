@@ -44,6 +44,7 @@ public class NewsEditorFragment extends Fragment {
     private TextView contentTextView;
     private ImageView newsImageView;
     private Bitmap bitmap;
+    private boolean isEditing = false;
     //    private byte[] profileImageByteArray;
     public NewsEditorFragment() {
     }
@@ -55,12 +56,14 @@ public class NewsEditorFragment extends Fragment {
         // check the Intent if an already existed news is passed
         String jsonNews = getActivity().getIntent().getStringExtra(Constants.NEWS_DATA);
         View view = inflater.inflate(R.layout.fragment_news_editor, container, false);
-        setLayout(view);
         if(jsonNews != null) {
             news = new Gson().fromJson(jsonNews, News.class);
             //TODO
+            isEditing = true;
         }
         else news = new News();
+        setLayout(view);
+
         return view;
     }
     private void setLayout(View view)
@@ -84,6 +87,8 @@ public class NewsEditorFragment extends Fragment {
         titleTextView = (TextView) view.findViewById(R.id.news_title_edit_text);
         contentTextView = (TextView) view.findViewById(R.id.news_content_edit_text);
         newsImageView = (ImageView) view.findViewById(R.id.news_edit_imageView);
+        titleTextView.setText(news.getTitle());
+        contentTextView.setText(news.getContent());
         newsImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +98,11 @@ public class NewsEditorFragment extends Fragment {
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"),1);
             }
         });
+    }
+
+    private void updateNews() {
+        final String id = getActivity().getIntent().getStringExtra(Constants.NEWS_DATA);
+
     }
 
     @Override
@@ -118,9 +128,17 @@ public class NewsEditorFragment extends Fragment {
         final ProgressDialog loading = ProgressDialog.show(getActivity(),"Uploading...","Please wait...",false,false);
         loading.show();
         Map<String,String> params = new HashMap<>();
-            params.put("req","addNew");
+        if (isEditing) {
+            params.put("req", "editNew");
+            params.put("newId", getActivity().getIntent().getStringExtra(Constants.NEWS_ID));
+            params.put("editedNew", new Gson().toJson(news));
+        }
+        else {
+            params.put("req", "addNew");
             params.put("new", new Gson().toJson(news));
-            params.put("imagebase64", Utils.getStringImage(bitmap));
+            if (bitmap != null)
+                params.put("imagebase64", Utils.getStringImage(bitmap));
+        }
             final VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL, params, getActivity()) {
                 @Override
                 public void onResponse(String response) {

@@ -1,6 +1,7 @@
 package com.kareem.newme.News;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,35 +97,19 @@ public class NewsDetailsAdapter extends BaseAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
-                // change ImageLayout
                 sendLikeRequest();
             }
         });
+        //delete button
         ImageView delete_button = (ImageView) view.findViewById(R.id.news_details_image_view_delete);
-        delete_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Map<String , String> stringMap = new HashMap<>();
-                stringMap.put("req", "deleteNew");
-                stringMap.put("newId", newsId);
-                VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,context) {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+        setDeleteButton(delete_button);
 
-                    }
-
-                    @Override
-                    public void onResponse(String response) {
-                    }
-                };
-                volleyRequest.start();
-            }
-        });
+        //edit button
+        ImageView editButton = (ImageView) view.findViewById(R.id.news_details_image_view_edit);
+        setEditButton(editButton);
     }
 
-    private void sendLikeRequest()
-    {
+    private void sendLikeRequest(){
         Map<String , String> stringMap = new HashMap<>();
         if (isLiked) stringMap.put("req", "dislikeNew");
         else
@@ -148,7 +133,44 @@ public class NewsDetailsAdapter extends BaseAdapter {
         volleyRequest.start();
     }
 
+    private void setDeleteButton(View deleteButton){
+        if (RunTimeItems.loggedUser != null && RunTimeItems.loggedUser.getUserType().equals(Constants.ADMIN_TYPE))
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Map<String , String> stringMap = new HashMap<>();
+                    stringMap.put("req", "deleteNew");
+                    stringMap.put("newId", newsId);
+                    VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,context) {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
 
+                        }
+
+                        @Override
+                        public void onResponse(String response) {
+                        }
+                    };
+                    volleyRequest.start();
+                }
+            });
+        else deleteButton.setVisibility(View.GONE);
+    }
+
+    private void setEditButton(View editButton)
+    {
+        if (RunTimeItems.loggedUser != null && RunTimeItems.loggedUser.getUserType().equals(Constants.ADMIN_TYPE))
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent  = new Intent(context,NewsEditor.class);
+                    intent.putExtra(Constants.NEWS_DATA, new Gson().toJson(news));
+                    intent.putExtra(Constants.NEWS_ID, newsId);
+                    context.startActivity(intent);
+                }
+            });
+        else editButton.setVisibility(View.GONE);
+    }
     public News getNews() {
         return news;
     }
