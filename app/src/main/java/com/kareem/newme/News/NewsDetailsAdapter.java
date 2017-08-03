@@ -72,18 +72,18 @@ public class NewsDetailsAdapter extends BaseAdapter {
         }
         else if (v.findViewById(R.id.comments_list_content) == null && position != 0) v = LayoutInflater.from(context).inflate(R.layout.comments_list_items,parent,false);
         if (position == 0) setNewsLayout(v);
-        else setCommentsLayout(v,position);
+        else setCommentsLayout(v,position - 1);
         return v;
     }
 
-    private void setCommentsLayout(View v, int position) {
+    private void setCommentsLayout(View v, final int position) {
         final EditText content = (EditText) v.findViewById(R.id.comments_list_content);
         TextView name = (TextView) v.findViewById(R.id.comments_list_name);
-        final Comment comment = news.getComments().get(position -1);
+        final Comment comment = news.getComments().get(position);
         content.setText(comment.getContent());
         content.setEnabled(false);
         name.setText(comment.getUserName());
-        View edit_button = v.findViewById(R.id.comments_list_edit_button);
+        final View edit_button = v.findViewById(R.id.comments_list_edit_button);
         View delete_button = v.findViewById(R.id.comments_list_del_button);
 
         if (RunTimeItems.loggedUser != null
@@ -94,20 +94,29 @@ public class NewsDetailsAdapter extends BaseAdapter {
             edit_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    content.setEnabled(true);
-                    content.requestFocus();
+                    if (content.isEnabled()){
+                        content.setEnabled(false);
+                        editComment(position,content.getText().toString());
+                    }
+                    else {
+                        content.setEnabled(true);
+                        content.requestFocus();
+                    }
                 }
             });
             edit_button.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    if (!hasFocus) content.setEnabled(false);
+                    if (!hasFocus) {
+                        content.setEnabled(false);
+
+                    }
                 }
             });
             delete_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                delete(position);
                 }
             });
 
@@ -119,6 +128,48 @@ public class NewsDetailsAdapter extends BaseAdapter {
         //TODO
         // 1- set listeners
         //idk just it seems i forgot something :)
+    }
+
+    private void editComment(int position, String newContent)
+    {
+        Comment comment=  news.getComments().get(position);
+        comment.setContent(newContent);
+        Map<String , String> stringMap = new HashMap<>();
+        stringMap.put("req", "editComment");
+        stringMap.put("newId", newsId);
+        stringMap.put("commentId", position +"");
+        stringMap.put("comment", new Gson().toJson(comment));
+        VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,context) {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+
+            }
+        };
+        volleyRequest.start();
+    }
+
+    private void delete(int position){
+        Map<String , String> stringMap = new HashMap<>();
+        stringMap.put("req", "deleteComment");
+        stringMap.put("newId", newsId);
+        stringMap.put("commentId", position +"");
+         VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,context) {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+
+            }
+        };
+        volleyRequest.start();
     }
 
     private void setNewsLayout(View view) {
