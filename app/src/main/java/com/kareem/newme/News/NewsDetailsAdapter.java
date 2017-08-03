@@ -69,7 +69,7 @@ public class NewsDetailsAdapter extends BaseAdapter {
         {
             v = LayoutInflater.from(context).inflate(R.layout.news_details_list_item,parent,false);
         }
-        else if (v.findViewById(R.id.comments_list_content) == null) v = LayoutInflater.from(context).inflate(R.layout.comments_list_items,parent,false);
+        else if (v.findViewById(R.id.comments_list_content) == null && position != 0) v = LayoutInflater.from(context).inflate(R.layout.comments_list_items,parent,false);
         if (position == 0) setNewsLayout(v);
         else setCommentsLayout(v,position);
         return v;
@@ -80,6 +80,7 @@ public class NewsDetailsAdapter extends BaseAdapter {
         TextView name = (TextView) v.findViewById(R.id.comments_list_name);
         Comment comment = news.getComments().get(position -1);
         content.setText(comment.getContent());
+        content.setEnabled(false);
         name.setText(comment.getUserName());
         //TODO
         // 1- set listeners
