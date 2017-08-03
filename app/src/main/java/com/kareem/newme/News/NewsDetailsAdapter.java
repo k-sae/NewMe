@@ -18,6 +18,7 @@ import com.kareem.newme.Constants;
 import com.kareem.newme.Model.Comment;
 import com.kareem.newme.Model.Like;
 import com.kareem.newme.Model.News;
+import com.kareem.newme.Model.User;
 import com.kareem.newme.R;
 import com.kareem.newme.RunTimeItems;
 import com.squareup.picasso.Picasso;
@@ -76,12 +77,45 @@ public class NewsDetailsAdapter extends BaseAdapter {
     }
 
     private void setCommentsLayout(View v, int position) {
-        EditText content = (EditText) v.findViewById(R.id.comments_list_content);
+        final EditText content = (EditText) v.findViewById(R.id.comments_list_content);
         TextView name = (TextView) v.findViewById(R.id.comments_list_name);
-        Comment comment = news.getComments().get(position -1);
+        final Comment comment = news.getComments().get(position -1);
         content.setText(comment.getContent());
         content.setEnabled(false);
         name.setText(comment.getUserName());
+        View edit_button = v.findViewById(R.id.comments_list_edit_button);
+        View delete_button = v.findViewById(R.id.comments_list_del_button);
+
+        if (RunTimeItems.loggedUser != null
+                &&
+                (RunTimeItems.loggedUser.getUserType().equals(Constants.ADMIN_TYPE)
+                ||String.valueOf(comment.getUserId()).equals(RunTimeItems.loggedUser.getId()))){
+
+            edit_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    content.setEnabled(true);
+                    content.requestFocus();
+                }
+            });
+            edit_button.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (!hasFocus) content.setEnabled(false);
+                }
+            });
+            delete_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
+        }
+        else {
+            edit_button.setVisibility(View.GONE);
+            delete_button.setVisibility(View.GONE);
+        }
         //TODO
         // 1- set listeners
         //idk just it seems i forgot something :)
