@@ -56,6 +56,7 @@ public class NewsDetailsFragment extends Fragment {
             public void onClick(View v) {
                 if (!comment_editText.getText().toString().equals(""))
                 sendComment(comment_editText.getText().toString());
+                comment_editText.setText("");
             }
         });
         return view;
