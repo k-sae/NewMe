@@ -11,9 +11,9 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="FAQ" />
         <item
-            android:id="@+id/nar_23121"
+            android:id="@+id/nav_contact_us"
             android:icon="@drawable/ic_menu_send"
-            android:title="Contact us" />
+            android:title="@string/contact_us" />
         <item
             android:id="@+id/nar_231322"
             android:icon="@drawable/ic_menu_slideshow"

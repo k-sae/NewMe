@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.kareem.newme.Authentication.AuthenticationActivity;
+import com.kareem.newme.Chatting.Messages.MessagesFragment;
 import com.kareem.newme.Model.RealmObjects.RealmUserUtils;
 import com.kareem.newme.Model.User;
 import com.kareem.newme.News.NewsFragment;
@@ -24,6 +25,7 @@ import com.kareem.newme.News.NewsFragment;
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private NewsFragment newsFragment;
+    private MessagesFragment messagesFragment;
     private final int LOGIN_ACTIVITY_RESULT_CODE = 3521;
     private TextView navigationBarHeader;
     private Menu menu;
@@ -46,6 +48,7 @@ public class NavigationActivity extends AppCompatActivity
         menu = navigationView.getMenu();
         if (savedInstanceState == null) {
             newsFragment = new NewsFragment();
+            messagesFragment = new MessagesFragment();
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             firebaseAuth.signInAnonymously();
             navigationView.setCheckedItem(R.id.nav_news);
@@ -102,6 +105,7 @@ public class NavigationActivity extends AppCompatActivity
             navigate(AuthenticationActivity.class);
             else logout();
         }
+        else if (id == R.id.nav_contact_us) navigate(messagesFragment);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

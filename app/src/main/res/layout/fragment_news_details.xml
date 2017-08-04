@@ -7,9 +7,6 @@
     tools:context="com.kareem.newme.News.NewsDetailsFragment"
     android:padding="@dimen/default_spacing"
     tools:showIn="@layout/activity_news_details">
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" android:id="@+id/news_details_listView"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -31,5 +28,9 @@
                 android:id="@+id/send_button" android:contentDescription="@string/button_text_send"/>
 
     </LinearLayout>
-
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:id="@+id/news_details_listView"
+        android:layout_above="@id/comments_writer_holder"
+        />
 </RelativeLayout>
