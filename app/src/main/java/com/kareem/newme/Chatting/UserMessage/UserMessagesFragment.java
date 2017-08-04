@@ -1,6 +1,7 @@
 package com.kareem.newme.Chatting.UserMessage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.kareem.newme.Chatting.Messages.MessagesActivity;
 import com.kareem.newme.Model.News;
 import com.kareem.newme.R;
 
@@ -59,7 +61,7 @@ public class UserMessagesFragment extends Fragment implements OnListFragmentInte
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_usermessage_list_item, container, false);
+        View view = inflater.inflate(R.layout.fragment_usermessage_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -111,7 +113,8 @@ public class UserMessagesFragment extends Fragment implements OnListFragmentInte
 
     @Override
     public void onListFragmentInteraction(UserMessage item) {
-
+        Intent intent = new Intent(getActivity(), MessagesActivity.class);
+        startActivity(intent);
     }
 
     /**

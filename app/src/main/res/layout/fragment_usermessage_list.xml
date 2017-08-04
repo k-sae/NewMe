@@ -9,5 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context="com.kareem.newme.Chatting.Messages.UserMessage.UserMessagesFragment"
+    tools:context="com.kareem.newme.Chatting.UserMessage.UserMessagesFragment"
     tools:listitem="@layout/fragment_usermessages" />
