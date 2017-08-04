@@ -14,6 +14,7 @@ import java.util.HashMap;
   public  class UserMessage {
     public  String name;
     public HashMap<String,Message> messages = new HashMap<>();
+    private String id;
     public UserMessage(String name) {
         this.name = name;
     }
@@ -24,5 +25,13 @@ import java.util.HashMap;
     @Override
     public String toString() {
         return name;
+    }
+
+    public String getId() {
+      return id;
+    }
+
+    public void setId(String id) {
+      this.id = id;
     }
 }

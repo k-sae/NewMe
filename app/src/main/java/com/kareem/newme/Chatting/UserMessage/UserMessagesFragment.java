@@ -15,7 +15,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.kareem.newme.Chatting.Messages.MessagesActivity;
+import com.kareem.newme.Constants;
 import com.kareem.newme.Model.News;
 import com.kareem.newme.R;
 
@@ -89,6 +91,7 @@ public class UserMessagesFragment extends Fragment implements OnListFragmentInte
                      ) {
                     UserMessage  userMessage = snapshot.getValue(UserMessage.class);
                     myUserMessageRecyclerViewAdapter.getmValues().add(userMessage);
+                    userMessage.setId(snapshot.getKey());
                 }
                 myUserMessageRecyclerViewAdapter.notifyDataSetChanged();
             }
@@ -114,6 +117,7 @@ public class UserMessagesFragment extends Fragment implements OnListFragmentInte
     @Override
     public void onListFragmentInteraction(UserMessage item) {
         Intent intent = new Intent(getActivity(), MessagesActivity.class);
+        intent.putExtra(Constants.USER_MESSAGE, new Gson().toJson(item));
         startActivity(intent);
     }
 

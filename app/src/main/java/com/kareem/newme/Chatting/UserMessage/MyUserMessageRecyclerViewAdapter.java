@@ -19,7 +19,6 @@ public class MyUserMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyUse
 
     private final ArrayList<UserMessage> mValues;
     private final OnListFragmentInteractionListener mListener;
-
     public MyUserMessageRecyclerViewAdapter(OnListFragmentInteractionListener listener) {
         mValues = new ArrayList<>();
         mListener = listener;
@@ -53,6 +52,7 @@ public class MyUserMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyUse
     public int getItemCount() {
         return mValues.size();
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
