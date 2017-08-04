@@ -1,4 +1,4 @@
-package com.kareem.newme.Chatting.Messages.UserMessage;
+package com.kareem.newme.Chatting.UserMessage;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,10 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.kareem.newme.Chatting.Messages.Message;
-import com.kareem.newme.Chatting.Messages.UserMessage.OnListFragmentInteractionListener;
 import com.kareem.newme.R;
-import com.kareem.newme.Chatting.Messages.UserMessage.UserMessage.DummyItem;
 
 /**
  * A fragment representing a list of Items.
@@ -27,7 +24,7 @@ public class UserMessagesFragment extends Fragment implements OnListFragmentInte
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-
+    private MyUserMessageRecyclerViewAdapter myUserMessageRecyclerViewAdapter;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -68,11 +65,17 @@ public class UserMessagesFragment extends Fragment implements OnListFragmentInte
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyUserMessageRecyclerViewAdapter(UserMessage.ITEMS, this));
+            myUserMessageRecyclerViewAdapter = new MyUserMessageRecyclerViewAdapter(this);
+            recyclerView.setAdapter(myUserMessageRecyclerViewAdapter);
+
         }
         return view;
     }
 
+    private void sync()
+    {
+
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -84,8 +87,9 @@ public class UserMessagesFragment extends Fragment implements OnListFragmentInte
         super.onDetach();
     }
 
+
     @Override
-    public void onListFragmentInteraction(DummyItem item) {
+    public void onListFragmentInteraction(UserMessage item) {
 
     }
 

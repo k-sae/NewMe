@@ -10,6 +10,11 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.kareem.newme.Chatting.Messages.Message;
+import com.kareem.newme.Chatting.UserMessage.UserMessage;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -19,6 +24,14 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Intent intent = new Intent(this, NavigationActivity.class);
+
+//        UserMessage userMessage = new UserMessage("bor3ey");
+//        FirebaseDatabase.getInstance()
+//                .getReference("Users").child("1").child("Messages")
+//                .push()
+//                .setValue(new Message("1", "hello", "some date"));
+
+
         startActivity(intent);
     }
 

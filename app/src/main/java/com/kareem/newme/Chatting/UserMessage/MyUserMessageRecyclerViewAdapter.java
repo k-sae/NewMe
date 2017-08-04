@@ -1,4 +1,4 @@
-package com.kareem.newme.Chatting.Messages.UserMessage;
+package com.kareem.newme.Chatting.UserMessage;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,23 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.kareem.newme.Chatting.Messages.UserMessage.UserMessage.DummyItem;
 import com.kareem.newme.R;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link UserMessage} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyUserMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyUserMessageRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final ArrayList<UserMessage> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyUserMessageRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+    public MyUserMessageRecyclerViewAdapter(OnListFragmentInteractionListener listener) {
+        mValues = new ArrayList<>();
         mListener = listener;
     }
 
@@ -36,8 +35,8 @@ public class MyUserMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyUse
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(0);
+        holder.mContentView.setText(mValues.get(position).name);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +44,7 @@ public class MyUserMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyUse
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+//                    mListener.onListFragmentInteraction(holder.mItem);
                 }
             }
         });
@@ -60,7 +59,7 @@ public class MyUserMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyUse
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public UserMessage mItem;
 
         public ViewHolder(View view) {
             super(view);
@@ -73,5 +72,9 @@ public class MyUserMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyUse
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
         }
+    }
+
+    public ArrayList<UserMessage> getmValues() {
+        return mValues;
     }
 }

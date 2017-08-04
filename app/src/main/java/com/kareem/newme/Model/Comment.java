@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Comment {
 
-    @SerializedName("content")
+    @SerializedName("name")
     @Expose
     private String content;
     @SerializedName("date")

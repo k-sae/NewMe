@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class User {
 
-    @SerializedName("id")
+    @SerializedName("senderId")
     @Expose
     private String id;
     @SerializedName("username")

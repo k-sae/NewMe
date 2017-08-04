@@ -7,5 +7,5 @@ import com.kareem.newme.Chatting.Messages.Message;
  */
 public interface OnListFragmentInteractionListener {
     // TODO: Update argument type and name
-    void onListFragmentInteraction(Message.DummyItem item);
+    void onListFragmentInteraction(Message item);
 }

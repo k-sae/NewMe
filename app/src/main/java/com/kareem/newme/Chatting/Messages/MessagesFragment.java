@@ -51,7 +51,7 @@ public class MessagesFragment extends Fragment implements OnListFragmentInteract
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyMessageRecyclerViewAdapter(Message.ITEMS, this));
+//            recyclerView.setAdapter(new MyMessageRecyclerViewAdapter(Message.ITEMS, this));
         }
         return view;
     }
@@ -75,7 +75,7 @@ public class MessagesFragment extends Fragment implements OnListFragmentInteract
     }
 
     @Override
-    public void onListFragmentInteraction(Message.DummyItem item) {
+    public void onListFragmentInteraction(Message item) {
 
     }
 

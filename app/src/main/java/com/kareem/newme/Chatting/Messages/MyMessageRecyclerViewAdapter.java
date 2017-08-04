@@ -11,16 +11,16 @@ import com.kareem.newme.R;
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link Message.DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link Message} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyMessageRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Message.DummyItem> mValues;
+    private final List<Message> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyMessageRecyclerViewAdapter(List<Message.DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyMessageRecyclerViewAdapter(List<Message> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -35,7 +35,7 @@ public class MyMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyMessage
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
+        holder.mIdView.setText(mValues.get(position).senderId);
         holder.mContentView.setText(mValues.get(position).content);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +59,7 @@ public class MyMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyMessage
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public Message.DummyItem mItem;
+        public Message mItem;
 
         public ViewHolder(View view) {
             super(view);
