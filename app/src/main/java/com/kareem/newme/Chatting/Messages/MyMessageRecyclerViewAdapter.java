@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.kareem.newme.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,11 +18,11 @@ import java.util.List;
  */
 public class MyMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyMessageRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Message> mValues;
+    private final ArrayList<Message> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyMessageRecyclerViewAdapter(List<Message> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+    public MyMessageRecyclerViewAdapter( OnListFragmentInteractionListener listener) {
+        mValues = new ArrayList<>();
         mListener = listener;
     }
 
@@ -35,7 +36,6 @@ public class MyMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyMessage
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).senderId);
         holder.mContentView.setText(mValues.get(position).content);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +54,11 @@ public class MyMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyMessage
     public int getItemCount() {
         return mValues.size();
     }
+
+    public ArrayList<Message> getmValues() {
+        return mValues;
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;

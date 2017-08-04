@@ -1,6 +1,7 @@
 package com.kareem.newme.Chatting.Messages;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -10,7 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.kareem.newme.Chatting.UserMessage.UserMessage;
+import com.kareem.newme.Constants;
 import com.kareem.newme.R;
+import com.kareem.newme.RunTimeItems;
 
 /**
  * A fragment representing a list of Items.
@@ -24,7 +33,7 @@ public class MessagesFragment extends Fragment implements OnListFragmentInteract
     private int mColumnCount = 1;
 
     private OnListFragmentInteractionListener mListener;
-
+    private MyMessageRecyclerViewAdapter myMessageRecyclerViewAdapter;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -41,19 +50,40 @@ public class MessagesFragment extends Fragment implements OnListFragmentInteract
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_message_list, container, false);
+        View fragmentView = inflater.inflate(R.layout.fragment_message_list, container, false);
         // Set the adapter
+        View view = fragmentView.findViewById(R.id.messages_recycle_view);
         if (view instanceof RecyclerView) {
-            Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-//            recyclerView.setAdapter(new MyMessageRecyclerViewAdapter(Message.ITEMS, this));
+            myMessageRecyclerViewAdapter = new MyMessageRecyclerViewAdapter(this);
+            recyclerView.setAdapter(myMessageRecyclerViewAdapter);
+            sync();
         }
-        return view;
+        return fragmentView;
+    }
+
+    private void sync() {
+       String intentString = getActivity().getIntent().getStringExtra(Constants.USER_MESSAGE);
+        String id = intentString == null
+                ? RunTimeItems.loggedUser.getId()
+                : new Gson().fromJson(intentString, UserMessage.class).getId();
+        FirebaseDatabase.getInstance().getReference("Users").child(id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                myMessageRecyclerViewAdapter.getmValues().clear();
+                for (DataSnapshot snapshot: dataSnapshot.child("messages").getChildren()
+                        ) {
+                    Message  userMessage = snapshot.getValue(Message.class);
+                    myMessageRecyclerViewAdapter.getmValues().add(userMessage);
+                }
+                myMessageRecyclerViewAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
