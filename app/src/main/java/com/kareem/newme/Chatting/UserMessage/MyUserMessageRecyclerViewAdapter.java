@@ -35,7 +35,6 @@ public class MyUserMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyUse
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(0);
         holder.mContentView.setText(mValues.get(position).name);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {

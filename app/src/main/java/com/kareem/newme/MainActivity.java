@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
 
 //        UserMessage userMessage = new UserMessage("bor3ey");
 //        FirebaseDatabase.getInstance()
-//                .getReference("Users").child("1").child("Messages")
+//                .getReference("Users").child("1").child("messages")
 //                .push()
-//                .setValue(new Message("1", "hello", "some date"));
+//                .setValue(new Message(1, "hello", "some date"));
 
 
         startActivity(intent);

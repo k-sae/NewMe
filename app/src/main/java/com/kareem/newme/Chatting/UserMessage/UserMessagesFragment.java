@@ -10,6 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.kareem.newme.Model.News;
 import com.kareem.newme.R;
 
 /**
@@ -67,14 +72,30 @@ public class UserMessagesFragment extends Fragment implements OnListFragmentInte
             }
             myUserMessageRecyclerViewAdapter = new MyUserMessageRecyclerViewAdapter(this);
             recyclerView.setAdapter(myUserMessageRecyclerViewAdapter);
-
+            sync();
         }
         return view;
     }
 
     private void sync()
     {
+        FirebaseDatabase.getInstance().getReference("Users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                myUserMessageRecyclerViewAdapter.getmValues().clear();
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()
+                     ) {
+                    UserMessage  userMessage = snapshot.getValue(UserMessage.class);
+                    myUserMessageRecyclerViewAdapter.getmValues().add(userMessage);
+                }
+                myUserMessageRecyclerViewAdapter.notifyDataSetChanged();
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override

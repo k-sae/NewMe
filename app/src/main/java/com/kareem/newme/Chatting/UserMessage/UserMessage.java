@@ -3,6 +3,7 @@ package com.kareem.newme.Chatting.UserMessage;
 import com.kareem.newme.Chatting.Messages.Message;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Helper class for providing sample name for user interfaces created by
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  */
   public  class UserMessage {
     public  String name;
-    public  ArrayList<Message> messages = new ArrayList<>();
+    public HashMap<String,Message> messages = new HashMap<>();
     public UserMessage(String name) {
         this.name = name;
     }
