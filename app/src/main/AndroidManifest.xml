@@ -40,6 +40,10 @@
         <activity
             android:name=".Chatting.Messages.MessagesActivity"
             android:label="@string/title_activity_messages"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".FAQ.FAQEditor"
+            android:label="@string/title_activity_faqeditor"
             android:theme="@style/AppTheme"></activity>
     </application>
 

@@ -1,7 +1,9 @@
 package com.kareem.newme.FAQ;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,9 +14,13 @@ import android.view.ViewGroup;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
+import com.kareem.newme.Authentication.AuthenticationActivity;
 import com.kareem.newme.Connections.VolleyRequest;
 import com.kareem.newme.Constants;
+import com.kareem.newme.News.NewsEditor;
 import com.kareem.newme.R;
+import com.kareem.newme.RunTimeItems;
+import com.kareem.newme.UserRoleFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +32,7 @@ import java.util.Map;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class FAQFragment extends Fragment  {
+public class FAQFragment extends UserRoleFragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -34,6 +40,7 @@ public class FAQFragment extends Fragment  {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private MyFAQRecyclerViewAdapter myFAQRecyclerViewAdapter;
+    private FloatingActionButton fab;
     private boolean isInit;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -65,6 +72,15 @@ public class FAQFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_faq_list, container, false);
+        fab = (FloatingActionButton) fragmentView.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), FAQEditor.class);
+                startActivityForResult(intent, Constants.FAQ_ACTIVITY_RESULT);
+            }
+        });
+
 
         // Set the adapter
         View view = fragmentView.findViewById(R.id.faq_list);
@@ -81,6 +97,7 @@ public class FAQFragment extends Fragment  {
             grabData();
             isInit = true;
         }
+        onUserRoleChanged();
         return fragmentView;
     }
 
@@ -133,5 +150,16 @@ public class FAQFragment extends Fragment  {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+    }
+
+    @Override
+    public void onUserRoleChanged() {
+        if (RunTimeItems.loggedUser != null && RunTimeItems.loggedUser.getUserType().equals(Constants.ADMIN_TYPE))
+            fab.setVisibility(View.VISIBLE);
+        else fab.setVisibility(View.GONE);
+    }
 }

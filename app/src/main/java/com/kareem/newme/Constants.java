@@ -14,4 +14,5 @@ public class Constants {
     public static final String ADMIN_TYPE = "0";
     public static final String NEWS_ID = "news_id";
     public static final String USER_MESSAGE = "user_message";
+    public static final int FAQ_ACTIVITY_RESULT = 4332;
 }

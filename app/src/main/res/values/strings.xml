@@ -28,4 +28,7 @@
     <string name="contact_us">Contact us</string>
     <string name="title_activity_messages">MessagesActivity</string>
     <string name="write_a_message">Write a Message</string>
+    <string name="title_activity_faqeditor">FAQEditor</string>
+    <string name="question">Question</string>
+    <string name="answer">Answer</string>
 </resources>
