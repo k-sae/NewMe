@@ -14,16 +14,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.kareem.newme.Authentication.AuthenticationActivity;
 import com.kareem.newme.Chatting.Messages.MessagesFragment;
-import com.kareem.newme.Chatting.UserMessage.UserMessage;
 import com.kareem.newme.Chatting.UserMessage.UserMessagesFragment;
+import com.kareem.newme.Connections.VolleyRequest;
 import com.kareem.newme.FAQ.FAQFragment;
+import com.kareem.newme.Model.RealmObjects.RealmTokenUtils;
 import com.kareem.newme.Model.RealmObjects.RealmUserUtils;
 import com.kareem.newme.Model.User;
 import com.kareem.newme.News.NewsFragment;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -156,17 +161,54 @@ public class NavigationActivity extends AppCompatActivity
     }
     private void updateLoginStatus()
     {
-        navigationBarHeader.setText(RunTimeItems.loggedUser.getName());
-        menu.findItem(R.id.nav_login).setTitle(getString(R.string.logout));
-        triggerUserRoleChanged();
+        Map<String , String> stringMap = new HashMap<>();
+        stringMap.put("req", "setUserDevice");
+        String token = new RealmTokenUtils(this).getTokenFromDataBase().getId();
+        if (token == null) return;
+        stringMap.put("deviceToken", token);
+        VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,this) {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Utils.showToast("Connection Error", NavigationActivity.this);
+                forceLogout();
+            }
+
+            @Override
+            public void onResponse(String response) {
+                navigationBarHeader.setText(RunTimeItems.loggedUser.getName());
+                menu.findItem(R.id.nav_login).setTitle(getString(R.string.logout));
+                triggerUserRoleChanged();
+            }
+        };
+        volleyRequest.start();
+
     }
     private void logout() {
+        Map<String , String> stringMap = new HashMap<>();
+        stringMap.put("req", "unSetUserDevice");
+        stringMap.put("userId", RunTimeItems.loggedUser.getId());
+        VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,this) {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Utils.showToast("Connection Error", NavigationActivity.this);
+            }
+
+            @Override
+            public void onResponse(String response) {
+                forceLogout();
+            }
+        };
+        volleyRequest.start();
+    }
+    private void forceLogout()
+    {
         navigationBarHeader.setText(getString(R.string.anonymous));
         menu.findItem(R.id.nav_login).setTitle(getString(R.string.login));
         RunTimeItems.loggedUser = null;
         RealmUserUtils realmUserUtils = new RealmUserUtils(this);
         realmUserUtils.clearRealmItems();
         triggerUserRoleChanged();
+
     }
     private void triggerUserRoleChanged()
     {
