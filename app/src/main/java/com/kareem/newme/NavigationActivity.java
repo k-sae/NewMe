@@ -109,7 +109,13 @@ public class NavigationActivity extends AppCompatActivity
             navigate(AuthenticationActivity.class);
             else logout();
         }
-        else if (id == R.id.nav_contact_us) navigate(userMessagesFragment);
+        else if (id == R.id.nav_contact_us)
+        {
+            if (RunTimeItems.loggedUser == null) throw new RuntimeException("not implemented :)");
+            else if (RunTimeItems.loggedUser.getUserType().equals(Constants.ADMIN_TYPE))
+            navigate(userMessagesFragment);
+            else navigate(messagesFragment);
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
