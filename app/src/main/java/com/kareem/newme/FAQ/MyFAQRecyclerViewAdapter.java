@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.kareem.newme.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,11 +19,9 @@ import java.util.List;
 public class MyFAQRecyclerViewAdapter extends RecyclerView.Adapter<MyFAQRecyclerViewAdapter.ViewHolder> {
 
     private final List<FAQ> mValues;
-    private final OnListFragmentInteractionListener mListener;
 
-    public MyFAQRecyclerViewAdapter(List<FAQ> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
-        mListener = listener;
+    public MyFAQRecyclerViewAdapter() {
+        mValues = new ArrayList<>();
     }
 
     @Override
@@ -38,21 +37,15 @@ public class MyFAQRecyclerViewAdapter extends RecyclerView.Adapter<MyFAQRecycler
         holder.mIdView.setText(mValues.get(position).getId());
         holder.mContentView.setText(mValues.get(position).getQuestion());
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
     }
 
     @Override
     public int getItemCount() {
         return mValues.size();
+    }
+
+    public List<FAQ> getmValues() {
+        return mValues;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -20,6 +20,7 @@ import com.kareem.newme.Authentication.AuthenticationActivity;
 import com.kareem.newme.Chatting.Messages.MessagesFragment;
 import com.kareem.newme.Chatting.UserMessage.UserMessage;
 import com.kareem.newme.Chatting.UserMessage.UserMessagesFragment;
+import com.kareem.newme.FAQ.FAQFragment;
 import com.kareem.newme.Model.RealmObjects.RealmUserUtils;
 import com.kareem.newme.Model.User;
 import com.kareem.newme.News.NewsFragment;
@@ -33,6 +34,7 @@ public class NavigationActivity extends AppCompatActivity
     private TextView navigationBarHeader;
     private Menu menu;
     private UserRoleFragment activeUserRoleFragment;
+    private FAQFragment faqFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +55,7 @@ public class NavigationActivity extends AppCompatActivity
             newsFragment = new NewsFragment();
             messagesFragment = new MessagesFragment();
             userMessagesFragment = new UserMessagesFragment();
+            faqFragment  = new FAQFragment();
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             firebaseAuth.signInAnonymously();
             navigationView.setCheckedItem(R.id.nav_news);
@@ -116,6 +119,7 @@ public class NavigationActivity extends AppCompatActivity
             navigate(userMessagesFragment);
             else navigate(messagesFragment);
         }
+        else if (id == R.id.nav_FAQََ) navigate(faqFragment);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

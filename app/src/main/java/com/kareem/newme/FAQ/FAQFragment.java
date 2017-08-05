@@ -10,7 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+import com.kareem.newme.Connections.VolleyRequest;
+import com.kareem.newme.Constants;
 import com.kareem.newme.R;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A fragment representing a list of Items.
@@ -18,14 +26,15 @@ import com.kareem.newme.R;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class FAQFragment extends Fragment {
+public class FAQFragment extends Fragment  {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
-
+    private MyFAQRecyclerViewAdapter myFAQRecyclerViewAdapter;
+    private boolean isInit;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -66,21 +75,45 @@ public class FAQFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-//            recyclerView.setAdapter(new MyFAQRecyclerViewAdapter(FAQ.ITEMS, mListener));
+            myFAQRecyclerViewAdapter = new MyFAQRecyclerViewAdapter();
+            recyclerView.setAdapter(myFAQRecyclerViewAdapter);
+            grabData();
+            isInit = true;
         }
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        grabData();
+    }
+
+    private void grabData()
+    {
+        if (myFAQRecyclerViewAdapter == null) return;
+        Map<String , String> stringMap = new HashMap<>();
+        stringMap.put("req", "getFaq");
+        VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,getActivity()) {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+                myFAQRecyclerViewAdapter.getmValues().clear();
+            FAQArray faqs = new Gson().fromJson(response, FAQArray.class);
+                myFAQRecyclerViewAdapter.getmValues().addAll(faqs.getFaqs());
+                myFAQRecyclerViewAdapter.notifyDataSetChanged();
+            }
+        };
+        volleyRequest.start();
+    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
     }
 
     @Override
