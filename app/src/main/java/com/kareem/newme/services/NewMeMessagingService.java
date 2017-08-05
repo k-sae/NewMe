@@ -26,9 +26,6 @@ public class NewMeMessagingService extends com.google.firebase.messaging.Firebas
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         //It is optional
-        Log.e(TAG, "From: " + remoteMessage.getData().toString());
-        Log.e(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
-
         //Calling method to generate notification
         sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
     }
@@ -44,7 +41,6 @@ public class NewMeMessagingService extends com.google.firebase.messaging.Firebas
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setSmallIcon(R.mipmap.ic_launcher)

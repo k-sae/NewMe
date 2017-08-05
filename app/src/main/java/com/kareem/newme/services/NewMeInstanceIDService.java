@@ -1,11 +1,16 @@
 package com.kareem.newme.services;
 
 
-        import android.app.AlertDialog;
-        import android.content.DialogInterface;
-        import android.util.Log;
-
+        import com.android.volley.VolleyError;
         import com.google.firebase.iid.FirebaseInstanceId;
+        import com.google.gson.Gson;
+        import com.kareem.newme.Connections.VolleyRequest;
+        import com.kareem.newme.Constants;
+        import com.kareem.newme.Model.RealmObjects.RealmTokenUtils;
+import com.kareem.newme.Model.RealmObjects.Token;
+
+        import java.util.HashMap;
+        import java.util.Map;
 
 public class NewMeInstanceIDService extends com.google.firebase.iid.FirebaseInstanceIdService {
 
@@ -14,42 +19,33 @@ public class NewMeInstanceIDService extends com.google.firebase.iid.FirebaseInst
     @Override
     public void onTokenRefresh() {
 
-        //TODO on recive send it to the server and save it to local database 
-        //Getting registration token
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-//dialogBox(refreshedToken);
-        //Displaying token in logcat
-        Log.e(TAG, "Refreshed token: " + refreshedToken);
-
+        Token token = new Token(refreshedToken);
+         new RealmTokenUtils(this).save(token);
+        sendRegistrationToServer(refreshedToken);
     }
 
-    private void sendRegistrationToServer(String token) {
+    private void sendRegistrationToServer(final String token) {
         //You can implement this method to store the token on your server
         //Not required for current project
+        Map<String , String> stringMap = new HashMap<>();
+        stringMap.put("req", "addDevice");
+        stringMap.put("deviceToken",token);
+        VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,this) {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                sendRegistrationToServer(token);
+            }
+
+            @Override
+            public void onResponse(String response) {
+            }
+        };
+        volleyRequest.start();
     }
-
-    public void dialogBox(String message) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage(message);
-        alertDialogBuilder.setPositiveButton("Ok",
-                new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
-                });
-
-        alertDialogBuilder.setNegativeButton("cancel",
-                new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-
-                    }
-                });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-
 }
