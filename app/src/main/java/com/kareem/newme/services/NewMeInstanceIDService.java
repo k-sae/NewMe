@@ -7,7 +7,7 @@ package com.kareem.newme.services;
 
         import com.google.firebase.iid.FirebaseInstanceId;
 
-public class FirebaseInstanceIDService extends com.google.firebase.iid.FirebaseInstanceIdService {
+public class NewMeInstanceIDService extends com.google.firebase.iid.FirebaseInstanceIdService {
 
     private static final String TAG = "MyFirebaseIIDService";
 

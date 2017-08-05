@@ -9,6 +9,7 @@ package com.kareem.newme.services;
         import android.graphics.Color;
         import android.media.RingtoneManager;
         import android.net.Uri;
+        import android.os.Build;
         import android.support.v4.app.NotificationCompat;
         import android.util.Log;
 
@@ -17,7 +18,7 @@ package com.kareem.newme.services;
         import com.kareem.newme.R;
 
 
-public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
+public class NewMeMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
     private static final String TAG = "Android News App";
 
@@ -25,7 +26,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         //It is optional
-        Log.e(TAG, "From: " + remoteMessage.getCollapseKey());
+        Log.e(TAG, "From: " + remoteMessage.getData().toString());
         Log.e(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
 
         //Calling method to generate notification
@@ -52,11 +53,12 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 .setAutoCancel(true)
                 .setSound(alarmSound)
                 .setLights(Color.CYAN, 1, 1)
-                .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .setPriority(1000)
                 .setVibrate(vibrate)
                 .setContentIntent(pendingIntent);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            notificationBuilder.setVisibility(Notification.VISIBILITY_PUBLIC);
+        }
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
