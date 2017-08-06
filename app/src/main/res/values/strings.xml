@@ -36,4 +36,5 @@
     <string name="location">location</string>
     <string name="confirm_password">confirm password</string>
     <string name="terms_and_conditions">terms and conditions</string>
+    <string name="username_already_exists">UserName Already exists</string>
 </resources>

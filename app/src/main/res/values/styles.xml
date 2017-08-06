@@ -22,5 +22,8 @@
         <item name="android:layout_height">25dp</item>
         <item name="android:layout_margin">@dimen/default_spacing</item>
     </style>
+    <!--TODO-->
+    <style name="register_page_edit_text">
 
+    </style>
 </resources>
