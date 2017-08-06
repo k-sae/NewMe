@@ -6,14 +6,14 @@ import io.realm.RealmObject;
  * Created by kareem on 8/5/17.
  */
 
-public class Token extends RealmObject{
+public class FireBaseToken extends RealmObject{
     private String id;
 
-    public Token(String id) {
+    public FireBaseToken(String id) {
         this.id = id;
     }
 
-    public Token() {
+    public FireBaseToken() {
     }
 
     public String getId() {

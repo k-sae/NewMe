@@ -16,7 +16,9 @@ import io.realm.RealmResults;
 public class RealmUserUtils{
     private Realm realm;
     public RealmUserUtils(Context context) {
-        realm = Realm.getInstance(new RealmConfiguration.Builder(context).name("Login_Credentials").build());
+        realm = Realm.getInstance(new RealmConfiguration.Builder(context)
+                .deleteRealmIfMigrationNeeded()
+                .name("Login_Credentials").build());
     }
 
     public User fromRealmUser(RealmUser realmUser)

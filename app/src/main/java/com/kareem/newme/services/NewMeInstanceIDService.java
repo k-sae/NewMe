@@ -3,11 +3,10 @@ package com.kareem.newme.services;
 
         import com.android.volley.VolleyError;
         import com.google.firebase.iid.FirebaseInstanceId;
-        import com.google.gson.Gson;
         import com.kareem.newme.Connections.VolleyRequest;
         import com.kareem.newme.Constants;
         import com.kareem.newme.Model.RealmObjects.RealmTokenUtils;
-import com.kareem.newme.Model.RealmObjects.Token;
+import com.kareem.newme.Model.RealmObjects.FireBaseToken;
 
         import java.util.HashMap;
         import java.util.Map;
@@ -20,8 +19,8 @@ public class NewMeInstanceIDService extends com.google.firebase.iid.FirebaseInst
     public void onTokenRefresh() {
 
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Token token = new Token(refreshedToken);
-         new RealmTokenUtils(this).save(token);
+        FireBaseToken fireBaseToken = new FireBaseToken(refreshedToken);
+         new RealmTokenUtils(this).save(fireBaseToken);
         sendRegistrationToServer(refreshedToken);
     }
 
