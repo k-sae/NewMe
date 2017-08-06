@@ -31,4 +31,9 @@
     <string name="title_activity_faqeditor">FAQEditor</string>
     <string name="question">Question</string>
     <string name="answer">Answer</string>
+    <string name="signup">SignUp</string>
+    <string name="phone_number">phone number</string>
+    <string name="location">location</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="terms_and_conditions">terms and conditions</string>
 </resources>

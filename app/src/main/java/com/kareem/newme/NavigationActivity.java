@@ -68,7 +68,7 @@ public class NavigationActivity extends AppCompatActivity
         }
         RealmUserUtils realmUserUtils = new RealmUserUtils(this);
         RunTimeItems.loggedUser = realmUserUtils.getLoggedUserFromDataBase();
-        if(RunTimeItems.loggedUser != null) updateLoginStatus();
+        if(RunTimeItems.loggedUser != null) forceLogin();
     }
 
     @Override
@@ -119,7 +119,7 @@ public class NavigationActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_contact_us)
         {
-            if (RunTimeItems.loggedUser == null) throw new RuntimeException("not implemented :)");
+            if (RunTimeItems.loggedUser == null) throw new RuntimeException("not fucken implemented :)");
             else if (RunTimeItems.loggedUser.getUserType().equals(Constants.ADMIN_TYPE))
             navigate(userMessagesFragment);
             else navigate(messagesFragment);
@@ -166,6 +166,7 @@ public class NavigationActivity extends AppCompatActivity
         String token = new RealmTokenUtils(this).getTokenFromDataBase().getId();
         if (token == null) return;
         stringMap.put("deviceToken", token);
+        stringMap.put("userId", RunTimeItems.loggedUser.getId());
         VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,this) {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -175,13 +176,17 @@ public class NavigationActivity extends AppCompatActivity
 
             @Override
             public void onResponse(String response) {
-                navigationBarHeader.setText(RunTimeItems.loggedUser.getName());
-                menu.findItem(R.id.nav_login).setTitle(getString(R.string.logout));
-                triggerUserRoleChanged();
+                forceLogin();
             }
         };
         volleyRequest.start();
 
+    }
+    private void forceLogin()
+    {
+        navigationBarHeader.setText(RunTimeItems.loggedUser.getName());
+        menu.findItem(R.id.nav_login).setTitle(getString(R.string.logout));
+        triggerUserRoleChanged();
     }
     private void logout() {
         Map<String , String> stringMap = new HashMap<>();
