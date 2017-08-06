@@ -13,6 +13,7 @@ import java.io.ByteArrayOutputStream;
 
 public class Utils {
 
+    public static final String regEx = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     public static String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);

@@ -25,6 +25,8 @@
             android:layout_height="wrap_content"
             android:textColor="#f00"
             android:text="@string/username_already_exists"
+            android:id="@+id/error_text_already_exists"
+            android:visibility="gone"
             />
         <EditText
             android:id="@+id/userName"
@@ -32,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@color/colorPrimaryDark"
-            android:drawableStart="@drawable/userName"
+            android:drawableStart="@drawable/user_name"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:hint="@string/username"

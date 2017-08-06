@@ -15,7 +15,7 @@ public class Comment {
     @SerializedName("userId")
     @Expose
     private Integer userId;
-    @SerializedName("userName")
+    @SerializedName("user_name")
     @Expose
     private String userName;
 
