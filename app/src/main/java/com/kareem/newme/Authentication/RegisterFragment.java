@@ -15,8 +15,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.google.android.gms.common.api.Api;
+import com.google.gson.Gson;
+import com.hbb20.CountryCodePicker;
+import com.kareem.newme.ApiRespond;
 import com.kareem.newme.Connections.VolleyRequest;
 import com.kareem.newme.Constants;
+import com.kareem.newme.Model.User;
 import com.kareem.newme.R;
 import com.kareem.newme.Utils;
 import com.kareem.newme.ViewPagerFragment;
@@ -37,6 +42,8 @@ public class RegisterFragment extends ViewPagerFragment implements View.OnClickL
     private TextView errorTextView;
     private Button signUpButton;
     private boolean isValidUserName;
+    private CountryCodePicker countryCodePicker;
+    private User user;
     public RegisterFragment() {
         // Required empty public constructor
     }
@@ -60,6 +67,7 @@ public class RegisterFragment extends ViewPagerFragment implements View.OnClickL
         confirmPassword = (EditText) view.findViewById(R.id.confirmPassword);
         signUpButton = (Button) view.findViewById(R.id.signUpBtn);
         errorTextView = (TextView) view.findViewById(R.id.error_text_already_exists);
+        countryCodePicker = (CountryCodePicker) view.findViewById(R.id.ccp);
         setListeners();
     }
 
@@ -74,7 +82,30 @@ public class RegisterFragment extends ViewPagerFragment implements View.OnClickL
         {
             //TODO
             //2-send to server
-            Log.e( "onClick: ", "Validation is true");
+            Map<String, String> params = new HashMap<>();
+            params.put("req", "registerUser");
+            params.put("user", new Gson().toJson(user));
+            VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,params,getActivity()) {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getActivity(),"Network Error please Try again", Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onResponse(String response) {
+                    if (response.contains("added"))
+                    {
+                        new CustomToast().Show_Toast(getActivity(), view,
+                                "Registered");
+                    }
+                    else
+                    {
+                        new CustomToast().Show_Toast(getActivity(), view,
+                                new Gson().fromJson(response, ApiRespond.class).getApiRespond());
+                    }
+                }
+            };
+            volleyRequest.start();
         }
     }
 
@@ -115,7 +146,9 @@ public class RegisterFragment extends ViewPagerFragment implements View.OnClickL
         String getMobileNumber = mobileNumber.getText().toString();
         String getPassword = password.getText().toString();
         String getConfirmPassword = confirmPassword.getText().toString();
-
+        String country = countryCodePicker.getSelectedCountryName();
+        String phonePrefix = countryCodePicker.getFullNumber();
+        String userName = this.userName.getText().toString();
         // Pattern match for email id
         Pattern p = Pattern.compile(Utils.regEx);
         Matcher m = p.matcher(getEmailId);
@@ -126,7 +159,11 @@ public class RegisterFragment extends ViewPagerFragment implements View.OnClickL
                 || getMobileNumber.equals("") || getMobileNumber.length() == 0
                 || getPassword.equals("") || getPassword.length() == 0
                 || getConfirmPassword.equals("")
-                || getConfirmPassword.length() == 0)
+                || getConfirmPassword.length() == 0
+                || userName.equals("")
+                || userName.length() == 0
+                )
+
 
             new CustomToast().Show_Toast(getActivity(), view,
                     "All fields are required.");
@@ -140,14 +177,21 @@ public class RegisterFragment extends ViewPagerFragment implements View.OnClickL
         else if (!getConfirmPassword.equals(getPassword))
             new CustomToast().Show_Toast(getActivity(), view,
                     "Both password doesn't match.");
-        else if (!isValidUserName)
-            new CustomToast().Show_Toast(getActivity(), view,
-                    "duplicated user Name");
             // Make sure user should check Terms and Conditions checkbox
 
             // Else do signup or do your stuff
-        else
+        else {
+            user = new User();
+            user.setUserType("1");
+            user.setName(getFullName);
+            user.setEmail(getEmailId);
+            user.setPhone(phonePrefix + getMobileNumber);
+            user.setCountry(country);
+            user.setGender("0");
+            user.setPass(getPassword);
+            user.setUsername(userName);
             return true;
+        }
         return false;
     }
 }

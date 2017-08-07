@@ -38,7 +38,7 @@
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:hint="@string/username"
-            android:inputType="textCapWords"
+            android:inputType="text"
             android:padding="10dp"
             android:singleLine="true"
             android:textColor="@color/white"
