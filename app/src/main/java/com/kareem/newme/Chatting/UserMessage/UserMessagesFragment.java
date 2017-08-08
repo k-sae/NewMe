@@ -19,7 +19,10 @@ import com.google.gson.Gson;
 import com.kareem.newme.Chatting.Messages.MessagesActivity;
 import com.kareem.newme.Constants;
 import com.kareem.newme.Model.News;
+import com.kareem.newme.NavigationActivity;
+import com.kareem.newme.NavigationActivityCallBack;
 import com.kareem.newme.R;
+import com.kareem.newme.UserRoleFragment;
 
 /**
  * A fragment representing a list of Items.
@@ -27,7 +30,7 @@ import com.kareem.newme.R;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class UserMessagesFragment extends Fragment implements OnListFragmentInteractionListener {
+public class UserMessagesFragment extends UserRoleFragment implements OnListFragmentInteractionListener {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -121,6 +124,11 @@ public class UserMessagesFragment extends Fragment implements OnListFragmentInte
         startActivity(intent);
     }
 
+    @Override
+    public void onUserRoleChanged() {
+        ((NavigationActivityCallBack)getActivity()).setActive(R.id.nav_login);
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -131,4 +139,5 @@ public class UserMessagesFragment extends Fragment implements OnListFragmentInte
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
+
 }

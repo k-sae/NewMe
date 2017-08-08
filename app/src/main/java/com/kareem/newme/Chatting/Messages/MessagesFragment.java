@@ -21,8 +21,10 @@ import com.google.gson.Gson;
 import com.kareem.newme.Chatting.UserMessage.UserMessage;
 import com.kareem.newme.Connections.VolleyRequest;
 import com.kareem.newme.Constants;
+import com.kareem.newme.NavigationActivityCallBack;
 import com.kareem.newme.R;
 import com.kareem.newme.RunTimeItems;
+import com.kareem.newme.UserRoleFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +35,7 @@ import java.util.Map;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class MessagesFragment extends Fragment implements OnListFragmentInteractionListener {
+public class MessagesFragment extends UserRoleFragment implements OnListFragmentInteractionListener {
 
     // TODO: Customize parameters
     private int mColumnCount = 1;
@@ -146,6 +148,11 @@ public class MessagesFragment extends Fragment implements OnListFragmentInteract
     @Override
     public void onListFragmentInteraction(Message item) {
 
+    }
+
+    @Override
+    public void onUserRoleChanged() {
+        ((NavigationActivityCallBack)getActivity()).setActive(R.id.nav_login);
     }
 
     /**
