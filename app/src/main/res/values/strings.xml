@@ -37,4 +37,8 @@
     <string name="confirm_password">confirm password</string>
     <string name="terms_and_conditions">terms and conditions</string>
     <string name="username_already_exists">UserName Already exists</string>
+    <string name="faq">FAQ</string>
+    <string name="new_me">New me</string>
+    <string name="about_us">About us</string>
+    <string name="home">Home</string>
 </resources>

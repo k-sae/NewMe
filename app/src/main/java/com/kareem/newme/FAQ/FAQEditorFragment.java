@@ -65,7 +65,7 @@ public class FAQEditorFragment extends Fragment {
     private void uploadData() {
         Map<String , String> stringMap = new HashMap<>();
         stringMap.put("req", "addFaq");
-        stringMap.put("faq", new Gson().toJson(faq));
+        stringMap.put("faq_icon", new Gson().toJson(faq));
         VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,getActivity()) {
             @Override
             public void onErrorResponse(VolleyError error) {

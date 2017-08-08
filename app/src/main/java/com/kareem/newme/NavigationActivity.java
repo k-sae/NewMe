@@ -26,6 +26,7 @@ import com.kareem.newme.Model.RealmObjects.RealmTokenUtils;
 import com.kareem.newme.Model.RealmObjects.RealmUserUtils;
 import com.kareem.newme.Model.User;
 import com.kareem.newme.News.NewsFragment;
+import com.kareem.newme.homePage.HomePageFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +41,7 @@ public class NavigationActivity extends AppCompatActivity
     private Menu menu;
     private UserRoleFragment activeUserRoleFragment;
     private FAQFragment faqFragment;
+    private HomePageFragment homePageFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +63,7 @@ public class NavigationActivity extends AppCompatActivity
             messagesFragment = new MessagesFragment();
             userMessagesFragment = new UserMessagesFragment();
             faqFragment  = new FAQFragment();
+            homePageFragment = new HomePageFragment();
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             firebaseAuth.signInAnonymously();
             navigationView.setCheckedItem(R.id.nav_news);
@@ -125,6 +128,7 @@ public class NavigationActivity extends AppCompatActivity
             else navigate(messagesFragment);
         }
         else if (id == R.id.nav_FAQََ) navigate(faqFragment);
+        else if (id == R.id.nav_home) navigate(homePageFragment);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

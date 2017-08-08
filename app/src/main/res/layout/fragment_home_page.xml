@@ -1,0 +1,119 @@
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.kareem.newme.homePage.HomePageFragment"
+        android:orientation="vertical">
+            <com.daimajia.slider.library.SliderLayout
+            android:id="@+id/slider"
+            android:layout_width="match_parent"
+            android:layout_height="230dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="horizontal">
+                <com.kareem.newme.homePage.SquareButton
+                    style="@style/home_page_square_button"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:orientation="vertical" android:layout_centerInParent="true"
+                        tools:ignore="UseCompoundDrawables">
+                        <ImageView
+                            style="@style/home_button_content_icon" android:src="@drawable/news_icon" />
+                    <TextView
+                        android:text="@string/news"
+                        style="@style/home_button_content_text"
+                        />
+                    </LinearLayout>
+                </com.kareem.newme.homePage.SquareButton>
+
+                <com.kareem.newme.homePage.SquareButton
+                    style="@style/home_page_square_button"
+                    >
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:orientation="vertical" android:layout_centerInParent="true"
+                        tools:ignore="UseCompoundDrawables">
+                        <ImageView
+                            style="@style/home_button_content_icon" android:src="@drawable/login_icon" />
+                        <TextView
+                            android:text="@string/login"
+                            style="@style/home_button_content_text"
+                            />
+                    </LinearLayout>
+                </com.kareem.newme.homePage.SquareButton>
+                <com.kareem.newme.homePage.SquareButton
+                    style="@style/home_page_square_button"
+                    >
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:orientation="vertical" android:layout_centerInParent="true"
+                        tools:ignore="UseCompoundDrawables">
+                        <ImageView
+                            style="@style/home_button_content_icon" android:src="@drawable/faq_icon" />
+                        <TextView
+                            android:text="@string/faq"
+                            style="@style/home_button_content_text"
+                            />
+                    </LinearLayout>
+                </com.kareem.newme.homePage.SquareButton>
+            </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:orientation="horizontal">
+        <com.kareem.newme.homePage.SquareButton
+            style="@style/home_page_square_button"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:orientation="vertical" android:layout_centerInParent="true"
+                tools:ignore="UseCompoundDrawables">
+                <ImageView
+                    style="@style/home_button_content_icon" android:src="@drawable/contact_us_icon" />
+                <TextView
+                    android:text="@string/contact_us"
+                    style="@style/home_button_content_text"
+                    />
+            </LinearLayout>
+        </com.kareem.newme.homePage.SquareButton>
+
+        <com.kareem.newme.homePage.SquareButton
+            style="@style/home_page_square_button"
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:orientation="vertical" android:layout_centerInParent="true"
+                tools:ignore="UseCompoundDrawables">
+                <ImageView
+                    style="@style/home_button_content_icon" android:src="@drawable/about_icon" />
+                <TextView
+                    android:text="@string/about_us"
+                    style="@style/home_button_content_text"
+                    />
+            </LinearLayout>
+        </com.kareem.newme.homePage.SquareButton>
+        <com.kareem.newme.homePage.SquareButton
+            style="@style/home_page_square_button"
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:orientation="vertical" android:layout_centerInParent="true"
+                tools:ignore="UseCompoundDrawables">
+                <ImageView
+                    style="@style/home_button_content_icon" android:src="@drawable/newme_icon" />
+                <TextView
+                    android:text="@string/new_me"
+                    style="@style/home_button_content_text"
+                    />
+            </LinearLayout>
+        </com.kareem.newme.homePage.SquareButton>
+    </LinearLayout>
+
+
+</LinearLayout>
