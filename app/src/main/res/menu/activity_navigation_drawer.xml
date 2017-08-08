@@ -7,15 +7,15 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/home" />
         <item
-            android:id="@+id/nav_news"
+            android:id="@id/nav_news"
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/news" />
         <item
-            android:id="@+id/nav_FAQََ"
+            android:id="@id/nav_FAQََ"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/faq" />
         <item
-            android:id="@+id/nav_contact_us"
+            android:id="@id/nav_contact_us"
             android:icon="@drawable/ic_menu_send"
             android:title="@string/contact_us" />
         <item
@@ -28,7 +28,7 @@
             android:icon="@drawable/ic_menu_share"
             android:title="@string/about_us" />
         <item
-            android:id="@+id/nav_login"
+            android:id="@id/nav_login"
             android:icon="@drawable/ic_menu_camera"
             android:checkable="false"
             android:title="@string/login" />

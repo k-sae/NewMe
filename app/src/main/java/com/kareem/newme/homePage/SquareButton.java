@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 public class SquareButton extends RelativeLayout {
     public SquareButton(Context context) {
         super(context);
+
     }
 
     @Override
@@ -34,4 +35,5 @@ public class SquareButton extends RelativeLayout {
     public SquareButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
+
 }

@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NavigationActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, NavigationActivityCallBack {
     private NewsFragment newsFragment;
     private MessagesFragment messagesFragment;
     private UserMessagesFragment userMessagesFragment;
@@ -42,6 +42,7 @@ public class NavigationActivity extends AppCompatActivity
     private UserRoleFragment activeUserRoleFragment;
     private FAQFragment faqFragment;
     private HomePageFragment homePageFragment;
+    private NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +55,7 @@ public class NavigationActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationBarHeader = (TextView) navigationView.getHeaderView(0).findViewById(R.id.navigation_header_text);
         menu = navigationView.getMenu();
@@ -66,8 +67,7 @@ public class NavigationActivity extends AppCompatActivity
             homePageFragment = new HomePageFragment();
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             firebaseAuth.signInAnonymously();
-            navigationView.setCheckedItem(R.id.nav_news);
-            navigate(newsFragment);
+            setActive(R.id.nav_home);
         }
         RealmUserUtils realmUserUtils = new RealmUserUtils(this);
         RunTimeItems.loggedUser = realmUserUtils.getLoggedUserFromDataBase();
@@ -111,27 +111,31 @@ public class NavigationActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        onNavigationItemSelected(id);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 
+    public void onNavigationItemSelected(int id) {
+        navigationView.setCheckedItem(id);
         if (id == R.id.nav_news) {
             navigate(newsFragment);
         }
         else if (id == R.id.nav_login){
             if (RunTimeItems.loggedUser == null)
-            navigate(AuthenticationActivity.class);
+                navigate(AuthenticationActivity.class);
             else logout();
         }
         else if (id == R.id.nav_contact_us)
         {
             if (RunTimeItems.loggedUser == null) throw new RuntimeException("not fucken implemented :)");
             else if (RunTimeItems.loggedUser.getUserType().equals(Constants.ADMIN_TYPE))
-            navigate(userMessagesFragment);
+                navigate(userMessagesFragment);
             else navigate(messagesFragment);
         }
         else if (id == R.id.nav_FAQََ) navigate(faqFragment);
         else if (id == R.id.nav_home) navigate(homePageFragment);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
     private void navigate(Fragment fragment)
@@ -223,5 +227,11 @@ public class NavigationActivity extends AppCompatActivity
     {
         if (activeUserRoleFragment != null)
         activeUserRoleFragment.onUserRoleChanged();
+    }
+
+    @Override
+    public void setActive(int id) {
+
+        onNavigationItemSelected(id);
     }
 }

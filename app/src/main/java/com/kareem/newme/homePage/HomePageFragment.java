@@ -15,12 +15,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.kareem.newme.NavigationActivityCallBack;
 import com.kareem.newme.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomePageFragment extends Fragment {
+public class HomePageFragment extends Fragment implements View.OnClickListener
+{
 
    private SliderLayout sliderLayout;
     public HomePageFragment() {
@@ -36,6 +38,7 @@ public class HomePageFragment extends Fragment {
           sliderLayout = (SliderLayout) view.findViewById(R.id.slider);
         sliderLayout.setCustomAnimation(new DescriptionAnimation());
         setSlider(sliderLayout);
+        setListeners(view);
         return view;
     }
 
@@ -76,5 +79,20 @@ public class HomePageFragment extends Fragment {
     public void onStop() {
         sliderLayout.stopAutoCycle();
         super.onStop();
+    }
+
+    public void setListeners(View view) {
+        view.findViewById(R.id.nav_FAQََ).setOnClickListener(this);
+        view.findViewById(R.id.nav_news).setOnClickListener(this);
+        view.findViewById(R.id.nav_login).setOnClickListener(this);
+        view.findViewById(R.id.nav_contact_us).setOnClickListener(this);
+        view.findViewById(R.id.nav_about).setOnClickListener(this);
+        view.findViewById(R.id.nav_newme);
+    }
+
+    @Override
+    public void onClick(View v) {
+        ((NavigationActivityCallBack) getActivity()).setActive(v.getId());
+
     }
 }

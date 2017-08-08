@@ -16,6 +16,7 @@
                 android:layout_height="wrap_content" android:orientation="horizontal">
                 <com.kareem.newme.homePage.SquareButton
                     style="@style/home_page_square_button"
+                    android:id="@+id/nav_news"
                     >
 
                     <LinearLayout
@@ -33,6 +34,7 @@
 
                 <com.kareem.newme.homePage.SquareButton
                     style="@style/home_page_square_button"
+                    android:id="@+id/nav_login"
                     >
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -48,6 +50,7 @@
                 </com.kareem.newme.homePage.SquareButton>
                 <com.kareem.newme.homePage.SquareButton
                     style="@style/home_page_square_button"
+                    android:id="@+id/nav_FAQََ"
                     >
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -67,6 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" android:orientation="horizontal">
         <com.kareem.newme.homePage.SquareButton
+            android:id="@+id/nav_contact_us"
             style="@style/home_page_square_button"
             >
 
@@ -85,6 +89,7 @@
 
         <com.kareem.newme.homePage.SquareButton
             style="@style/home_page_square_button"
+            android:id="@+id/nav_about"
             >
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -100,6 +105,7 @@
         </com.kareem.newme.homePage.SquareButton>
         <com.kareem.newme.homePage.SquareButton
             style="@style/home_page_square_button"
+            android:id="@+id/nav_newme"
             >
             <LinearLayout
                 android:layout_width="wrap_content"
