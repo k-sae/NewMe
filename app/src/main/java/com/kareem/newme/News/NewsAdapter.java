@@ -1,5 +1,6 @@
 package com.kareem.newme.News;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,7 @@ public class NewsAdapter extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View v, ViewGroup parent) {
 
@@ -55,11 +57,14 @@ public class NewsAdapter extends BaseAdapter {
 
         TextView newsTitle = (TextView)v.findViewById(R.id.news_list_item_title);
         TextView newsDetails = (TextView)v.findViewById(R.id.news_list_item_details);
-
+        TextView likesCount = (TextView) v.findViewById(R.id.likes_count_news_list);
+        TextView commentsCount = (TextView) v.findViewById(R.id.comments_count_news_list);
         // Set their text
         News news = dataSnapshots.get(position).getValue(News.class);
         newsTitle.setText(news.getTitle());
         newsDetails.setText(news.getContent());
+        likesCount.setText(news.getLikes().size() +"");
+        commentsCount.setText(news.getComments().size() + "");
         Picasso.with(context).load(news.getImage_url()).error(R.mipmap.default_image_news).into(imageView);
         return v;
     }

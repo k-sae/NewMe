@@ -56,12 +56,14 @@
             android:layout_height="wrap_content" android:textSize="18dp" android:textColor="@color/heartColor" android:text="0"
             android:drawableStart="@drawable/heart_filled"
             android:layout_alignParentStart="true"
+            android:id="@+id/likes_count_news_list"
             tools:ignore="HardcodedText" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:textSize="18dp" android:textColor="@color/commentColor" android:text="0"
             tools:ignore="HardcodedText"
             android:layout_centerInParent="true" android:drawableStart="@drawable/comments_filled"
+            android:id="@+id/comments_count_news_list"
             />
     </RelativeLayout>
 </LinearLayout>
