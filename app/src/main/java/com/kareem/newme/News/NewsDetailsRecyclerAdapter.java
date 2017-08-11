@@ -2,23 +2,23 @@ package com.kareem.newme.News;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.InputType;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
+import com.kareem.newme.Chatting.Messages.Message;
 import com.kareem.newme.Connections.VolleyRequest;
 import com.kareem.newme.Constants;
 import com.kareem.newme.Model.Comment;
 import com.kareem.newme.Model.Like;
 import com.kareem.newme.Model.News;
-import com.kareem.newme.Model.User;
 import com.kareem.newme.R;
 import com.kareem.newme.RunTimeItems;
 import com.squareup.picasso.Picasso;
@@ -27,55 +27,46 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by kareem on 7/31/17.
+ * {@link RecyclerView.Adapter} that can display a {@link Message} and makes a call to the
+ * specified {@link OnListFragmentInteractionListener}.
+ * TODO: Replace the implementation with code for your data type.
  */
+public class NewsDetailsRecyclerAdapter extends RecyclerView.Adapter<NewsDetailsRecyclerAdapter.ViewHolder> {
 
-@Deprecated
-public class NewsDetailsAdapter extends BaseAdapter {
     private News news;
     private Context context;
     private String newsId;
     private Boolean isLiked = false;
     private int likeId;
-    public NewsDetailsAdapter(Context context) {
+
+    public NewsDetailsRecyclerAdapter(Context context) {
         this.context = context;
     }
 
     @Override
-    public int getCount() {
-        return news.getComments().size() + 1;
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view;
+        if (viewType ==0)
+         view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.news_details_list_item, parent, false);
+        else view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.comments_list_items, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public Object getItem(int position) {
-        return position == 0? news : news.getComments().get(position-1) ;
+    public int getItemViewType(int position) {
+        if (position == 0) return 0;
+        else return 1;
     }
 
     @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View v, ViewGroup parent) {
-
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         //TODO dont forget the image
-        if (v ==null )
-        {
-            if (position == 0)
-            v = LayoutInflater.from(context).inflate(R.layout.news_details_list_item,parent,false);
-            //TODO
-            else v = LayoutInflater.from(context).inflate(R.layout.comments_list_items,parent,false);
-        }
-        if ((position == 0 && v.findViewById(R.id.news_details_textView_title) == null) )
-        {
-            v = LayoutInflater.from(context).inflate(R.layout.news_details_list_item,parent,false);
-        }
-        else if (v.findViewById(R.id.comments_list_content) == null && position != 0) v = LayoutInflater.from(context).inflate(R.layout.comments_list_items,parent,false);
-        if (position == 0) setNewsLayout(v);
-        else setCommentsLayout(v,position - 1);
-        return v;
+        if (position == 0) setNewsLayout(holder.mView);
+        else setCommentsLayout(holder.mView, position - 1);
     }
+
 
     private void setCommentsLayout(View v, final int position) {
         final EditText content = (EditText) v.findViewById(R.id.comments_list_content);
@@ -90,22 +81,23 @@ public class NewsDetailsAdapter extends BaseAdapter {
         if (RunTimeItems.loggedUser != null
                 &&
                 (RunTimeItems.loggedUser.getUserType().equals(Constants.ADMIN_TYPE)
-                ||String.valueOf(comment.getUserId()).equals(RunTimeItems.loggedUser.getId()))){
+                        || String.valueOf(comment.getUserId()).equals(RunTimeItems.loggedUser.getId()))) {
 
             edit_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (content.isEnabled()){
+                    if (content.isEnabled()) {
                         content.setEnabled(false);
-                        editComment(position,content.getText().toString());
-                    }
-                    else {
+                        editComment(position, content.getText().toString());
+                    } else {
                         content.setEnabled(true);
                         content.requestFocus();
+                        InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.showSoftInput(content, InputMethodManager.SHOW_IMPLICIT);
                     }
                 }
             });
-            edit_button.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            content.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
@@ -117,12 +109,11 @@ public class NewsDetailsAdapter extends BaseAdapter {
             delete_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                delete(position);
+                    delete(position);
                 }
             });
 
-        }
-        else {
+        } else {
             edit_button.setVisibility(View.GONE);
             delete_button.setVisibility(View.GONE);
         }
@@ -131,16 +122,15 @@ public class NewsDetailsAdapter extends BaseAdapter {
         //idk just it seems i forgot something :)
     }
 
-    private void editComment(int position, String newContent)
-    {
-        Comment comment=  news.getComments().get(position);
+    private void editComment(int position, String newContent) {
+        Comment comment = news.getComments().get(position);
         comment.setContent(newContent);
-        Map<String , String> stringMap = new HashMap<>();
+        Map<String, String> stringMap = new HashMap<>();
         stringMap.put("req", "editComment");
         stringMap.put("newId", newsId);
-        stringMap.put("commentId", position +"");
+        stringMap.put("commentId", position + "");
         stringMap.put("comment", new Gson().toJson(comment));
-        VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,context) {
+        VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL, stringMap, context) {
             @Override
             public void onErrorResponse(VolleyError error) {
 
@@ -154,12 +144,12 @@ public class NewsDetailsAdapter extends BaseAdapter {
         volleyRequest.start();
     }
 
-    private void delete(int position){
-        Map<String , String> stringMap = new HashMap<>();
+    private void delete(int position) {
+        Map<String, String> stringMap = new HashMap<>();
         stringMap.put("req", "deleteComment");
         stringMap.put("newId", newsId);
-        stringMap.put("commentId", position +"");
-         VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,context) {
+        stringMap.put("commentId", position + "");
+        VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL, stringMap, context) {
             @Override
             public void onErrorResponse(VolleyError error) {
 
@@ -174,8 +164,8 @@ public class NewsDetailsAdapter extends BaseAdapter {
     }
 
     private void setNewsLayout(View view) {
-        TextView newsTitle = (TextView)view.findViewById(R.id.news_details_textView_title);
-        TextView newsDetails = (TextView)view.findViewById(R.id.news_details_textView_content);
+        TextView newsTitle = (TextView) view.findViewById(R.id.news_details_textView_title);
+        TextView newsDetails = (TextView) view.findViewById(R.id.news_details_textView_content);
         ImageView imageView = (ImageView) view.findViewById(R.id.news_details_image_view);
         // Set their text
         newsTitle.setText(news.getTitle());
@@ -184,8 +174,7 @@ public class NewsDetailsAdapter extends BaseAdapter {
         setNewsButtonsLayoutAndListeners(view);
     }
 
-    private void setNewsButtonsLayoutAndListeners(View view)
-    {
+    private void setNewsButtonsLayoutAndListeners(View view) {
         //like button
         //edit
         //delete
@@ -202,8 +191,7 @@ public class NewsDetailsAdapter extends BaseAdapter {
                 }
 
             }
-        }
-        else likeButton.setVisibility(View.GONE);
+        } else likeButton.setVisibility(View.GONE);
         if (isLiked)
             likeButton.setImageResource(R.drawable.like_active);
         else likeButton.setImageResource(R.drawable.like);
@@ -222,17 +210,17 @@ public class NewsDetailsAdapter extends BaseAdapter {
         setEditButton(editButton);
     }
 
-    private void sendLikeRequest(){
-        Map<String , String> stringMap = new HashMap<>();
+    private void sendLikeRequest() {
+        Map<String, String> stringMap = new HashMap<>();
         if (isLiked) stringMap.put("req", "dislikeNew");
         else
-        stringMap.put("req", "likeNew");
+            stringMap.put("req", "likeNew");
         stringMap.put("newId", newsId);
         //TODO fix this
         if (isLiked) stringMap.put("likeId", String.valueOf(likeId));
         else
             stringMap.put("like", new Gson().toJson(new Like(Integer.valueOf(RunTimeItems.loggedUser.getId()))));
-        VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,context) {
+        VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL, stringMap, context) {
             @Override
             public void onErrorResponse(VolleyError error) {
 
@@ -246,15 +234,15 @@ public class NewsDetailsAdapter extends BaseAdapter {
         volleyRequest.start();
     }
 
-    private void setDeleteButton(View deleteButton){
+    private void setDeleteButton(View deleteButton) {
         if (RunTimeItems.loggedUser != null && RunTimeItems.loggedUser.getUserType().equals(Constants.ADMIN_TYPE))
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Map<String , String> stringMap = new HashMap<>();
+                    Map<String, String> stringMap = new HashMap<>();
                     stringMap.put("req", "deleteNew");
                     stringMap.put("newId", newsId);
-                    VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,context) {
+                    VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL, stringMap, context) {
                         @Override
                         public void onErrorResponse(VolleyError error) {
 
@@ -270,13 +258,12 @@ public class NewsDetailsAdapter extends BaseAdapter {
         else deleteButton.setVisibility(View.GONE);
     }
 
-    private void setEditButton(View editButton)
-    {
+    private void setEditButton(View editButton) {
         if (RunTimeItems.loggedUser != null && RunTimeItems.loggedUser.getUserType().equals(Constants.ADMIN_TYPE))
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent  = new Intent(context,NewsEditor.class);
+                    Intent intent = new Intent(context, NewsEditor.class);
                     intent.putExtra(Constants.NEWS_DATA, new Gson().toJson(news));
                     intent.putExtra(Constants.NEWS_ID, newsId);
                     context.startActivity(intent);
@@ -284,6 +271,13 @@ public class NewsDetailsAdapter extends BaseAdapter {
             });
         else editButton.setVisibility(View.GONE);
     }
+
+
+    @Override
+    public int getItemCount() {
+        return news.getComments().size() + 1;
+    }
+
     public News getNews() {
         return news;
     }
@@ -292,12 +286,29 @@ public class NewsDetailsAdapter extends BaseAdapter {
         this.news = news;
     }
 
-    public String getNewsId() {
-        return newsId;
-    }
-
     public void setNewsId(String newsId) {
         this.newsId = newsId;
     }
 
+    public String getNewsId() {
+        return newsId;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public  View mView;
+        public final TextView mContentView;
+        public News mItem;
+
+        public ViewHolder(View view) {
+            super(view);
+            mView = view;
+            mContentView = (TextView) view.findViewById(R.id.content);
+        }
+
+        @Override
+        public String toString() {
+            return super.toString() + " '" + mContentView.getText() + "'";
+        }
+    }
 }
+

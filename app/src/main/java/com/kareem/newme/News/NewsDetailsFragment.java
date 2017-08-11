@@ -3,6 +3,7 @@ package com.kareem.newme.News;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,8 @@ import java.util.Map;
  */
 public class NewsDetailsFragment extends Fragment {
 
-    private NewsDetailsAdapter newsDetailsAdapter;
+//    private NewsDetailsAdapter newsDetailsAdapter;
+    private NewsDetailsRecyclerAdapter newsDetailsRecyclerAdapter;
     public NewsDetailsFragment() {
     }
 
@@ -46,7 +48,7 @@ public class NewsDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_news_details, container, false);
         Log.e( "onCreateView: ", getActivity().getIntent().getStringExtra(Constants.NEWS_ID) );
         Log.e( "onCreateView: ", getActivity().getIntent().getStringExtra(Constants.NEWS_DATA) );
-        ListView listView = (ListView) view.findViewById(R.id.news_details_listView);
+        RecyclerView listView = (RecyclerView) view.findViewById(R.id.news_details_listView);
         setNewsDetailsAdapter(listView);
         if (RunTimeItems.loggedUser == null) view.findViewById(R.id.comments_writer_holder).setVisibility(View.GONE);
         View send_button = view.findViewById(R.id.send_button);
@@ -84,19 +86,19 @@ public class NewsDetailsFragment extends Fragment {
         };
         volleyRequest.start();
     }
-    private void setNewsDetailsAdapter(ListView listView)
+    private void setNewsDetailsAdapter(RecyclerView listView)
     {
-        newsDetailsAdapter = new NewsDetailsAdapter(getActivity());
-        newsDetailsAdapter.setNews(new Gson().fromJson(getActivity().getIntent().getStringExtra(Constants.NEWS_DATA), News.class));
-        newsDetailsAdapter.setNewsId(getActivity().getIntent().getStringExtra(Constants.NEWS_ID));
-        FirebaseDatabase.getInstance().getReference("News-2").child(newsDetailsAdapter.getNewsId()).addValueEventListener(new ValueEventListener() {
+        newsDetailsRecyclerAdapter = new NewsDetailsRecyclerAdapter(getActivity());
+        newsDetailsRecyclerAdapter.setNews(new Gson().fromJson(getActivity().getIntent().getStringExtra(Constants.NEWS_DATA), News.class));
+        newsDetailsRecyclerAdapter.setNewsId(getActivity().getIntent().getStringExtra(Constants.NEWS_ID));
+        FirebaseDatabase.getInstance().getReference("News-2").child(newsDetailsRecyclerAdapter.getNewsId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 News news = dataSnapshot.getValue(News.class);
-                if (news == null) getActivity().finish();
+                if (news == null) NewsDetailsFragment.this.getActivity().finish();
                 else {
-                    newsDetailsAdapter.setNews(news);
-                    newsDetailsAdapter.notifyDataSetChanged();
+                    newsDetailsRecyclerAdapter.setNews(news);
+                    newsDetailsRecyclerAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -105,7 +107,7 @@ public class NewsDetailsFragment extends Fragment {
 
             }
         });
-        listView.setAdapter(newsDetailsAdapter);
+        listView.setAdapter(newsDetailsRecyclerAdapter);
 
     }
 }
