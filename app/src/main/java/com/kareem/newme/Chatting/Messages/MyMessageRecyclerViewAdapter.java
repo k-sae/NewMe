@@ -1,12 +1,16 @@
 package com.kareem.newme.Chatting.Messages;
 
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kareem.newme.R;
+import com.kareem.newme.RunTimeItems;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +41,9 @@ public class MyMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyMessage
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mContentView.setText(mValues.get(position).content);
-
+        if (RunTimeItems.loggedUser.getId().equals(mValues.get(position).senderId+""))
+                setSenderLayout(holder);
+        else setRemoteLayout(holder);
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +54,29 @@ public class MyMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyMessage
                 }
             }
         });
+    }
+    private void setSenderLayout(ViewHolder viewHolder)
+    {
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+// Align bottom-right, and add bottom-margin
+        params.addRule(RelativeLayout.ALIGN_PARENT_END);
+        viewHolder.mContentView.setLayoutParams(params);
+        viewHolder.mContentView.setBackground(
+                    ContextCompat.getDrawable(viewHolder.mView.getContext(),
+                            R.drawable.rounded_button_primary));
+        viewHolder.mContentView.setTextColor(ContextCompat.getColor(viewHolder.mView.getContext(), R.color.secondaryTextColor));
+
+    }
+
+    private void setRemoteLayout(ViewHolder viewHolder) {
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+// Align bottom-right, and add bottom-margin
+        params.addRule(RelativeLayout.ALIGN_PARENT_START);
+        viewHolder.mContentView.setLayoutParams(params);
+        viewHolder.mContentView.setBackground(
+                ContextCompat.getDrawable(viewHolder.mView.getContext(),
+                        R.drawable.rounded_button_gray));
+        viewHolder.mContentView.setTextColor(ContextCompat.getColor(viewHolder.mView.getContext(), R.color.mainTextColor));
     }
 
     @Override
@@ -60,16 +89,15 @@ public class MyMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyMessage
     }
 
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
         public final TextView mContentView;
         public Message mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 

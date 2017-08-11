@@ -3,6 +3,7 @@ package com.kareem.newme.Chatting.Messages;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,6 +43,7 @@ public class MessagesFragment extends UserRoleFragment implements OnListFragment
     private String id;
     private OnListFragmentInteractionListener mListener;
     private MyMessageRecyclerViewAdapter myMessageRecyclerViewAdapter;
+    private RecyclerView recyclerView;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -62,7 +64,7 @@ public class MessagesFragment extends UserRoleFragment implements OnListFragment
         // Set the adapter
         View view = fragmentView.findViewById(R.id.messages_recycle_view);
         if (view instanceof RecyclerView) {
-            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView = (RecyclerView) view;
             myMessageRecyclerViewAdapter = new MyMessageRecyclerViewAdapter(this);
             recyclerView.setAdapter(myMessageRecyclerViewAdapter);
             sync();
@@ -118,6 +120,12 @@ public class MessagesFragment extends UserRoleFragment implements OnListFragment
                     myMessageRecyclerViewAdapter.getmValues().add(userMessage);
                 }
                 myMessageRecyclerViewAdapter.notifyDataSetChanged();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        recyclerView.smoothScrollToPosition(myMessageRecyclerViewAdapter.getmValues().size());
+                    }
+                }, 1);
             }
 
             @Override
@@ -126,7 +134,6 @@ public class MessagesFragment extends UserRoleFragment implements OnListFragment
             }
         });
     }
-
 
     @Override
     public void onAttach(Context context) {

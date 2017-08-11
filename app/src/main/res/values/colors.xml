@@ -7,10 +7,11 @@
     <color name="titleFontColor">#000</color>
     <color name="primaryBackground">#fff</color>
     <color name="secondaryBackground">#ddd</color>
-    <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
+    <color name="secondaryTextColor">#FFFFFF</color>
+    <color name="mainTextColor">#000000</color>
     <color name="white_greyish">#EEEEEE</color>
     <color name="button_selectorcolor">#9E9E9E</color>
     <color name="heartColor">#e74c3c</color>
     <color name="commentColor">#2980b9</color>
+
 </resources>

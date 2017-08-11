@@ -35,8 +35,8 @@
                 android:hint="@string/username"
                 android:inputType="textEmailAddress"
                 android:padding="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColor="@color/secondaryTextColor"
+                android:textColorHint="@color/secondaryTextColor"
                 android:textSize="16sp" />
 
             <View
@@ -55,8 +55,8 @@
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:padding="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColor="@color/secondaryTextColor"
+                android:textColorHint="@color/secondaryTextColor"
                 android:textSize="16sp" />
             <Button
                 android:id="@+id/loginBtn"
