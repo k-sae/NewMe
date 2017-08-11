@@ -16,6 +16,7 @@ import java.util.List;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
+@Deprecated
 public class MyFAQRecyclerViewAdapter extends RecyclerView.Adapter<MyFAQRecyclerViewAdapter.ViewHolder> {
 
     private final List<FAQ> mValues;

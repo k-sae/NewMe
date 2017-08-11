@@ -4,20 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
-import com.kareem.newme.Authentication.AuthenticationActivity;
 import com.kareem.newme.Connections.VolleyRequest;
 import com.kareem.newme.Constants;
-import com.kareem.newme.News.NewsEditor;
 import com.kareem.newme.R;
 import com.kareem.newme.RunTimeItems;
 import com.kareem.newme.UserRoleFragment;
@@ -40,6 +35,7 @@ public class FAQFragment extends UserRoleFragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private MyFAQRecyclerViewAdapter myFAQRecyclerViewAdapter;
+    private ExpandableListAdapter expandableListAdapter;
     private FloatingActionButton fab;
     private boolean isInit;
     /**
@@ -83,20 +79,11 @@ public class FAQFragment extends UserRoleFragment {
 
 
         // Set the adapter
-        View view = fragmentView.findViewById(R.id.faq_list);
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            myFAQRecyclerViewAdapter = new MyFAQRecyclerViewAdapter();
-            recyclerView.setAdapter(myFAQRecyclerViewAdapter);
-            grabData();
-            isInit = true;
-        }
+        ExpandableListView expandableListView = (ExpandableListView) fragmentView.findViewById(R.id.expandableListView);
+        expandableListAdapter = new ExpandableListAdapter(getActivity());
+        expandableListView.setAdapter(expandableListAdapter);
+        grabData();
+        isInit = true;
         onUserRoleChanged();
         return fragmentView;
     }
@@ -109,7 +96,7 @@ public class FAQFragment extends UserRoleFragment {
 
     private void grabData()
     {
-        if (myFAQRecyclerViewAdapter == null) return;
+        if (expandableListAdapter == null) return;
         Map<String , String> stringMap = new HashMap<>();
         stringMap.put("req", "getFaq");
         VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,getActivity()) {
@@ -120,10 +107,18 @@ public class FAQFragment extends UserRoleFragment {
 
             @Override
             public void onResponse(String response) {
-                myFAQRecyclerViewAdapter.getmValues().clear();
-            FAQArray faqs = new Gson().fromJson(response, FAQArray.class);
-                myFAQRecyclerViewAdapter.getmValues().addAll(faqs.getFaqs());
-                myFAQRecyclerViewAdapter.notifyDataSetChanged();
+                expandableListAdapter.getExpandableListTitle().clear();
+                expandableListAdapter.getExpandableListDetail().clear();
+                FAQArray faqs = new Gson().fromJson(response, FAQArray.class);
+                for (FAQ faq: faqs.getFaqs()
+                     ) {
+                    expandableListAdapter.getExpandableListTitle().add(faq.getQuestion());
+                    ArrayList<String> ans =  new ArrayList<>(1);
+                    ans.add(faq.getAnswer());
+                    expandableListAdapter.getExpandableListDetail().put(faq.getQuestion(), ans);
+                }
+
+                expandableListAdapter.notifyDataSetChanged();
             }
         };
         volleyRequest.start();
