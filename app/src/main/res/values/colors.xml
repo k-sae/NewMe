@@ -13,5 +13,5 @@
     <color name="button_selectorcolor">#9E9E9E</color>
     <color name="heartColor">#e74c3c</color>
     <color name="commentColor">#2980b9</color>
-
+    <color name="overLay">#6000</color>
 </resources>
