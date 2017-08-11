@@ -1,5 +1,6 @@
 package com.kareem.newme.News;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -38,7 +39,8 @@ public class NewsDetailsRecyclerAdapter extends RecyclerView.Adapter<NewsDetails
     private String newsId;
     private Boolean isLiked = false;
     private int likeId;
-
+    private TextView likeButton;
+    private int likeCount;
     public NewsDetailsRecyclerAdapter(Context context) {
         this.context = context;
     }
@@ -178,7 +180,7 @@ public class NewsDetailsRecyclerAdapter extends RecyclerView.Adapter<NewsDetails
         //like button
         //edit
         //delete
-        ImageView likeButton = (ImageView) view.findViewById(R.id.news_details_image_view_like);
+        likeButton = (TextView) view.findViewById(R.id.news_details_image_view_like);
 
         if (RunTimeItems.loggedUser != null) {
             isLiked = false;
@@ -192,9 +194,7 @@ public class NewsDetailsRecyclerAdapter extends RecyclerView.Adapter<NewsDetails
 
             }
         } else likeButton.setVisibility(View.GONE);
-        if (isLiked)
-            likeButton.setImageResource(R.drawable.like_active);
-        else likeButton.setImageResource(R.drawable.like);
+        refreshLikeButtonLayout();
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,14 +210,26 @@ public class NewsDetailsRecyclerAdapter extends RecyclerView.Adapter<NewsDetails
         setEditButton(editButton);
     }
 
+    @SuppressLint("SetTextI18n")
+    private void refreshLikeButtonLayout() {
+        if (isLiked) {
+            likeButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.heart_filled, 0, 0, 0);
+        }
+        else likeButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.heart,0,0,0);
+        likeButton.setText(likeCount + "");
+    }
+
     private void sendLikeRequest() {
+        isLiked = !isLiked;
+        likeCount = isLiked ? likeCount + 1 :likeCount -1;
+        refreshLikeButtonLayout();
         Map<String, String> stringMap = new HashMap<>();
-        if (isLiked) stringMap.put("req", "dislikeNew");
+        if (!isLiked) stringMap.put("req", "dislikeNew");
         else
             stringMap.put("req", "likeNew");
         stringMap.put("newId", newsId);
         //TODO fix this
-        if (isLiked) stringMap.put("likeId", String.valueOf(likeId));
+        if (!isLiked) stringMap.put("likeId", String.valueOf(likeId));
         else
             stringMap.put("like", new Gson().toJson(new Like(Integer.valueOf(RunTimeItems.loggedUser.getId()))));
         VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL, stringMap, context) {
@@ -284,6 +296,7 @@ public class NewsDetailsRecyclerAdapter extends RecyclerView.Adapter<NewsDetails
 
     public void setNews(News news) {
         this.news = news;
+        likeCount = news.getLikes().size();
     }
 
     public void setNewsId(String newsId) {
