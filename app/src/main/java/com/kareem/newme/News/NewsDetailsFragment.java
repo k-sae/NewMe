@@ -1,5 +1,7 @@
 package com.kareem.newme.News;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -39,6 +41,7 @@ public class NewsDetailsFragment extends Fragment {
 
 //    private NewsDetailsAdapter newsDetailsAdapter;
     private NewsDetailsRecyclerAdapter newsDetailsRecyclerAdapter;
+    private Activity parent;
     public NewsDetailsFragment() {
     }
 
@@ -95,7 +98,7 @@ public class NewsDetailsFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 News news = dataSnapshot.getValue(News.class);
-                if (news == null) NewsDetailsFragment.this.getActivity().finish();
+                if (news == null) parent.finish();
                 else {
                     newsDetailsRecyclerAdapter.setNews(news);
                     newsDetailsRecyclerAdapter.notifyDataSetChanged();
@@ -110,4 +113,11 @@ public class NewsDetailsFragment extends Fragment {
         listView.setAdapter(newsDetailsRecyclerAdapter);
 
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        parent = activity;
+    }
+
 }
