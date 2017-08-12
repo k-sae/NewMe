@@ -3,14 +3,18 @@ package com.kareem.newme.homePage;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -18,13 +22,19 @@ import com.google.firebase.database.ValueEventListener;
 import com.kareem.newme.NavigationActivityCallBack;
 import com.kareem.newme.R;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomePageFragment extends Fragment implements View.OnClickListener
+public class HomePageFragment extends Fragment implements View.OnClickListener, ViewPagerEx.OnPageChangeListener
 {
 
    private SliderLayout sliderLayout;
+    private ArrayList<String> titles = new ArrayList<>();
+    private ArrayList<String> descriptionString = new ArrayList<>();
+    private TextView description;
+    private TextView title;
     public HomePageFragment() {
         // Required empty public constructor
     }
@@ -37,6 +47,9 @@ public class HomePageFragment extends Fragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
           sliderLayout = (SliderLayout) view.findViewById(R.id.slider);
         sliderLayout.setCustomAnimation(new DescriptionAnimation());
+        sliderLayout.addOnPageChangeListener(this);
+        description = (TextView) view.findViewById(R.id.home_slider_description);
+        title = (TextView) view.findViewById(R.id.home_slider_title);
         setSlider(sliderLayout);
         setListeners(view);
         return view;
@@ -48,9 +61,15 @@ public class HomePageFragment extends Fragment implements View.OnClickListener
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 layout.removeAllSliders();
+                titles.clear();
+                descriptionString.clear();
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()
                         ) {
-                    layout.addSlider(initTexSlider(snapshot.child("title").getValue().toString() , snapshot.child("image_url").getValue().toString()));
+                    String title = snapshot.child("title").getValue().toString();
+                    String Description = snapshot.child("content").getValue().toString();
+                    titles.add(title);
+                    descriptionString.add(Description);
+                    layout.addSlider(initTexSlider(title, snapshot.child("image_url").getValue().toString()));
                 }
             }
 
@@ -60,9 +79,9 @@ public class HomePageFragment extends Fragment implements View.OnClickListener
             }
         });
     }
-    private TextSliderView initTexSlider(String text, String url)
+    private DefaultSliderView initTexSlider(String text, String url)
     {
-        TextSliderView textSliderView = new TextSliderView(getActivity());
+        DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
         // initialize a SliderLayout
         textSliderView
                 .description(text).image(url)
@@ -94,5 +113,19 @@ public class HomePageFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         ((NavigationActivityCallBack) getActivity()).setActive(v.getId());
 
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        description.setText(descriptionString.get(position));
+        title.setText(titles.get(position));
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
     }
 }
