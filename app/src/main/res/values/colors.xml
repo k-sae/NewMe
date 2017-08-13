@@ -5,8 +5,8 @@
     <color name="colorPrimaryLight">#5aa3ea</color>
     <color name="colorAccent">#009688</color>
     <color name="titleFontColor">#000</color>
-    <color name="primaryBackground">#fff</color>
-    <color name="secondaryBackground">#ddd</color>
+    <color name="primaryBackground">#F0ECEC</color>
+    <color name="secondaryBackground">#cfcfcf</color>
     <color name="secondaryTextColor">#FFFFFF</color>
     <color name="mainTextColor">#000000</color>
     <color name="white_greyish">#EEEEEE</color>

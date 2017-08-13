@@ -28,7 +28,7 @@
     </style>
     <style name="home_page_square_button">
         <item name="android:layout_margin">@dimen/default_spacing</item>
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:background">@drawable/rounded_button_primary</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">0.33333</item>
@@ -47,5 +47,10 @@
         <item name="android:layout_height">42dp</item>
         <item name="android:layout_gravity">center</item>
     </style>
-
+    <style name="home_shareables">
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+    </style>
 </resources>
