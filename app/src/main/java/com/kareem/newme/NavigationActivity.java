@@ -2,6 +2,7 @@ package com.kareem.newme;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
@@ -43,12 +44,16 @@ public class NavigationActivity extends AppCompatActivity
     private FAQFragment faqFragment;
     private HomePageFragment homePageFragment;
     private NavigationView navigationView;
+    private TextView titlebar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("");
+        toolbar.setTitleTextColor(Color.TRANSPARENT);
+         titlebar = (TextView) findViewById(R.id.toolbar_title);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -121,6 +126,7 @@ public class NavigationActivity extends AppCompatActivity
         navigationView.setCheckedItem(id);
         if (id == R.id.nav_news) {
             navigate(newsFragment);
+            titlebar.setText(getString(R.string.news));
         }
         else if (id == R.id.nav_login){
             if (RunTimeItems.loggedUser == null)
@@ -133,9 +139,17 @@ public class NavigationActivity extends AppCompatActivity
             else if (RunTimeItems.loggedUser.getUserType().equals(Constants.ADMIN_TYPE))
                 navigate(userMessagesFragment);
             else navigate(messagesFragment);
+            titlebar.setText(getString(R.string.contact_us));
         }
-        else if (id == R.id.nav_FAQََ) navigate(faqFragment);
-        else if (id == R.id.nav_home) navigate(homePageFragment);
+        else if (id == R.id.nav_FAQََ) {
+            navigate(faqFragment);
+            titlebar.setText(getString(R.string.faq));
+        }
+        else if (id == R.id.nav_home)
+        {
+            navigate(homePageFragment);
+            titlebar.setText(getString(R.string.home));
+        }
     }
 
     private void navigate(Fragment fragment)
