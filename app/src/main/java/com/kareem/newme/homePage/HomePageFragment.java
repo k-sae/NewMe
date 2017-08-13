@@ -19,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.kareem.newme.Model.News;
 import com.kareem.newme.NavigationActivityCallBack;
 import com.kareem.newme.R;
 
@@ -65,11 +66,12 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
                 descriptionString.clear();
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()
                         ) {
-                    String title = snapshot.child("title").getValue().toString();
-                    String Description = snapshot.child("content").getValue().toString();
+                    News news = snapshot.getValue(News.class);
+                    String title = news.getTitle();
+                    String Description = news.getContent();
                     titles.add(title);
                     descriptionString.add(Description);
-                    layout.addSlider(initTexSlider(title, snapshot.child("image_url").getValue().toString()));
+                    layout.addSlider(initTexSlider(title, news.getImage_url()));
                 }
             }
 

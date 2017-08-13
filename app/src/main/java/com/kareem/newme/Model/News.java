@@ -17,7 +17,7 @@ public class News {
     @SerializedName("contain_video")
     @Expose
     private Boolean containVideo;
-    @SerializedName("name")
+    @SerializedName("content")
     @Expose
     private String content;
     @SerializedName("cover_image_url")
