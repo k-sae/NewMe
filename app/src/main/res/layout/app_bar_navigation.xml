@@ -20,15 +20,17 @@
             android:background="?attr/colorPrimary"
             android:textAlignment="center"
             app:popupTheme="@style/AppTheme.PopupOverlay">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_gravity="center"
-                android:id="@+id/toolbar_title" />
-
+            <RelativeLayout
+                android:layout_width="match_parent" android:layout_marginStart="-60dp"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_centerInParent="true"
+                    android:id="@+id/toolbar_title" />
+            </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
@@ -37,6 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" android:id="@+id/frame_content"/>
     </LinearLayout>
+
     <include layout="@layout/content_navigation" />
 
 </android.support.design.widget.CoordinatorLayout>

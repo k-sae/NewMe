@@ -31,51 +31,23 @@ public class MyMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyMessage
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.message_list_item_active, parent, false);
+                .inflate(viewType, parent, false);
         return new ViewHolder(view);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (RunTimeItems.loggedUser.getId().equals(mValues.get(position).senderId+"")) return R.layout.message_list_item_remote;
+        else  return R.layout.message_list_item_active;
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mContentView.setText(mValues.get(position).content);
-        if (RunTimeItems.loggedUser.getId().equals(mValues.get(position).senderId+""))
-                setSenderLayout(holder);
-        else setRemoteLayout(holder);
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
-    }
-    private void setSenderLayout(ViewHolder viewHolder)
-    {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-// Align bottom-right, and add bottom-margin
-        params.addRule(RelativeLayout.ALIGN_PARENT_END);
-        viewHolder.mContentView.setLayoutParams(params);
-        viewHolder.mContentView.setBackground(
-                    ContextCompat.getDrawable(viewHolder.mView.getContext(),
-                            R.drawable.rounded_button_primary));
-        viewHolder.mContentView.setTextColor(ContextCompat.getColor(viewHolder.mView.getContext(), R.color.secondaryTextColor));
 
     }
 
-    private void setRemoteLayout(ViewHolder viewHolder) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-// Align bottom-right, and add bottom-margin
-        params.addRule(RelativeLayout.ALIGN_PARENT_START);
-        viewHolder.mContentView.setLayoutParams(params);
-        viewHolder.mContentView.setBackground(
-                ContextCompat.getDrawable(viewHolder.mView.getContext(),
-                        R.drawable.rounded_button_gray));
-        viewHolder.mContentView.setTextColor(ContextCompat.getColor(viewHolder.mView.getContext(), R.color.mainTextColor));
-    }
 
     @Override
     public int getItemCount() {
