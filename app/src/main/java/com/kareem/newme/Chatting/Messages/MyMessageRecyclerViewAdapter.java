@@ -1,6 +1,5 @@
 package com.kareem.newme.Chatting.Messages;
 
-import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import com.kareem.newme.R;
 import com.kareem.newme.RunTimeItems;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Message} and makes a call to the
@@ -33,7 +31,7 @@ public class MyMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyMessage
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.message_list_item, parent, false);
+                .inflate(R.layout.message_list_item_active, parent, false);
         return new ViewHolder(view);
     }
 

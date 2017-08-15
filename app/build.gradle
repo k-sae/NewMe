@@ -41,7 +41,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-location:10.2.0'
     compile 'com.google.android.gms:play-services-places:10.2.0'
     compile 'com.hbb20:ccp:2.0.2'
-
+    compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.slider:library:1.1.5@aar'
 

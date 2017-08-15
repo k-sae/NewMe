@@ -35,5 +35,5 @@
     android:layout_marginRight="16dp"
     android:layout_above="@id/comments_writer_holder"
     app:layoutManager="LinearLayoutManager"
-    tools:listitem="@layout/message_list_item" />
+    tools:listitem="@layout/message_list_item_active" />
 </RelativeLayout>
