@@ -168,11 +168,15 @@ public class NewsDetailsRecyclerAdapter extends RecyclerView.Adapter<NewsDetails
     private void setNewsLayout(View view) {
         TextView newsTitle = (TextView) view.findViewById(R.id.news_details_textView_title);
         TextView newsDetails = (TextView) view.findViewById(R.id.news_details_textView_content);
+        TextView newsDate = (TextView) view.findViewById(R.id.news_details_date);
         ImageView imageView = (ImageView) view.findViewById(R.id.news_details_image_view);
+        TextView commentsCount = (TextView) view.findViewById(R.id.comments_count_news_list);
         // Set their text
         newsTitle.setText(news.getTitle());
         newsDetails.setText(news.getContent());
+        newsDate.setText(news.getDate());
         Picasso.with(context).load(news.getImage_url()).error(R.mipmap.default_image_news).into(imageView);
+        commentsCount.setText(news.getComments().size() + "");
         setNewsButtonsLayoutAndListeners(view);
     }
 

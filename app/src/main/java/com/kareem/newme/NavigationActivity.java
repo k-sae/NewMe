@@ -239,8 +239,9 @@ public class NavigationActivity extends AppCompatActivity
     }
     private void triggerUserRoleChanged()
     {
-        if (activeUserRoleFragment != null)
-        activeUserRoleFragment.onUserRoleChanged();
+//        if (activeUserRoleFragment != null)
+//        activeUserRoleFragment.onUserRoleChanged();
+        setActive(R.id.nav_home);
     }
 
     @Override

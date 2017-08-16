@@ -12,7 +12,7 @@
         android:src="@mipmap/default_image_news" android:scaleType="fitXY"
         android:layout_centerInParent="true"
     />
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" android:layout_alignBottom="@id/news_details_image_view" android:background="@color/overLay">
@@ -24,35 +24,52 @@
             android:id="@+id/news_details_image_view_like"
             android:text="0"
             tools:ignore="HardcodedText"
-            android:textSize="20dp" android:textColor="@color/heartColor"
+            android:textSize="20dp" android:textColor="@color/secondaryTextColor"
             />
         <ImageView
             style="@style/image_control_button_style"
             android:src="@drawable/edit"
             android:id="@+id/news_details_image_view_edit"
+            android:visibility="gone"
+            />
+        <ImageView
+            android:layout_width="18dp" android:id="@+id/myIcon"
+            android:layout_height="18dp" android:src="@drawable/comments_filled" android:layout_centerInParent="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_centerVertical="true" android:textSize="18sp" android:textColor="@color/secondaryTextColor" android:text="0"
+            tools:ignore="HardcodedText"
+            android:id="@+id/comments_count_news_list"
+            android:layout_toEndOf="@id/myIcon"
             />
         <ImageView
             style="@style/image_control_button_style"
             android:src="@drawable/delete"
             android:id="@+id/news_details_image_view_delete"
+            android:visibility="gone"
             />
-    </LinearLayout>
+    </RelativeLayout>
     </RelativeLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/news_details_textView_title"
         android:textSize="@dimen/news_title_fontSize"
-        android:textColor="@color/titleFontColor"
+        android:layout_marginTop="@dimen/news_text_spaces"
+        android:textColor="@color/colorPrimary"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/news_details_date"
+        android:layout_marginTop="@dimen/news_text_spaces"
+        android:textSize="10sp"
         />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/news_details_textView_content"
+        android:layout_marginTop="@dimen/news_text_spaces"
         />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/like_button"
-        />
+
 </LinearLayout>

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -80,6 +81,7 @@ public class NewsFragment extends UserRoleFragment implements DataSetListener {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getActivity(), "sorry this is section still uder work", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getActivity(), NewsDetails.class);
                 DataSnapshot dataSnapshot = newsAdapter.getDataSnapshots().get(position);
                 intent.putExtra(Constants.NEWS_DATA,new Gson().toJson(dataSnapshot.getValue(News.class)));
