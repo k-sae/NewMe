@@ -135,7 +135,7 @@ public class NavigationActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_contact_us)
         {
-            if (RunTimeItems.loggedUser == null) throw new RuntimeException("not fucken implemented :)");
+            if (RunTimeItems.loggedUser == null) onNavigationItemSelected(R.id.nav_login);
             else if (RunTimeItems.loggedUser.getUserType().equals(Constants.ADMIN_TYPE))
                 navigate(userMessagesFragment);
             else navigate(messagesFragment);

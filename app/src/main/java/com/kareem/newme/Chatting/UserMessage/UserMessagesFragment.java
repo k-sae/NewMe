@@ -126,7 +126,7 @@ public class UserMessagesFragment extends UserRoleFragment implements OnListFrag
 
     @Override
     public void onUserRoleChanged() {
-        ((NavigationActivityCallBack)getActivity()).setActive(R.id.nav_login);
+        ((NavigationActivityCallBack)getActivity()).setActive(R.id.nav_contact_us);
     }
 
     /**
