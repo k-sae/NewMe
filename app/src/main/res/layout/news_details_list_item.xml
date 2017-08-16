@@ -7,8 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:id="@+id/news_details_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" android:id="@+id/news_details_image_view"
         android:src="@mipmap/default_image_news" android:scaleType="fitXY"
         android:layout_centerInParent="true"
     />
@@ -71,5 +71,9 @@
         android:id="@+id/news_details_textView_content"
         android:layout_marginTop="@dimen/news_text_spaces"
         />
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:background="#000"/>
 </LinearLayout>

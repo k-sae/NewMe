@@ -73,10 +73,12 @@ public class NewsDetailsRecyclerAdapter extends RecyclerView.Adapter<NewsDetails
     private void setCommentsLayout(View v, final int position) {
         final EditText content = (EditText) v.findViewById(R.id.comments_list_content);
         TextView name = (TextView) v.findViewById(R.id.comments_list_name);
+        TextView date = (TextView) v.findViewById(R.id.comments_list_date);
         final Comment comment = news.getComments().get(position);
         content.setText(comment.getContent());
         content.setEnabled(false);
         name.setText(comment.getUserName());
+        date.setText(comment.getDate());
         final View edit_button = v.findViewById(R.id.comments_list_edit_button);
         View delete_button = v.findViewById(R.id.comments_list_del_button);
 
