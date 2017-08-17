@@ -210,6 +210,7 @@
 
         <ImageView
             style="@style/home_shareables"
+            android:id="@+id/home_whatsapp"
             android:src="@drawable/whatsapp" />
     </LinearLayout>
 </LinearLayout>

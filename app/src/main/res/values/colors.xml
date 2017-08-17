@@ -14,4 +14,5 @@
     <color name="heartColor">#e74c3c</color>
     <color name="commentColor">#2980b9</color>
     <color name="overLay">#6000</color>
+    <color name="lightGrey">#9e9e9e</color>
 </resources>
