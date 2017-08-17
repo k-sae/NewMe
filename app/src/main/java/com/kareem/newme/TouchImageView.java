@@ -1,7 +1,15 @@
 package com.kareem.newme;
 
-/**
- * Created by kareem on 8/17/17.
+/*
+ * TouchImageView.java
+ * By: Michael Ortiz
+ * Updated By: Patrick Lackemacher
+ * Updated By: Babay88
+ * Updated By: @ipsilondev
+ * Updated By: hank-cp
+ * Updated By: singpolyma
+ * -------------------
+ * Extends Android ImageView to include pinch zooming, panning, fling and double tap zoom.
  */
          import android.annotation.TargetApi;
          import android.content.Context;
