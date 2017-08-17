@@ -41,4 +41,7 @@
     <string name="new_me">New me</string>
     <string name="about_us">About us</string>
     <string name="home">Home</string>
+    <string name="action">Action</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

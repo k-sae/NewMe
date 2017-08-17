@@ -189,7 +189,7 @@ public class NewsDetailsAdapter extends BaseAdapter {
         //like button
         //edit
         //delete
-        ImageView likeButton = (ImageView) view.findViewById(R.id.news_details_image_view_like);
+//        ImageView likeButton = (ImageView) view.findViewById(R.id.news_details_image_view_like);
 
         if (RunTimeItems.loggedUser != null) {
             isLiked = false;
@@ -203,23 +203,23 @@ public class NewsDetailsAdapter extends BaseAdapter {
 
             }
         }
-        else likeButton.setVisibility(View.GONE);
-        if (isLiked)
-            likeButton.setImageResource(R.drawable.like_active);
-        else likeButton.setImageResource(R.drawable.like);
-        likeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendLikeRequest();
-            }
-        });
+//        else likeButton.setVisibility(View.GONE);
+//        if (isLiked)
+//            likeButton.setImageResource(R.drawable.like_active);
+//        else likeButton.setImageResource(R.drawable.like);
+//        likeButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                sendLikeRequest();
+//            }
+//        });
         //delete button
-        ImageView delete_button = (ImageView) view.findViewById(R.id.news_details_image_view_delete);
-        setDeleteButton(delete_button);
-
-        //edit button
-        ImageView editButton = (ImageView) view.findViewById(R.id.news_details_image_view_edit);
-        setEditButton(editButton);
+//        ImageView delete_button = (ImageView) view.findViewById(R.id.news_details_image_view_delete);
+//        setDeleteButton(delete_button);
+//
+//        //edit button
+//        ImageView editButton = (ImageView) view.findViewById(R.id.news_details_image_view_edit);
+//        setEditButton(editButton);
     }
 
     private void sendLikeRequest(){

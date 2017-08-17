@@ -3,13 +3,17 @@ package com.kareem.newme.News;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -24,6 +28,7 @@ import com.kareem.newme.R;
 import com.kareem.newme.RunTimeItems;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +46,7 @@ public class NewsDetailsRecyclerAdapter extends RecyclerView.Adapter<NewsDetails
     private int likeId;
     private TextView likeButton;
     private int likeCount;
+
     public NewsDetailsRecyclerAdapter(Context context) {
         this.context = context;
     }
@@ -48,9 +54,9 @@ public class NewsDetailsRecyclerAdapter extends RecyclerView.Adapter<NewsDetails
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        if (viewType ==0)
-         view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.news_details_list_item, parent, false);
+        if (viewType == 0)
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.news_details_list_item, parent, false);
         else view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.comments_list_items, parent, false);
         return new ViewHolder(view);
@@ -96,7 +102,7 @@ public class NewsDetailsRecyclerAdapter extends RecyclerView.Adapter<NewsDetails
                     } else {
                         content.setEnabled(true);
                         content.requestFocus();
-                        InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.showSoftInput(content, InputMethodManager.SHOW_IMPLICIT);
                     }
                 }
@@ -208,26 +214,54 @@ public class NewsDetailsRecyclerAdapter extends RecyclerView.Adapter<NewsDetails
             }
         });
         //delete button
-        ImageView delete_button = (ImageView) view.findViewById(R.id.news_details_image_view_delete);
-        setDeleteButton(delete_button);
-
-        //edit button
-        ImageView editButton = (ImageView) view.findViewById(R.id.news_details_image_view_edit);
-        setEditButton(editButton);
+        setSpinner((Spinner) view.findViewById(R.id.action_spinner));
     }
+
+    public void setSpinner(final Spinner spinner) {
+        if (RunTimeItems.loggedUser != null && RunTimeItems.loggedUser.getUserType().equals(Constants.ADMIN_TYPE))
+        //TODO
+        {
+            spinner.setVisibility(View.VISIBLE);
+            final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context,
+                    R.layout.spinner_item,
+                    new ArrayList<String>());
+            arrayAdapter.add("");
+            arrayAdapter.add(context.getResources().getString(R.string.edit));
+            arrayAdapter.add(context.getResources().getString(R.string.delete));
+            spinner.setAdapter(arrayAdapter);
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                    if (position == 1) sendEditRequest();
+                    else if (position == 2) sendDeleteRequest();
+                    if (position!= 0)
+                    spinner.setSelection(0);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+
+        }
+    }
+
 
     @SuppressLint("SetTextI18n")
     private void refreshLikeButtonLayout() {
         if (isLiked) {
             likeButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.heart_filled, 0, 0, 0);
-        }
-        else likeButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.heart,0,0,0);
+        } else
+            likeButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.heart, 0, 0, 0);
         likeButton.setText(likeCount + "");
     }
 
     private void sendLikeRequest() {
         isLiked = !isLiked;
-        likeCount = isLiked ? likeCount + 1 :likeCount -1;
+        likeCount = isLiked ? likeCount + 1 : likeCount - 1;
         refreshLikeButtonLayout();
         Map<String, String> stringMap = new HashMap<>();
         if (!isLiked) stringMap.put("req", "dislikeNew");
@@ -252,43 +286,30 @@ public class NewsDetailsRecyclerAdapter extends RecyclerView.Adapter<NewsDetails
         volleyRequest.start();
     }
 
-    private void setDeleteButton(View deleteButton) {
-        if (RunTimeItems.loggedUser != null && RunTimeItems.loggedUser.getUserType().equals(Constants.ADMIN_TYPE))
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Map<String, String> stringMap = new HashMap<>();
-                    stringMap.put("req", "deleteNew");
-                    stringMap.put("newId", newsId);
-                    VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL, stringMap, context) {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
+    private void sendDeleteRequest() {
+        Map<String, String> stringMap = new HashMap<>();
+        stringMap.put("req", "deleteNew");
+        stringMap.put("newId", newsId);
+        VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL, stringMap, context) {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-                        }
+            }
 
-                        @Override
-                        public void onResponse(String response) {
-                        }
-                    };
-                    volleyRequest.start();
-                }
-            });
-        else deleteButton.setVisibility(View.GONE);
+            @Override
+            public void onResponse(String response) {
+            }
+        };
+        volleyRequest.start();
     }
 
-    private void setEditButton(View editButton) {
-        if (RunTimeItems.loggedUser != null && RunTimeItems.loggedUser.getUserType().equals(Constants.ADMIN_TYPE))
-            editButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, NewsEditor.class);
-                    intent.putExtra(Constants.NEWS_DATA, new Gson().toJson(news));
-                    intent.putExtra(Constants.NEWS_ID, newsId);
-                    context.startActivity(intent);
-                }
-            });
-        else editButton.setVisibility(View.GONE);
+    private void sendEditRequest() {
+        Intent intent = new Intent(context, NewsEditor.class);
+        intent.putExtra(Constants.NEWS_DATA, new Gson().toJson(news));
+        intent.putExtra(Constants.NEWS_ID, newsId);
+        context.startActivity(intent);
     }
+
 
 
     @Override
@@ -313,8 +334,9 @@ public class NewsDetailsRecyclerAdapter extends RecyclerView.Adapter<NewsDetails
         return newsId;
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public  View mView;
+        public View mView;
         public final TextView mContentView;
         public News mItem;
 
