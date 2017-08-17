@@ -20,17 +20,16 @@
             android:background="?attr/colorPrimary"
             android:textAlignment="center"
             app:popupTheme="@style/AppTheme.PopupOverlay">
-            <RelativeLayout
-                android:layout_width="match_parent" android:layout_marginStart="-60dp"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:layout_centerInParent="true"
-                    android:id="@+id/toolbar_title" />
-            </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:text="@string/title"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/toolbar_title" />
+
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
