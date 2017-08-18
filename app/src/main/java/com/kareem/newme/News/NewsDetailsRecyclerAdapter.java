@@ -205,14 +205,15 @@ public class NewsDetailsRecyclerAdapter extends RecyclerView.Adapter<NewsDetails
                 }
 
             }
-        } else likeButton.setVisibility(View.GONE);
-        refreshLikeButtonLayout();
-        likeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendLikeRequest();
-            }
-        });
+            refreshLikeButtonLayout();
+            likeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sendLikeRequest();
+                }
+            });
+        }
+
         //delete button
         setSpinner((Spinner) view.findViewById(R.id.action_spinner));
     }
@@ -225,7 +226,7 @@ public class NewsDetailsRecyclerAdapter extends RecyclerView.Adapter<NewsDetails
             final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context,
                     R.layout.spinner_item,
                     new ArrayList<String>());
-            arrayAdapter.add("");
+            arrayAdapter.add(context.getResources().getString(R.string.choose_action));
             arrayAdapter.add(context.getResources().getString(R.string.edit));
             arrayAdapter.add(context.getResources().getString(R.string.delete));
             spinner.setAdapter(arrayAdapter);
