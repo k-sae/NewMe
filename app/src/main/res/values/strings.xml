@@ -45,4 +45,8 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="choose_action">Choose Action</string>
+
+    <string name="title_activity_image_view_full_screen">ImageViewFullScreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

@@ -184,6 +184,14 @@ public class NewsDetailsRecyclerAdapter extends RecyclerView.Adapter<NewsDetails
         newsDetails.setText(news.getContent());
         newsDate.setText(news.getDate());
         Picasso.with(context).load(news.getImage_url()).error(R.mipmap.default_image_news).into(imageView);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ImageViewFullScreenActivity.class);
+                intent.putExtra(Constants.IMAGE_URL,news.getImage_url() );
+                context.startActivity(intent);
+            }
+        });
         commentsCount.setText(news.getComments().size() + "");
         setNewsButtonsLayoutAndListeners(view);
     }

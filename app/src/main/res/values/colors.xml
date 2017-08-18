@@ -15,4 +15,6 @@
     <color name="commentColor">#2980b9</color>
     <color name="overLay">#6000</color>
     <color name="lightGrey">#e0e0e0</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

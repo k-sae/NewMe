@@ -26,6 +26,7 @@
     <style name="register_page_edit_text">
 
     </style>
+
     <style name="home_page_square_button">
         <item name="android:layout_margin">@dimen/default_spacing</item>
         <item name="android:background">@drawable/rounded_button_primary</item>
@@ -42,15 +43,29 @@
         <item name="android:paddingTop">@dimen/default_spacing</item>
         <item name="android:layout_gravity">center</item>
     </style>
+
     <style name="home_button_content_icon">
         <item name="android:layout_width">42dp</item>
         <item name="android:layout_height">42dp</item>
         <item name="android:layout_gravity">center</item>
     </style>
+
     <style name="home_shareables">
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:layout_marginRight">5dp</item>
         <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">40dp</item>
+    </style>
+
+    <style name="FullscreenTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
     </style>
 </resources>
