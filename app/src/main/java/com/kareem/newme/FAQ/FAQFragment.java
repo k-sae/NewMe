@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -27,7 +29,7 @@ import java.util.Map;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class FAQFragment extends UserRoleFragment {
+public class FAQFragment extends UserRoleFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -37,6 +39,7 @@ public class FAQFragment extends UserRoleFragment {
     private MyFAQRecyclerViewAdapter myFAQRecyclerViewAdapter;
     private ExpandableListAdapter expandableListAdapter;
     private FloatingActionButton fab;
+    private SwipeRefreshLayout swipeLayout;
     private boolean isInit;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -85,6 +88,9 @@ public class FAQFragment extends UserRoleFragment {
         grabData();
         isInit = true;
         onUserRoleChanged();
+        swipeLayout = (SwipeRefreshLayout) fragmentView.findViewById(R.id.swipe_container);
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setRefreshing(true);
         return fragmentView;
     }
 
@@ -102,7 +108,8 @@ public class FAQFragment extends UserRoleFragment {
         VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,getActivity()) {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(getActivity(), "Network error", Toast.LENGTH_SHORT).show();
+                swipeLayout.setRefreshing(false);
             }
 
             @Override
@@ -119,6 +126,7 @@ public class FAQFragment extends UserRoleFragment {
                 }
 
                 expandableListAdapter.notifyDataSetChanged();
+                swipeLayout.setRefreshing(false);
             }
         };
         volleyRequest.start();
@@ -156,5 +164,10 @@ public class FAQFragment extends UserRoleFragment {
         if (RunTimeItems.loggedUser != null && RunTimeItems.loggedUser.getUserType().equals(Constants.ADMIN_TYPE))
             fab.setVisibility(View.VISIBLE);
         else fab.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onRefresh() {
+        grabData();
     }
 }

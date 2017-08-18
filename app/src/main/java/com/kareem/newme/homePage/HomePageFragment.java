@@ -121,7 +121,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
                     Intent waIntent = new Intent(Intent.ACTION_SEND);
                     waIntent.setType("text/plain");
-                    String text = "YOUR TEXT HERE";
+                    String text = "https://play.google.com/store/apps/details?id=com.alkandari";
 
                     PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
                     //Check if package exists or not. If not then code

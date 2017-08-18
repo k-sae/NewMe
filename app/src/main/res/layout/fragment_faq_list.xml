@@ -6,6 +6,11 @@
     android:layout_width="match_parent"
     tools:context="com.kareem.newme.FAQ.FAQFragment"
     android:layout_height="match_parent">
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipe_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ExpandableListView
     android:id="@+id/expandableListView"
     android:layout_height="match_parent"
@@ -13,7 +18,7 @@
     android:indicatorRight="?android:attr/expandableListPreferredItemIndicatorRight"
     android:divider="@android:color/darker_gray"
     android:dividerHeight="0.5dp" />
-
+    </android.support.v4.widget.SwipeRefreshLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
