@@ -29,7 +29,10 @@
         android:textSize="@dimen/news_title_fontSize"
         android:textColor="@color/colorPrimary"
         android:layout_marginStart="5dp"
-        android:ems="10" />
+        android:ems="10"
+        android:maxLines = "1"
+        android:minLines="1"
+        />
     <TextView
         android:id="@+id/news_list_item_details"
         android:layout_width="wrap_content"
@@ -40,6 +43,8 @@
         android:textSize="@dimen/news_details_fontSize"
         android:layout_marginTop="@dimen/textFields_default_margin"
         android:layout_marginStart="5dp"
+        android:maxLines = "4"
+        android:minLines="1"
         android:ems="10" />
 
 </RelativeLayout>
