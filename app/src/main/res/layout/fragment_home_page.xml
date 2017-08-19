@@ -79,7 +79,7 @@
                 </LinearLayout>
             </com.kareem.newme.homePage.SquareButton>
 
-            <com.kareem.newme.homePage.SquareButton
+            <com.kareem.newme.homePage.SquareButton android:visibility="gone"
                 android:id="@+id/nav_login"
                 style="@style/home_page_square_button">
 
@@ -120,13 +120,6 @@
                         android:text="@string/faq" />
                 </LinearLayout>
             </com.kareem.newme.homePage.SquareButton>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
             <com.kareem.newme.homePage.SquareButton
                 android:id="@+id/nav_contact_us"
                 style="@style/home_page_square_button">
@@ -148,6 +141,16 @@
                 </LinearLayout>
             </com.kareem.newme.homePage.SquareButton>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp" android:layout_weight="0.1666666"/>
             <com.kareem.newme.homePage.SquareButton
                 android:id="@+id/nav_about"
                 style="@style/home_page_square_button">
@@ -189,6 +192,9 @@
                         android:text="@string/new_me" />
                 </LinearLayout>
             </com.kareem.newme.homePage.SquareButton>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp" android:layout_weight="0.166666666"/>
         </LinearLayout>
     </LinearLayout>
 
