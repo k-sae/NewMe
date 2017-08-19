@@ -49,8 +49,6 @@ public class NewsDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_details, container, false);
-        Log.e( "onCreateView: ", getActivity().getIntent().getStringExtra(Constants.NEWS_ID) );
-        Log.e( "onCreateView: ", getActivity().getIntent().getStringExtra(Constants.NEWS_DATA) );
         RecyclerView listView = (RecyclerView) view.findViewById(R.id.news_details_listView);
         setNewsDetailsAdapter(listView);
         if (RunTimeItems.loggedUser == null) view.findViewById(R.id.comments_writer_holder).setVisibility(View.GONE);
@@ -75,8 +73,8 @@ public class NewsDetailsFragment extends Fragment {
         Map<String , String> stringMap = new HashMap<>();
         stringMap.put("req", "addComment");
         stringMap.put("comment", new Gson().toJson(comment));
-        stringMap.put("newId", getActivity().getIntent().getStringExtra(Constants.NEWS_ID));
-        VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,getActivity()) {
+        stringMap.put("newId", parent.getIntent().getStringExtra(Constants.NEWS_ID));
+        VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,parent) {
             @Override
             public void onErrorResponse(VolleyError error) {
 
@@ -93,7 +91,7 @@ public class NewsDetailsFragment extends Fragment {
     {
         newsDetailsRecyclerAdapter = new NewsDetailsRecyclerAdapter(getActivity());
         newsDetailsRecyclerAdapter.setNews(new Gson().fromJson(getActivity().getIntent().getStringExtra(Constants.NEWS_DATA), News.class));
-        newsDetailsRecyclerAdapter.setNewsId(getActivity().getIntent().getStringExtra(Constants.NEWS_ID));
+        newsDetailsRecyclerAdapter.setNewsId(parent.getIntent().getStringExtra(Constants.NEWS_ID));
         FirebaseDatabase.getInstance().getReference("News-2").child(newsDetailsRecyclerAdapter.getNewsId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

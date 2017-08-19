@@ -1,5 +1,6 @@
 package com.kareem.newme.FAQ;
 
+import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -28,6 +30,7 @@ public class FAQEditorFragment extends Fragment {
     private TextView titleTextView;
     private TextView contentTextView;
     private FAQ faq;
+    private Activity parent;
     public FAQEditorFragment() {
     }
 
@@ -65,19 +68,26 @@ public class FAQEditorFragment extends Fragment {
     private void uploadData() {
         Map<String , String> stringMap = new HashMap<>();
         stringMap.put("req", "addFaq");
-        stringMap.put("faq_icon", new Gson().toJson(faq));
-        VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,getActivity()) {
+        stringMap.put("faq", new Gson().toJson(faq));
+        VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,parent) {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(parent ,"Network Error", Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
             public void onResponse(String response) {
-                getActivity().finish();
+                 if (parent != null)
+                    parent.finish();
             }
         };
         volleyRequest.start();
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        parent = activity;
+    }
 }

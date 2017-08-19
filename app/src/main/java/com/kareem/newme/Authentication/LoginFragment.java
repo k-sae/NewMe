@@ -31,6 +31,7 @@ public class LoginFragment extends ViewPagerFragment implements View.OnClickList
 
     private EditText userName;
     private EditText password;
+    private Activity parent;
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -56,13 +57,13 @@ public class LoginFragment extends ViewPagerFragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        final ProgressDialog loading = ProgressDialog.show(getActivity(),"Logging in ...","Please wait...",false,false);
+        final ProgressDialog loading = ProgressDialog.show(parent, "Logging in ...","Please wait...",false,false);
         loading.show();
         VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,getParams(),getActivity()) {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loading.dismiss();
-                Toast.makeText(getActivity(),"Network Error please Try again", Toast.LENGTH_LONG).show();
+                Toast.makeText(parent,"Network Error please Try again", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -70,14 +71,14 @@ public class LoginFragment extends ViewPagerFragment implements View.OnClickList
                 loading.dismiss();
                 if (response.contains("\"apiRespond\":false"))
                 {
-                    Toast.makeText(getActivity(),"Wrong User Name or Password", Toast.LENGTH_LONG).show();
+                    Toast.makeText(parent, "Wrong User Name or Password", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
                     Intent data = new Intent();
                     data.putExtra(Constants.USER_DATA, response);
-                    getActivity().setResult(Activity.RESULT_OK,data);
-                    getActivity().finish();
+                    parent.setResult(Activity.RESULT_OK,data);
+                    parent.finish();
                 }
             }
         };
@@ -91,5 +92,11 @@ public class LoginFragment extends ViewPagerFragment implements View.OnClickList
         stringStringMap.put("username", userName.getText().toString());
         stringStringMap.put("password", password.getText().toString() );
         return stringStringMap;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        parent = activity;
     }
 }

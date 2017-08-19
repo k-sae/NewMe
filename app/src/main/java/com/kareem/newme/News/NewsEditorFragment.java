@@ -45,6 +45,7 @@ public class NewsEditorFragment extends Fragment {
     private ImageView newsImageView;
     private Bitmap bitmap;
     private boolean isEditing = false;
+    private Activity parent;
     //    private byte[] profileImageByteArray;
     public NewsEditorFragment() {
     }
@@ -125,12 +126,12 @@ public class NewsEditorFragment extends Fragment {
     }
     private void uploadNews()
     {
-        final ProgressDialog loading = ProgressDialog.show(getActivity(),"Uploading...","Please wait...",false,false);
+        final ProgressDialog loading = ProgressDialog.show(parent,"Uploading...","Please wait...",false,false);
         loading.show();
         Map<String,String> params = new HashMap<>();
         if (isEditing) {
             params.put("req", "editNew");
-            params.put("newId", getActivity().getIntent().getStringExtra(Constants.NEWS_ID));
+            params.put("newId", parent.getIntent().getStringExtra(Constants.NEWS_ID));
             params.put("editedNew", new Gson().toJson(news));
         }
         else {
@@ -139,21 +140,26 @@ public class NewsEditorFragment extends Fragment {
             if (bitmap != null)
                 params.put("imagebase64", Utils.getStringImage(bitmap));
         }
-            final VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL, params, getActivity()) {
+            final VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL, params, parent) {
                 @Override
                 public void onResponse(String response) {
                     loading.dismiss();
-                    getActivity().finish();
+                    parent.finish();
                 }
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getActivity(),"Error occure will uploading please try again", Toast.LENGTH_LONG).show();
-                    loading.setMessage("retrying");
-                  start();
+                    Toast.makeText(parent,"Error occure will uploading please try again", Toast.LENGTH_LONG).show();
+                    loading.dismiss();
                 }
             };
             volleyRequest.start();
 
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        parent = activity;
     }
 }

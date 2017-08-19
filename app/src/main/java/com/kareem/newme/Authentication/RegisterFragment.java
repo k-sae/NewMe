@@ -44,6 +44,7 @@ public class RegisterFragment extends ViewPagerFragment implements View.OnClickL
     private boolean isValidUserName;
     private CountryCodePicker countryCodePicker;
     private User user;
+    private Activity parent;
     public RegisterFragment() {
         // Required empty public constructor
     }
@@ -82,25 +83,29 @@ public class RegisterFragment extends ViewPagerFragment implements View.OnClickL
         {
             //TODO
             //2-send to server
-            Map<String, String> params = new HashMap<>();
+            final Map<String, String> params = new HashMap<>();
             params.put("req", "registerUser");
             params.put("user", new Gson().toJson(user));
-            VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,params,getActivity()) {
+            if (parent == null) return;
+            VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,params,parent) {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getActivity(),"Network Error please Try again", Toast.LENGTH_LONG).show();
+                    if (parent != null)
+                    Toast.makeText(parent,"Network Error please Try again", Toast.LENGTH_LONG).show();
                 }
 
                 @Override
                 public void onResponse(String response) {
                     if (response.contains("added"))
                     {
-                        new CustomToast().Show_Toast(getActivity(), view,
+                        if (parent != null)
+                        new CustomToast().Show_Toast(parent, view,
                                 "Registered");
                     }
                     else
                     {
-                        new CustomToast().Show_Toast(getActivity(), view,
+                        if (parent != null)
+                        new CustomToast().Show_Toast(parent, view,
                                 new Gson().fromJson(response, ApiRespond.class).getApiRespond());
                     }
                 }
@@ -116,10 +121,12 @@ public class RegisterFragment extends ViewPagerFragment implements View.OnClickL
             Map<String, String> params = new HashMap<>();
             params.put("req", "validUsername");
             params.put("username", userName.getText().toString());
-            VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,params,getActivity()) {
+            if (parent == null) return;
+            VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,params,parent) {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getActivity(),"Network Error please Try again", Toast.LENGTH_LONG).show();
+                    if (parent != null)
+                    Toast.makeText(parent,"Network Error please Try again", Toast.LENGTH_LONG).show();
                 }
 
                 @Override
@@ -162,20 +169,19 @@ public class RegisterFragment extends ViewPagerFragment implements View.OnClickL
                 || getConfirmPassword.length() == 0
                 || userName.equals("")
                 || userName.length() == 0
-                )
-
-
-            new CustomToast().Show_Toast(getActivity(), view,
+                ) {
+            if (parent != null) return false;
+            new CustomToast().Show_Toast(parent, view,
                     "All fields are required.");
-
+        }
             // Check if email id valid or not
         else if (!m.find())
-            new CustomToast().Show_Toast(getActivity(), view,
+            new CustomToast().Show_Toast(parent, view,
                     "Your Email Id is Invalid.");
 
             // Check if both password should be equal
         else if (!getConfirmPassword.equals(getPassword))
-            new CustomToast().Show_Toast(getActivity(), view,
+            new CustomToast().Show_Toast(parent, view,
                     "Both password doesn't match.");
             // Make sure user should check Terms and Conditions checkbox
 
@@ -193,6 +199,12 @@ public class RegisterFragment extends ViewPagerFragment implements View.OnClickL
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        parent = activity;
     }
 }
 

@@ -1,6 +1,7 @@
 package com.kareem.newme.homePage;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -40,6 +41,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
     private ArrayList<String> descriptionString = new ArrayList<>();
     private TextView description;
     private TextView title;
+    private Activity parent;
     public HomePageFragment() {
         // Required empty public constructor
     }
@@ -132,7 +134,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
                     startActivity(Intent.createChooser(waIntent, "Share with"));
 
                 } catch (PackageManager.NameNotFoundException e) {
-                    Toast.makeText(getActivity(), "WhatsApp not Installed", Toast.LENGTH_SHORT)
+                    Toast.makeText(parent, "WhatsApp not Installed", Toast.LENGTH_SHORT)
                             .show();
                 }
 
@@ -158,5 +160,11 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onPageScrollStateChanged(int state) {
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        parent = activity;
     }
 }

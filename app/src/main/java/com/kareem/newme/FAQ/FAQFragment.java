@@ -1,5 +1,6 @@
 package com.kareem.newme.FAQ;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ public class FAQFragment extends UserRoleFragment implements SwipeRefreshLayout.
     private ExpandableListAdapter expandableListAdapter;
     private FloatingActionButton fab;
     private SwipeRefreshLayout swipeLayout;
+    private Activity parent;
     private boolean isInit;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -75,7 +77,7 @@ public class FAQFragment extends UserRoleFragment implements SwipeRefreshLayout.
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), FAQEditor.class);
+                Intent intent = new Intent(parent, FAQEditor.class);
                 startActivityForResult(intent, Constants.FAQ_ACTIVITY_RESULT);
             }
         });
@@ -83,7 +85,7 @@ public class FAQFragment extends UserRoleFragment implements SwipeRefreshLayout.
 
         // Set the adapter
         ExpandableListView expandableListView = (ExpandableListView) fragmentView.findViewById(R.id.expandableListView);
-        expandableListAdapter = new ExpandableListAdapter(getActivity());
+        expandableListAdapter = new ExpandableListAdapter(parent);
         expandableListView.setAdapter(expandableListAdapter);
         grabData();
         isInit = true;
@@ -105,10 +107,10 @@ public class FAQFragment extends UserRoleFragment implements SwipeRefreshLayout.
         if (expandableListAdapter == null) return;
         Map<String , String> stringMap = new HashMap<>();
         stringMap.put("req", "getFaq");
-        VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,getActivity()) {
+        VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,parent) {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "Network error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(parent, "Network error", Toast.LENGTH_SHORT).show();
                 swipeLayout.setRefreshing(false);
             }
 
@@ -135,6 +137,12 @@ public class FAQFragment extends UserRoleFragment implements SwipeRefreshLayout.
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        parent = activity;
     }
 
     @Override
