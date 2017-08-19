@@ -44,6 +44,7 @@ public class MessagesFragment extends UserRoleFragment implements OnListFragment
     private OnListFragmentInteractionListener mListener;
     private MyMessageRecyclerViewAdapter myMessageRecyclerViewAdapter;
     private RecyclerView recyclerView;
+    private String intentString;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -91,7 +92,9 @@ public class MessagesFragment extends UserRoleFragment implements OnListFragment
         Map<String , String> stringMap = new HashMap<>();
         stringMap.put("req", "sendMessage");
         stringMap.put("message", new Gson().toJson(message));
-        stringMap.put("toUser", id);
+        stringMap.put("toUser", intentString == null
+                ? "1"
+                : new Gson().fromJson(intentString, UserMessage.class).getId());
         VolleyRequest volleyRequest = new VolleyRequest(Constants.BASE_URL,stringMap,getActivity()) {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -106,7 +109,7 @@ public class MessagesFragment extends UserRoleFragment implements OnListFragment
         volleyRequest.start();
     }
     private void sync() {
-       String intentString = getActivity().getIntent().getStringExtra(Constants.USER_MESSAGE);
+       intentString = getActivity().getIntent().getStringExtra(Constants.USER_MESSAGE);
         id = intentString == null
                 ? RunTimeItems.loggedUser.getId()
                 : new Gson().fromJson(intentString, UserMessage.class).getId();

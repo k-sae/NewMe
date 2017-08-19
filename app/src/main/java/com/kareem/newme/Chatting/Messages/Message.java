@@ -7,12 +7,12 @@ package com.kareem.newme.Chatting.Messages;
  * TODO: Replace all uses of this class before publishing your app.
  */
 public  class Message {
-    public  int senderId;
+    public  int sender;
     public  String content;
     public  String date;
 
     public Message(int senderId, String content, String date) {
-        this.senderId = senderId;
+        this.sender = senderId;
         this.content = content;
         this.date = date;
     }

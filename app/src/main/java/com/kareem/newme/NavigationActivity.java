@@ -45,6 +45,7 @@ public class NavigationActivity extends AppCompatActivity
     private HomePageFragment homePageFragment;
     private NavigationView navigationView;
     private TextView titlebar;
+    private int selectedItemId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +86,11 @@ public class NavigationActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            if (selectedItemId != R.id.nav_home)
+            {
+                setActive(R.id.nav_home);
+            }
+            else
             super.onBackPressed();
         }
     }
@@ -129,6 +135,7 @@ public class NavigationActivity extends AppCompatActivity
             navigate(homePageFragment);
             titlebar.setText(getString(R.string.home));
         }
+        selectedItemId = id;
     }
 
     private void navigate(Fragment fragment)
@@ -228,4 +235,5 @@ public class NavigationActivity extends AppCompatActivity
 
         onNavigationItemSelected(id);
     }
+
 }

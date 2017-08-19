@@ -37,7 +37,7 @@ public class MyMessageRecyclerViewAdapter extends RecyclerView.Adapter<MyMessage
 
     @Override
     public int getItemViewType(int position) {
-        if (RunTimeItems.loggedUser.getId().equals(mValues.get(position).senderId+"")) return R.layout.message_list_item_remote;
+        if (RunTimeItems.loggedUser.getId().equals(mValues.get(position).sender+"")) return R.layout.message_list_item_remote;
         else  return R.layout.message_list_item_active;
     }
 
