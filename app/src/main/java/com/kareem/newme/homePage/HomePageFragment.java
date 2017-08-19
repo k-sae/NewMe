@@ -2,9 +2,11 @@ package com.kareem.newme.homePage;
 
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -115,31 +117,37 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         view.findViewById(R.id.nav_contact_us).setOnClickListener(this);
         view.findViewById(R.id.nav_about).setOnClickListener(this);
         view.findViewById(R.id.nav_newme);
+
+        //whatsapp
         view.findViewById(R.id.home_whatsapp).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PackageManager pm=getActivity().getPackageManager();
-                try {
-
-                    Intent waIntent = new Intent(Intent.ACTION_SEND);
-                    waIntent.setType("text/plain");
-                    String text = "https://play.google.com/store/apps/details?id=com.alkandari";
-
-                    PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
-                    //Check if package exists or not. If not then code
-                    //in catch block will be called
-                    waIntent.setPackage("com.whatsapp");
-
-                    waIntent.putExtra(Intent.EXTRA_TEXT, text);
-                    startActivity(Intent.createChooser(waIntent, "Share with"));
-
-                } catch (PackageManager.NameNotFoundException e) {
-                    Toast.makeText(parent, "WhatsApp not Installed", Toast.LENGTH_SHORT)
-                            .show();
-                }
+                Uri uri = Uri.parse("smsto:" + "+965 6667 9725");
+                Intent i = new Intent(Intent.ACTION_SENDTO, uri);
+                i.putExtra("sms_body", "");
+                i.setPackage("com.whatsapp");
+                startActivity(i);
 
             }
         });
+        //instagram
+        view.findViewById(R.id.instagram).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("http://instagram.com/dr.hanadialbadir");
+                Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+
+                likeIng.setPackage("com.instagram.android");
+
+                try {
+                    startActivity(likeIng);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://instagram.com/dr.hanadialbadir")));
+                }
+            }
+        });
+
     }
 
     @Override

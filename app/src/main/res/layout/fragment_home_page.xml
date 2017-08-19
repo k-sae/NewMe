@@ -202,11 +202,14 @@
 
         <ImageView
             style="@style/home_shareables"
-            android:src="@drawable/insta" />
+            android:src="@drawable/insta"
+            android:id="@+id/instagram"
+            />
 
         <ImageView
             style="@style/home_shareables"
-            android:src="@drawable/snapchat" />
+            android:src="@drawable/snapchat"
+            android:id="@+id/snapchat"/>
 
         <ImageView
             style="@style/home_shareables"
