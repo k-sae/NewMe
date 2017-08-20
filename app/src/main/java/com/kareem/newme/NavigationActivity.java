@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.kareem.newme.Authentication.AuthenticationActivity;
@@ -29,6 +30,7 @@ import com.kareem.newme.Model.User;
 import com.kareem.newme.News.NewsFragment;
 import com.kareem.newme.homePage.HomePageFragment;
 
+import io.fabric.sdk.android.Fabric;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,6 +51,7 @@ public class NavigationActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -79,7 +82,6 @@ public class NavigationActivity extends AppCompatActivity
         RunTimeItems.loggedUser = realmUserUtils.getLoggedUserFromDataBase();
         if(RunTimeItems.loggedUser != null) forceLogin();
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

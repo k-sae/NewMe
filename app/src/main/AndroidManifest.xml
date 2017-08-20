@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.kareem.newme">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -60,7 +61,11 @@
             android:name=".News.ImageViewFullScreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_image_view_full_screen"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="426249733f33a1b54fcf36674e648247bb96fa7c"
+            tools:replace="android:value" />
     </application>
 
 </manifest>
