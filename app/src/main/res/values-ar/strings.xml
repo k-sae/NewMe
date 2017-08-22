@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">New Me</string>
+    <string name="action_settings">الاعدادات</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="news">الاخبار</string>
+    <string name="user_image">صورة المستخدم</string>
+    <string name="title_activity_news_editor">معدل الخبر</string>
+    <string name="title">العنوان</string>
+    <string name="content">المحتوي</string>
+    <string name="news_image">صورة الخبر</string>
+    <string name="title_activity_news_details">محتوي الخبر</string>
+    <string name="write_comment">اكتب تعليق</string>
+    <string name="title_activity_authentication">المصادقة</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">الدخول</string>
+    <string name="logout">الخروج</string>
+    <string name="register">تسجيل حساب</string>
+    <string name="management">الادارة</string>
+    <string name="email">الايميل</string>
+    <string name="password">كلمة السر</string>
+    <string name="username">اسم المستخدم</string>
+    <string name="guest">ضيف</string>
+    <string name="contact_us">تواصل معنا</string>
+    <string name="title_activity_messages">الرسائل</string>
+    <string name="write_a_message">اكتب رسالة</string>
+    <string name="title_activity_faqeditor">معدل الاسئلة</string>
+    <string name="question">السؤال</string>
+    <string name="answer">الايجابة</string>
+    <string name="signup">تسجيل حساب</string>
+    <string name="phone_number">رقم التليفون</string>
+    <string name="location">العنوان</string>
+    <string name="confirm_password">تاكيد كلمة المرور</string>
+    <string name="terms_and_conditions">الشروط و الاحكام</string>
+    <string name="username_already_exists">اسم المستخدم موجود</string>
+    <string name="faq">الرسائل المتكررة</string>
+    <string name="new_me">New me</string>
+    <string name="about_us">من نحن</string>
+    <string name="home">الرئيسية</string>
+    <string name="action">Action</string>
+    <string name="edit">تعديل</string>
+    <string name="delete">مسح</string>
+    <string name="choose_action">اختر</string>
+    <string name="full_name">الاسم و اسم العائلة</string>
+    <string name="title_activity_image_view_full_screen">ImageViewFullScreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+</resources>

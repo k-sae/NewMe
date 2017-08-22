@@ -24,7 +24,7 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="username">UserName</string>
-    <string name="anonymous">Anonymous</string>
+    <string name="guest">Anonymous</string>
     <string name="contact_us">Contact us</string>
     <string name="title_activity_messages">MessagesActivity</string>
     <string name="write_a_message">Write a Message</string>
@@ -45,7 +45,7 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="choose_action">Choose Action</string>
-
+    <string name="full_name">full name</string>
     <string name="title_activity_image_view_full_screen">ImageViewFullScreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>

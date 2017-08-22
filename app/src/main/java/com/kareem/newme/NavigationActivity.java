@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -142,8 +144,11 @@ public class NavigationActivity extends AppCompatActivity
 
     private void navigate(Fragment fragment)
     {
-
-        getSupportFragmentManager().beginTransaction()
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager == null) return;
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if (fragmentTransaction == null) return;
+        fragmentTransaction
                 .replace(R.id.frame_content,
                         fragment)
                 .commit();
@@ -217,7 +222,7 @@ public class NavigationActivity extends AppCompatActivity
     }
     private void forceLogout()
     {
-        navigationBarHeader.setText(getString(R.string.anonymous));
+        navigationBarHeader.setText(getString(R.string.guest));
         menu.findItem(R.id.nav_login).setTitle(getString(R.string.login));
         RunTimeItems.loggedUser = null;
         RealmUserUtils realmUserUtils = new RealmUserUtils(this);
