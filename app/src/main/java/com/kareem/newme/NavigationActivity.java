@@ -65,17 +65,13 @@ public class NavigationActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
+        initFragments();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationBarHeader = (TextView) navigationView.getHeaderView(0).findViewById(R.id.navigation_header_text);
         menu = navigationView.getMenu();
         if (savedInstanceState == null) {
-            newsFragment = new NewsFragment();
-            messagesFragment = new MessagesFragment();
-            userMessagesFragment = new UserMessagesFragment();
-            faqFragment  = new FAQFragment();
-            homePageFragment = new HomePageFragment();
+
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             firebaseAuth.signInAnonymously();
             setActive(R.id.nav_home);
@@ -147,6 +143,9 @@ public class NavigationActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager == null) return;
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        if (fragment == null) initFragments();
+
         if (fragmentTransaction == null) return;
         fragmentTransaction
                 .replace(R.id.frame_content,
@@ -243,4 +242,12 @@ public class NavigationActivity extends AppCompatActivity
         onNavigationItemSelected(id);
     }
 
+    private void initFragments()
+    {
+        newsFragment = new NewsFragment();
+        messagesFragment = new MessagesFragment();
+        userMessagesFragment = new UserMessagesFragment();
+        faqFragment  = new FAQFragment();
+        homePageFragment = new HomePageFragment();
+    }
 }
