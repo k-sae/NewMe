@@ -22,7 +22,7 @@
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/ic_menu_send_right"
+            android:src="@drawable/ic_menu_send_left"
             android:padding="@dimen/default_spacing"
             android:id="@+id/send_button" android:contentDescription="@string/button_text_send"/>
 
