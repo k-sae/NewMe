@@ -15,7 +15,6 @@
         android:layout_height="120dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:src="@mipmap/default_image_news"
         android:scaleType="fitXY"
         android:contentDescription="@string/user_image" />
 
