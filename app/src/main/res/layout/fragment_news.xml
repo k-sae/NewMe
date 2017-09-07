@@ -8,7 +8,11 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent" android:id="@+id/news_container_listView" android:divider="@android:color/transparent"
-        android:dividerHeight="5dp"/>
+        android:dividerHeight="5dp"
+
+        />
+    <!--android:stackFromBottom="true"-->
+    <!--android:transcriptMode="normal"-->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

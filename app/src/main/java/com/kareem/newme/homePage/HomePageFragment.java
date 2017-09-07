@@ -126,7 +126,11 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
                 Intent i = new Intent(Intent.ACTION_SENDTO, uri);
                 i.putExtra("sms_body", "");
                 i.setPackage("com.whatsapp");
-                startActivity(i);
+                try {
+                    startActivity(i);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(parent, "Whatsapp not installed", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });

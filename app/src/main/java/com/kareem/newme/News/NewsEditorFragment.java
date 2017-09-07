@@ -162,4 +162,15 @@ public class NewsEditorFragment extends Fragment {
         super.onAttach(activity);
         parent = activity;
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (bitmap != null)
+        {
+            bitmap.recycle();
+        }
+        bitmap = null;
+        Runtime.getRuntime().gc();
+    }
 }

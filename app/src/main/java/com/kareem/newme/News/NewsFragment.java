@@ -136,7 +136,7 @@ public class NewsFragment extends UserRoleFragment implements DataSetListener {
                 newsAdapter.getDataSnapshots().clear();
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()
                         ) {
-                    newsAdapter.getDataSnapshots().add(snapshot);
+                    newsAdapter.getDataSnapshots().add(0,snapshot);
                 }
                 newsAdapter.notifyDataSetChanged();
             }

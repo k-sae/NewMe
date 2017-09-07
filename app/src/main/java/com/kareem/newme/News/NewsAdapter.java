@@ -69,12 +69,10 @@ public class NewsAdapter extends BaseAdapter {
             String filename = news.getImage_url().substring(news.getImage_url().lastIndexOf("/") + 1);
             Picasso.with(context).load("http://www.drhanadi.com/newmemobile/view/upload/thumb/" + filename)
                     .error(R.mipmap.default_image_news)
-                    .resize(300,300).onlyScaleDown()
                     .into(imageView);
         }
         else Picasso.with(context)
                 .load(R.mipmap.default_image_news)
-                .resize(300,300).onlyScaleDown()
                 .error(R.mipmap.default_image_news)
                 .into(imageView);
         return v;
