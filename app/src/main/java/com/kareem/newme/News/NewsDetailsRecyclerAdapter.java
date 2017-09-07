@@ -201,10 +201,10 @@ public class NewsDetailsRecyclerAdapter extends RecyclerView.Adapter<NewsDetails
         //edit
         //delete
         likeButton = (TextView) view.findViewById(R.id.news_details_image_view_like);
-
+        likeCount = news.getLikes().size();
         if (RunTimeItems.loggedUser != null) {
             isLiked = false;
-            for (int i = 0; i < news.getLikes().size(); i++) {
+            for (int i = 0; i < likeCount; i++) {
                 Like like = news.getLikes().get(i);
                 if (RunTimeItems.loggedUser.getId().equals(like.getUserId().toString())) {
                     isLiked = true;
@@ -221,7 +221,7 @@ public class NewsDetailsRecyclerAdapter extends RecyclerView.Adapter<NewsDetails
                 }
             });
         }
-
+        likeButton.setText(likeCount + "");
         //delete button
         setSpinner((Spinner) view.findViewById(R.id.action_spinner));
     }

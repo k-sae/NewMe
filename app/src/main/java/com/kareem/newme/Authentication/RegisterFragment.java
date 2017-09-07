@@ -153,15 +153,18 @@ public class RegisterFragment extends ViewPagerFragment implements View.OnClickL
         String getMobileNumber = mobileNumber.getText().toString();
         String getPassword = password.getText().toString();
         String getConfirmPassword = confirmPassword.getText().toString();
-        String country = null;
+        String country ;
+        String phonePrefix;
         try {
            country  = countryCodePicker.getSelectedCountryName();
+            phonePrefix = countryCodePicker.getFullNumber();
         }catch (Exception e)
         {
             country = "united states";
+            phonePrefix = "1";
         }
 
-        String phonePrefix = countryCodePicker.getFullNumber();
+
         String userName = this.userName.getText().toString();
         // Pattern match for email id
         Pattern p = Pattern.compile(Utils.regEx);
