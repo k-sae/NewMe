@@ -99,7 +99,7 @@ public class RegisterFragment extends ViewPagerFragment implements View.OnClickL
                     if (response.contains("added"))
                     {
                         if (parent != null)
-                        new CustomToast().Show_Toast(parent, view,
+                        new CustomToast().setType(CustomToast.TYPE_SUCCESS).Show_Toast(parent, view,
                                 "Registered");
                     }
                     else
@@ -153,7 +153,14 @@ public class RegisterFragment extends ViewPagerFragment implements View.OnClickL
         String getMobileNumber = mobileNumber.getText().toString();
         String getPassword = password.getText().toString();
         String getConfirmPassword = confirmPassword.getText().toString();
-        String country = countryCodePicker.getSelectedCountryName();
+        String country = null;
+        try {
+           country  = countryCodePicker.getSelectedCountryName();
+        }catch (Exception e)
+        {
+            country = "united states";
+        }
+
         String phonePrefix = countryCodePicker.getFullNumber();
         String userName = this.userName.getText().toString();
         // Pattern match for email id

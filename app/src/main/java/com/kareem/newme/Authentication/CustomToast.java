@@ -15,7 +15,15 @@ import android.widget.Toast;
 import com.kareem.newme.R;
 
 public class CustomToast {
+    public static final int TYPE_WARNING = 0;
+    public static final int TYPE_SUCCESS = 1;
+    private int type = 0;
 
+    public CustomToast setType(int type)
+    {
+        this.type = type;
+        return this;
+    }
     // Custom Toast Method
     public void Show_Toast(Context context, View view, String error) {
 
@@ -24,8 +32,17 @@ public class CustomToast {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // inflate the layout over view
-        View layout = inflater.inflate(R.layout.custom_toast,
-                (ViewGroup) view.findViewById(R.id.toast_root));
+        View layout;
+        if (type == 1)
+        {
+           layout =  inflater.inflate(R.layout.custom_toast_successful,
+                    (ViewGroup) view.findViewById(R.id.toast_root));
+        }
+        else
+        {
+            layout =  inflater.inflate(R.layout.custom_toast_warning,
+                    (ViewGroup) view.findViewById(R.id.toast_root));
+        }
 
         // Get TextView id and set error
         TextView text = (TextView) layout.findViewById(R.id.toast_error);
